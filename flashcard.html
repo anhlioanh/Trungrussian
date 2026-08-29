@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thẻ từ vựng — Học tiếng Nga cùng Oanh</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .fc-wrap { max-width: 620px; margin: 0 auto; }
+  .fc {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+    box-shadow: var(--shadow-lg); padding: 44px 28px; text-align: center; min-height: 260px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  }
+  .fc .front { font-family: var(--font-ru); font-size: 2.6rem; font-weight: 700; line-height: 1.15; }
+  .fc .back { font-size: 1.25rem; color: var(--text-soft); }
+  .fc .hidden-back { color: var(--text-mute); font-size: .9rem; font-style: italic; }
+  .grade-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 14px; }
+  .grade-row button { padding: 13px 4px; font-size: .85rem; }
+  .grade-row small { display: block; font-size: .68rem; opacity: .75; font-weight: 400; }
+  .g0 { background: var(--err-soft); color: var(--err); border: 1px solid currentColor; }
+  .g3 { background: var(--accent-soft); color: var(--accent); border: 1px solid currentColor; }
+  .g4 { background: var(--brand-soft); color: var(--brand); border: 1px solid currentColor; }
+  .g5 { background: var(--ok-soft); color: var(--ok); border: 1px solid currentColor; }
+  .mini { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; text-align: center; }
+  .mini div b { display: block; font-family: var(--font-display); font-size: 1.5rem; color: var(--brand); }
+  .mini div span { font-size: .74rem; color: var(--text-mute); }
+</style>
+</head>
+<body>
+<div id="nav"></div>
+
+<div class="wrap">
+  <section style="margin:32px 0 22px">
+    <h1 style="margin-bottom:4px">Thẻ từ vựng</h1>
+    <p class="soft">Mỗi từ hiện lại đúng lúc em sắp quên nó. Trả lời thật lòng — bấm “Quên rồi” không phải là thất bại, đó là cách thuật toán biết phải cho em gặp lại từ đó sớm hơn.</p>
+  </section>
+
+  <section class="card"><div class="mini" id="stats"></div></section>
+
+  <section class="fc-wrap" id="area"></section>
+</div>
+
+<div id="footer"></div>
+
+<script src="data/course.js"></script>
+<script src="data/lessons/a0.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/lesson.js"></script>
+<script src="assets/js/srs.js"></script>
+<script>
+mountChrome('flashcard.html');
+touchStreak();
+
+let queue = [];
+let done = 0;
+let revealed = false;
+
+function drawStats() {
+  const b = SRS.breakdown();
+  document.getElementById('stats').innerHTML = `
+    <div><b>${b.total}</b><span>tổng số thẻ</span></div>
+    <div><b>${b.due}</b><span>cần ôn hôm nay</span></div>
+    <div><b>${b.learning}</b><span>đang thuộc dần</span></div>
+    <div><b>${b.solid}</b><span>đã nhớ chắc</span></div>`;
+}
+
+function start() {
+  queue = SRS.dueCards(40);
+  done = 0;
+  draw();
+}
+
+function draw() {
+  const area = document.getElementById('area');
+  drawStats();
+
+  if (!SRS.breakdown().total) {
+    area.innerHTML = `<div class="card center">
+      <h2>Chưa có thẻ nào</h2>
+      <p class="soft">Thẻ từ vựng được thêm tự động mỗi khi em học xong một bài. Học bài đầu tiên đi rồi quay lại đây nhé.</p>
+      <div class="row" style="justify-content:center">
+        <a class="btn btn-primary" href="hoc.html?id=a0-01">Học bài 1</a>
+        <button class="btn btn-ghost" id="seed">Nạp sẵn toàn bộ từ vựng A0</button>
+      </div></div>`;
+    document.getElementById('seed').onclick = () => { SRS.seedLevel('a0'); start(); };
+    return;
+  }
+
+  if (!queue.length) {
+    area.innerHTML = `<div class="card center">
+      <h2>Hôm nay ôn xong rồi 🎉</h2>
+      <p class="soft">Em đã ôn <b>${done}</b> thẻ. Không còn từ nào đến hạn — quay lại vào ngày mai, hoặc học thêm bài mới để có từ mới.</p>
+      <div class="row" style="justify-content:center">
+        <a class="btn btn-primary" href="index.html">Về lộ trình</a>
+        <button class="btn btn-ghost" id="again">Ôn lại tất cả cho chắc</button>
+      </div></div>`;
+    document.getElementById('again').onclick = () => { queue = shuffle(SRS.allCards()).slice(0, 30); done = 0; draw(); };
+    return;
+  }
+
+  const c = queue[0];
+  revealed = false;
+  area.innerHTML = `
+    <div class="between tiny muted" style="margin-bottom:10px">
+      <span>Còn ${queue.length} thẻ trong lượt này</span>
+      <span>${c.n === 0 ? 'Thẻ mới' : 'Lần ôn thứ ' + c.n}</span>
+    </div>
+    <div class="bar bar-sm" style="margin-bottom:14px"><i style="width:${done / (done + queue.length) * 100}%"></i></div>
+    <div class="fc" id="card">
+      <div class="front ru">${esc(c.ru)}</div>
+      <div>${speakBtn(c.ru, c.ru)}</div>
+      <div class="hidden-back" id="back">Nhớ nghĩa chưa? Bấm vào thẻ để lật</div>
+    </div>
+    <div id="controls" style="margin-top:14px" class="center">
+      <button class="btn btn-primary" id="flip" style="width:100%">Lật thẻ</button>
+    </div>`;
+
+  const flip = () => {
+    if (revealed) return;
+    revealed = true;
+    document.getElementById('back').outerHTML = `<div class="back">${esc(c.vn || '—')}</div>`;
+    document.getElementById('controls').innerHTML = `
+      <div class="tiny muted">Em nhớ từ này ở mức nào?</div>
+      <div class="grade-row">
+        <button class="btn g0" data-q="0">Quên rồi<small>gặp lại ngay</small></button>
+        <button class="btn g3" data-q="3">Khó<small>1 ngày</small></button>
+        <button class="btn g4" data-q="4">Nhớ được<small>vài ngày</small></button>
+        <button class="btn g5" data-q="5">Quá dễ<small>lâu hơn</small></button>
+      </div>`;
+    document.querySelectorAll('[data-q]').forEach(b => b.onclick = () => {
+      const q = Number(b.getAttribute('data-q'));
+      SRS.answer(c.ru, q);
+      const cur = queue.shift();
+      done++;
+      if (q < 3) queue.push(cur);   // quên thì đẩy xuống cuối, gặp lại trong phiên
+      draw();
+    });
+  };
+  document.getElementById('card').onclick = flip;
+  document.getElementById('flip').onclick = flip;
+}
+
+/* phím tắt: cách = lật, 1–4 = chấm điểm */
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space') { e.preventDefault(); const f = document.getElementById('flip') || document.getElementById('card'); f && f.click(); }
+  if (revealed && ['1', '2', '3', '4'].includes(e.key)) {
+    const map = { '1': 0, '2': 3, '3': 4, '4': 5 };
+    const b = document.querySelector(`[data-q="${map[e.key]}"]`); b && b.click();
+  }
+});
+
+start();
+</script>
+</body>
+</html>

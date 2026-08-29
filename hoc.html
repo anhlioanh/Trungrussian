@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bài học — Học tiếng Nga cùng Oanh</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .lesson-head { padding: 28px 0 6px; }
+  .letter-big { font-size: 2.5rem; line-height: 1; font-weight: 700; color: var(--brand); min-width: 76px; }
+  .letter-card { padding: 16px; }
+  .letter-card .row.small .ru b { font-size: 1.2rem; font-weight: 700; }
+  .letter-card .row.small .muted { font-size: .88rem; }
+
+  .wordlist { display: grid; gap: 2px; }
+  .word-row { display: grid; grid-template-columns: 30px minmax(120px, 1fr) 1.4fr; gap: 12px; align-items: center;
+    padding: 8px 12px; border-radius: var(--radius-sm); }
+  .word-row:nth-child(odd) { background: var(--surface); }
+  .w-ru { font-size: 1.08rem; font-weight: 600; }
+  .w-vn { color: var(--text-soft); font-size: .92rem; }
+  @media (max-width: 560px) { .word-row { grid-template-columns: 30px 1fr; } .w-vn { grid-column: 2; margin-top: -6px; } }
+
+  .alpha-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(88px, 1fr)); gap: 8px; }
+  .alpha-cell { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    padding: 12px 6px; cursor: pointer; font: inherit; color: var(--text); text-align: center; transition: background .15s; }
+  .alpha-cell:hover { background: var(--brand-soft); border-color: var(--brand); }
+  .alpha-cell .ru { display: block; font-size: 1.25rem; font-weight: 700; }
+  .alpha-cell small { color: var(--text-mute); font-size: .7rem; }
+
+  .dlg-line { display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+  .dlg-line:last-child { border-bottom: 0; }
+  .dlg-who { width: 26px; height: 26px; flex: none; border-radius: 50%; background: var(--brand-soft);
+    color: var(--brand); display: grid; place-items: center; font-size: .8rem; font-weight: 700; }
+
+  .exq { padding: 16px 18px; border-left: 3px solid var(--border); }
+  .exq.ok { border-left-color: var(--ok); }
+  .exq.bad { border-left-color: var(--err); }
+  .qn { width: 24px; height: 24px; flex: none; border-radius: 7px; background: var(--bg-soft);
+    display: grid; place-items: center; font-size: .76rem; font-weight: 700; color: var(--text-mute); }
+  .qtext { font-weight: 600; margin-bottom: 10px; }
+  .opts { display: grid; gap: 6px; }
+  .opt { display: flex; align-items: center; gap: 9px; padding: 9px 12px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); cursor: pointer; background: var(--surface-2); }
+  .opt:hover { border-color: var(--brand); }
+  .inp, select { font: inherit; padding: 9px 12px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+    background: var(--surface); color: var(--text); min-width: 180px; }
+  .inp { font-family: var(--font-ru); font-size: 1.05rem; flex: 1; }
+  select.good { border-color: var(--ok); }
+  select.bad { border-color: var(--err); }
+  .match-row { display: flex; align-items: center; gap: 10px; padding: 5px 0; flex-wrap: wrap; }
+  .match-row .ru { min-width: 120px; font-size: 1.05rem; font-weight: 600; }
+  .fb { margin-top: 10px; padding: 9px 12px; border-radius: var(--radius-sm); font-size: .89rem; }
+  .fb.good { background: var(--ok-soft); color: var(--ok); }
+  .fb.wrong { background: var(--err-soft); color: var(--err); }
+
+  .kb { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .kb button { font-family: var(--font-ru); font-size: .95rem; width: 32px; height: 32px; border-radius: 7px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+  .kb button:hover { background: var(--brand-soft); }
+  .score-box { text-align: center; padding: 26px; }
+  .score-box .big { font-family: var(--font-display); font-size: 3rem; line-height: 1; color: var(--brand); }
+</style>
+</head>
+<body>
+<div id="nav"></div>
+
+<div class="wrap narrow" id="page"></div>
+
+<div id="footer"></div>
+
+<script src="data/course.js"></script>
+<script src="data/lessons/a0.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/lesson.js"></script>
+<script>
+mountChrome('hoc.html');
+touchStreak();
+
+const id = qs('id') || 'a0-01';
+const data = LESSON_DATA[id];
+const levelId = id.split('-')[0];
+const list = LESSONS[levelId] || [];
+const idx = list.findIndex(l => l.id === id);
+const meta = list[idx];
+const level = COURSE.levels.find(l => l.id === levelId);
+const page = document.getElementById('page');
+
+if (!data || !meta) {
+  page.innerHTML = `<section class="card center"><h2>Bài này chưa có nội dung</h2>
+    <p class="soft">Bài học đang được soạn. Em quay lại trang chủ chọn bài khác nhé.</p>
+    <a class="btn btn-primary" href="index.html">Về trang chủ</a></section>`;
+} else {
+  const prev = list.slice(0, idx).reverse().find(l => l.ready);
+  const next = list.slice(idx + 1).find(l => l.ready);
+  const saved = Store.get('lessons.' + id, null);
+
+  page.innerHTML = `
+    <header class="lesson-head">
+      <a href="index.html" class="tiny muted" style="text-decoration:none">← ${esc(level.code)} · ${esc(level.name)}</a>
+      <h1 style="margin:6px 0 4px">${esc(meta.title)}</h1>
+      <p class="soft">${esc(meta.sub || '')}</p>
+      <div class="tiny muted">Bài ${idx + 1} / ${list.length}${saved && saved.done ? ' · <span style="color:var(--ok)">đã học xong</span>' : ''}</div>
+    </header>
+
+    <section><div class="callout note">${data.intro}</div></section>
+
+    <section id="theory">${renderBlocks(data.blocks)}</section>
+
+    <hr>
+
+    <section id="ex-wrap">
+      <h2>Bài tập</h2>
+      <p class="soft small">Làm hết rồi bấm “Chấm bài”. Sai không sao — chỗ sai chính là chỗ em sắp giỏi lên.</p>
+      <div id="kb-hint" class="card" style="padding:12px 16px;margin-bottom:14px">
+        <div class="tiny muted" style="margin-bottom:2px">Không có bàn phím tiếng Nga? Bấm chữ ở đây, nó sẽ điền vào ô đang gõ.</div>
+        <div class="kb" id="kb"></div>
+      </div>
+      <div class="grid" style="gap:10px" id="exs">${renderExercises(data.ex)}</div>
+      <div class="row" style="margin-top:18px">
+        <button class="btn btn-primary" id="grade">Chấm bài</button>
+        ${next ? `<a class="btn btn-ghost" href="hoc.html?id=${next.id}">Bỏ qua, sang bài sau →</a>` : ''}
+      </div>
+      <div id="result"></div>
+    </section>
+
+    <hr>
+    <nav class="between" style="margin-bottom:30px">
+      ${prev ? `<a class="btn btn-ghost btn-sm" href="hoc.html?id=${prev.id}">← ${esc(prev.title)}</a>` : '<span></span>'}
+      ${next ? `<a class="btn btn-ghost btn-sm" href="hoc.html?id=${next.id}">${esc(next.title)} →</a>`
+             : `<a class="btn btn-accent btn-sm" href="thi.html?level=${levelId}">Thi cuối cấp ${esc(level.code)} →</a>`}
+    </nav>`;
+
+  /* bàn phím tiếng Nga ảo */
+  const RU_KEYS = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'.split('');
+  const kb = document.getElementById('kb');
+  kb.innerHTML = RU_KEYS.map(c => `<button type="button" data-k="${c}">${c}</button>`).join('') +
+                 '<button type="button" data-k=" " style="width:64px">␣</button>' +
+                 '<button type="button" data-k="⌫" style="width:44px">⌫</button>';
+  let lastInput = null;
+  document.addEventListener('focusin', e => { if (e.target.classList.contains('inp')) lastInput = e.target; });
+  kb.addEventListener('click', e => {
+    const b = e.target.closest('[data-k]'); if (!b) return;
+    const target = lastInput || document.querySelector('.inp');
+    if (!target) return;
+    const k = b.getAttribute('data-k');
+    target.value = (k === '⌫') ? target.value.slice(0, -1) : target.value + k;
+    target.focus();
+  });
+
+  /* chấm bài */
+  document.getElementById('grade').onclick = () => {
+    const correct = gradeExercises(data.ex, document.getElementById('exs'));
+    const total = data.ex.length;
+    const pct = Math.round(correct / total * 100);
+    const pass = pct >= 70;
+    const added = pass ? seedCards(data.vocab) : 0;
+
+    if (pass) {
+      const d = Store.load();
+      const old = d.lessons[id] || {};
+      d.lessons[id] = { done: true, score: Math.max(correct, old.score || 0), total, at: today() };
+      Store.save();
+    }
+
+    document.getElementById('result').innerHTML = `
+      <div class="card score-box" style="margin-top:16px">
+        <div class="big">${correct}/${total}</div>
+        <div class="pill ${pass ? 'pill-ok' : 'pill-accent'}" style="margin:10px 0">${pct}% — ${pass ? 'Đạt' : 'Cần làm lại'}</div>
+        <p class="soft small" style="max-width:44ch;margin:0 auto 14px">
+          ${pass
+            ? (added ? `Bài này đã tính là học xong. <b>${added} từ mới</b> vừa được thêm vào bộ thẻ ôn tập của em.` : 'Bài này đã tính là học xong.')
+            : 'Cần đúng từ 70% trở lên mới tính là xong. Em xem lại phần lý thuyết phía trên rồi làm lại nhé — chỗ sai đã được chỉ rõ ở từng câu.'}
+        </p>
+        <div class="row" style="justify-content:center">
+          ${pass && next ? `<a class="btn btn-primary" href="hoc.html?id=${next.id}">Sang bài tiếp theo</a>` : ''}
+          ${pass && !next ? `<a class="btn btn-accent" href="thi.html?level=${levelId}">Vào thi cuối cấp</a>` : ''}
+          ${!pass ? `<button class="btn btn-primary" onclick="location.reload()">Làm lại</button>` : ''}
+          <a class="btn btn-ghost" href="flashcard.html">Ôn thẻ từ vựng</a>
+        </div>
+      </div>`;
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+}
+</script>
+</body>
+</html>

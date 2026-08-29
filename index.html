@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Học tiếng Nga cùng Oanh — từ con số 0 đến C2</title>
+<meta name="description" content="Khoá học tiếng Nga miễn phí bằng tiếng Việt, từ bảng chữ cái đến trình độ C2. Có phát âm, thẻ từ vựng lặp lại ngắt quãng, kì thi và chứng nhận.">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .hero { padding: 52px 0 30px; }
+  .hero h1 { max-width: 16ch; }
+  .hero p.lead { font-size: 1.12rem; color: var(--text-soft); max-width: 54ch; }
+  .stat { text-align: center; padding: 16px 12px; }
+  .stat b { display: block; font-family: var(--font-display); font-size: 1.9rem; line-height: 1.1; color: var(--brand); }
+  .stat span { font-size: .78rem; color: var(--text-mute); }
+  .lvl { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow: hidden; box-shadow: var(--shadow); }
+  .lvl-head { display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; cursor: pointer; }
+  .lvl-code {
+    width: 52px; height: 52px; flex: none; border-radius: 12px; display: grid; place-items: center;
+    font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
+    background: var(--bg-soft); color: var(--text-mute); border: 1px solid var(--border);
+  }
+  .lvl.open-now .lvl-code { background: linear-gradient(140deg, var(--brand), var(--accent)); color: #fff; border-color: transparent; }
+  .lvl-body { padding: 0 20px 20px; display: none; }
+  .lvl.expanded .lvl-body { display: block; }
+  .lesson-row { display: flex; align-items: center; gap: 11px; padding: 9px 0; border-bottom: 1px dashed var(--border); text-decoration: none; color: inherit; }
+  .lesson-row:last-child { border-bottom: 0; }
+  .lesson-row .n { width: 26px; height: 26px; flex: none; border-radius: 7px; background: var(--bg-soft); display: grid; place-items: center; font-size: .74rem; font-weight: 700; color: var(--text-mute); }
+  .lesson-row.done .n { background: var(--ok-soft); color: var(--ok); }
+  .lesson-row.locked { opacity: .55; cursor: default; }
+  .lesson-row .t { flex: 1; font-size: .93rem; }
+  .lesson-row .t small { display: block; color: var(--text-mute); font-size: .78rem; }
+  .chev { margin-left: auto; color: var(--text-mute); font-size: 1.3rem; line-height: 1; transition: transform .2s; }
+  .lvl.expanded .chev { transform: rotate(90deg); }
+</style>
+</head>
+<body>
+<div id="nav"></div>
+
+<header class="hero"><div class="wrap">
+  <span class="pill pill-accent">Русский язык с нуля</span>
+  <h1 id="hero-title">Học tiếng Nga cùng Oanh</h1>
+  <p class="lead">Bảng chữ cái đến trình độ C2, dạy bằng tiếng Việt, có phát âm và thẻ ghi nhớ. Không quảng cáo, không tài khoản, không mất tiền — mở ra là học.</p>
+  <div class="row" style="margin-top:22px">
+    <a class="btn btn-primary" id="cta" href="hoc.html?id=a0-01">Bắt đầu bài đầu tiên</a>
+    <a class="btn btn-ghost" href="flashcard.html">Ôn từ vựng hôm nay</a>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+  <section>
+    <div class="card">
+      <div class="grid grid-4" style="gap:0">
+        <div class="stat"><b id="s-lessons">0</b><span>bài đã học xong</span></div>
+        <div class="stat"><b id="s-words">0</b><span>từ trong bộ thẻ</span></div>
+        <div class="stat"><b id="s-due">0</b><span>từ cần ôn hôm nay</span></div>
+        <div class="stat"><b id="s-streak">0</b><span>ngày học liên tiếp</span></div>
+      </div>
+      <div style="margin-top:14px">
+        <div class="between tiny muted" style="margin-bottom:6px">
+          <span>Tiến độ toàn khoá</span><span id="s-pct">0%</span>
+        </div>
+        <div class="bar"><i id="s-bar" style="width:0%"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Lộ trình 7 cấp độ</h2>
+    <p class="soft" style="max-width:62ch">Lộ trình bám theo hệ <b>ТРКИ</b> — hệ chuẩn quốc gia Nga về tiếng Nga cho người nước ngoài, tương ứng với khung châu Âu A1–C2. Bấm vào từng cấp để xem danh sách bài.</p>
+    <div class="grid" id="roadmap" style="gap:12px"></div>
+  </section>
+
+  <section>
+    <h2>Học thế nào cho vào</h2>
+    <div class="grid grid-3">
+      <div class="card">
+        <h3>Mỗi ngày 15 phút</h3>
+        <p class="small soft mb0">Đều đặn thắng cày cuốc. Trí nhớ ngôn ngữ ăn theo <b>số lần gặp lại</b>, không ăn theo tổng số giờ ngồi học.</p>
+      </div>
+      <div class="card">
+        <h3>Luôn đọc thành tiếng</h3>
+        <p class="small soft mb0">Đọc thầm trong đầu không luyện được cơ miệng. Bấm nút loa, nghe, rồi đọc to theo — kể cả khi thấy ngượng.</p>
+      </div>
+      <div class="card">
+        <h3>Ôn thẻ trước khi học bài mới</h3>
+        <p class="small soft mb0">Thẻ từ vựng dùng thuật toán lặp lại ngắt quãng: từ nào sắp quên nó sẽ hiện lại đúng lúc. Ôn trước, học sau.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="card">
+      <div class="between">
+        <div>
+          <h3 class="mb0">Tiến độ của em</h3>
+          <p class="small muted mb0">Lưu trong trình duyệt máy này. Đổi máy hoặc xoá lịch sử là mất — nên thỉnh thoảng sao lưu ra file.</p>
+        </div>
+        <div class="row">
+          <button class="btn btn-ghost btn-sm" id="backup">Sao lưu ra file</button>
+          <label class="btn btn-ghost btn-sm" style="margin:0">Khôi phục<input type="file" id="restore" accept="application/json" hidden></label>
+          <button class="btn btn-ghost btn-sm" id="wipe" style="color:var(--err)">Xoá hết</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div id="footer"></div>
+
+<script src="data/course.js"></script>
+<script src="data/lessons/a0.js"></script>
+<script src="assets/js/core.js"></script>
+<script>
+mountChrome('index.html');
+touchStreak();
+
+/* lời chào theo giờ */
+(function () {
+  const h = new Date().getHours();
+  const greet = h < 11 ? 'Chào buổi sáng' : h < 18 ? 'Chào buổi chiều' : 'Chào buổi tối';
+  const name = Store.get('learner', '');
+  document.getElementById('hero-title').textContent = name ? `${greet}, ${name}!` : SITE.name;
+})();
+
+/* thống kê */
+(function () {
+  const st = courseStats();
+  document.getElementById('s-lessons').textContent = st.doneLessons;
+  document.getElementById('s-words').textContent = st.cards;
+  document.getElementById('s-due').textContent = st.due;
+  document.getElementById('s-streak').textContent = st.streak;
+  const pct = st.totalLessons ? Math.round(st.doneLessons / st.totalLessons * 100) : 0;
+  document.getElementById('s-pct').textContent = pct + '%';
+  document.getElementById('s-bar').style.width = pct + '%';
+
+  /* nút "bắt đầu" nhảy tới bài chưa học đầu tiên */
+  const next = (LESSONS.a0 || []).find(l => l.ready && !Store.get('lessons.' + l.id + '.done', false));
+  const cta = document.getElementById('cta');
+  if (next) { cta.href = 'hoc.html?id=' + next.id; if (st.doneLessons) cta.textContent = 'Học tiếp: ' + next.title; }
+  else if (st.doneLessons) { cta.href = 'thi.html?level=a0'; cta.textContent = 'Xong A0 — vào thi lấy chứng nhận'; }
+})();
+
+/* lộ trình */
+(function () {
+  const d = Store.load();
+  document.getElementById('roadmap').innerHTML = COURSE.levels.map(lv => {
+    const list = LESSONS[lv.id] || [];
+    const readyCount = list.filter(l => l.ready).length;
+    const done = list.filter(l => l.ready && d.lessons[l.id] && d.lessons[l.id].done).length;
+    const pct = readyCount ? Math.round(done / readyCount * 100) : 0;
+    const exam = d.exams[lv.id];
+    const rows = list.map((l, i) => {
+      const isDone = d.lessons[l.id] && d.lessons[l.id].done;
+      if (!l.ready) return `<div class="lesson-row locked"><span class="n">${i + 1}</span><span class="t">${esc(l.title)}<small>Đang soạn</small></span></div>`;
+      return `<a class="lesson-row ${isDone ? 'done' : ''}" href="hoc.html?id=${l.id}">
+        <span class="n">${isDone ? '✓' : i + 1}</span>
+        <span class="t">${esc(l.title)}${l.sub ? `<small>${esc(l.sub)}</small>` : ''}</span>
+      </a>`;
+    }).join('');
+    return `<div class="lvl ${readyCount ? 'open-now' : ''}" data-lvl="${lv.id}">
+      <div class="lvl-head">
+        <div class="lvl-code">${lv.code}</div>
+        <div style="flex:1;min-width:0">
+          <div class="row" style="gap:8px">
+            <strong>${esc(lv.name)}</strong>
+            <span class="pill ${readyCount ? 'pill-accent' : 'pill-mute'}">${esc(lv.tag)}</span>
+            ${exam && exam.passed ? '<span class="pill pill-ok">đã có chứng nhận</span>' : ''}
+          </div>
+          <div class="small soft" style="margin:3px 0 8px">${esc(lv.goal)}</div>
+          <div class="bar bar-sm"><i style="width:${pct}%"></i></div>
+          <div class="tiny muted" style="margin-top:5px">
+            ${readyCount ? `${done}/${readyCount} bài đã học` : `${lv.lessonCount} bài — đang soạn`}
+            · ${esc(lv.words)} · ${esc(lv.hours)}
+          </div>
+        </div>
+        <div class="chev">›</div>
+      </div>
+      <div class="lvl-body">
+        <p class="small soft">${esc(lv.desc)}</p>
+        <div class="small"><b>Học xong cấp này em làm được:</b></div>
+        <ul class="small soft" style="margin:6px 0 14px">${lv.can.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
+        ${rows}
+        ${readyCount ? `<div style="margin-top:14px"><a class="btn btn-accent btn-sm" href="thi.html?level=${lv.id}">Thi cuối cấp ${lv.code}</a></div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('.lvl-head').forEach(h => h.addEventListener('click', () => h.parentElement.classList.toggle('expanded')));
+  const first = document.querySelector('.lvl');
+  if (first) first.classList.add('expanded');
+})();
+
+/* sao lưu / khôi phục */
+document.getElementById('backup').onclick = () => {
+  const blob = new Blob([JSON.stringify(Store.load(), null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tien-do-tieng-nga-' + today() + '.json';
+  a.click();
+};
+document.getElementById('restore').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const d = JSON.parse(r.result);
+      localStorage.setItem('htn.v1', JSON.stringify(d));
+      alert('Khôi phục xong!'); location.reload();
+    } catch (err) { alert('File không đọc được.'); }
+  };
+  r.readAsText(f);
+};
+document.getElementById('wipe').onclick = () => {
+  if (confirm('Xoá toàn bộ tiến độ học? Không lấy lại được đâu.')) { Store.reset(); location.reload(); }
+};
+</script>
+</body>
+</html>

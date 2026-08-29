@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kì thi — Học tiếng Nga cùng Oanh</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .exam-wrap { max-width: 680px; margin: 0 auto; }
+  .timer { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; }
+  .timer.low { color: var(--err); }
+  .opt { display: flex; align-items: center; gap: 10px; padding: 13px 15px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); cursor: pointer; background: var(--surface-2); margin-bottom: 8px; }
+  .opt:hover { border-color: var(--brand); }
+  .opt input { accent-color: var(--brand); }
+  .inp { font-family: var(--font-ru); font-size: 1.15rem; padding: 12px 14px; width: 100%;
+    border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); }
+  .kb { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+  .kb button { font-family: var(--font-ru); font-size: .95rem; width: 32px; height: 32px; border-radius: 7px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+  .kb button:hover { background: var(--brand-soft); }
+  .qbig { font-size: 1.15rem; font-weight: 600; margin-bottom: 16px; }
+  .review-item { padding: 11px 0; border-bottom: 1px solid var(--border); font-size: .9rem; }
+  .review-item:last-child { border: 0; }
+  #cert { max-width: 100%; height: auto; border-radius: var(--radius); box-shadow: var(--shadow-lg); border: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div id="nav"></div>
+
+<div class="wrap"><div class="exam-wrap" id="page"></div></div>
+
+<div id="footer"></div>
+
+<script src="data/course.js"></script>
+<script src="data/lessons/a0.js"></script>
+<script src="data/exams.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/lesson.js"></script>
+<script src="assets/js/exam.js"></script>
+<script>
+mountChrome('thi.html');
+
+const levelId = qs('level') || 'a0';
+const exam = EXAMS[levelId];
+const level = COURSE.levels.find(l => l.id === levelId);
+const page = document.getElementById('page');
+
+let answers = [], cur = 0, timeLeft = 0, timerId = null;
+
+/* ---------- màn hình mở đầu ---------- */
+function intro() {
+  if (!exam) {
+    page.innerHTML = `<section class="card center" style="margin-top:40px">
+      <h2>Đề thi cấp ${esc(level ? level.code : levelId.toUpperCase())} chưa có</h2>
+      <p class="soft">Đề thi sẽ được soạn cùng lúc với các bài học của cấp này.</p>
+      <a class="btn btn-primary" href="index.html">Về lộ trình</a></section>`;
+    return;
+  }
+  const prev = Store.get('exams.' + levelId, null);
+  const lessons = LESSONS[levelId].filter(l => l.ready);
+  const doneCount = lessons.filter(l => Store.get('lessons.' + l.id + '.done', false)).length;
+
+  page.innerHTML = `
+    <section style="margin:34px 0 20px">
+      <span class="pill pill-accent">${esc(level.code)} · ${esc(level.ru)}</span>
+      <h1 style="margin:10px 0 6px">${esc(exam.title)}</h1>
+      <p class="soft">${esc(exam.desc)}</p>
+    </section>
+
+    ${prev && prev.passed ? `<div class="callout tip"><b>Em đã đạt cấp này rồi</b> — ${prev.best}% ngày ${prev.at}.
+      <button class="btn btn-ghost btn-sm" id="show-cert" style="margin-left:8px">Xem lại chứng nhận</button></div>` : ''}
+
+    <section class="card">
+      <div class="grid grid-3" style="text-align:center">
+        <div><b style="font-family:var(--font-display);font-size:1.6rem">${exam.q.length}</b><div class="tiny muted">câu hỏi</div></div>
+        <div><b style="font-family:var(--font-display);font-size:1.6rem">${exam.minutes}</b><div class="tiny muted">phút</div></div>
+        <div><b style="font-family:var(--font-display);font-size:1.6rem">${exam.pass}%</b><div class="tiny muted">để đạt</div></div>
+      </div>
+      <hr>
+      <p class="small soft">Cách thi: mỗi lần một câu, không quay lại sửa được, không có chấm điểm giữa chừng. Hết giờ thì bài tự nộp. Đạt từ ${exam.pass}% trở lên là có giấy chứng nhận mang tên em, tải về được.</p>
+      ${doneCount < lessons.length ? `<div class="callout"><b>Em mới học ${doneCount}/${lessons.length} bài của cấp này.</b> Vẫn thi được, nhưng học hết rồi thi sẽ chắc hơn nhiều.</div>` : ''}
+      <div style="margin-top:16px">
+        <label class="small"><b>Tên em để in lên chứng nhận</b></label>
+        <input class="inp" id="name" style="font-family:var(--font);margin-top:6px" placeholder="Ví dụ: Nguyễn Thị Oanh" value="${escAttr(Store.get('learner',''))}">
+      </div>
+      <div class="row" style="margin-top:18px">
+        <button class="btn btn-primary" id="start">Bắt đầu thi</button>
+        <a class="btn btn-ghost" href="index.html">Để lúc khác</a>
+      </div>
+    </section>`;
+
+  document.getElementById('start').onclick = () => {
+    const n = document.getElementById('name').value.trim();
+    if (!n) { alert('Em điền tên vào đã nhé — tên này sẽ in lên chứng nhận.'); return; }
+    const d = Store.load(); d.learner = n; Store.save();
+    begin();
+  };
+  const sc = document.getElementById('show-cert');
+  if (sc) sc.onclick = () => showCert(prev.best, prev.at);
+}
+
+/* ---------- làm bài ---------- */
+function begin() {
+  answers = new Array(exam.q.length).fill(null);
+  cur = 0;
+  timeLeft = exam.minutes * 60;
+  timerId = setInterval(() => {
+    timeLeft--;
+    const t = document.getElementById('timer');
+    if (t) {
+      t.textContent = String(Math.floor(timeLeft / 60)).padStart(2, '0') + ':' + String(timeLeft % 60).padStart(2, '0');
+      t.classList.toggle('low', timeLeft < 60);
+    }
+    if (timeLeft <= 0) { clearInterval(timerId); finish(); }
+  }, 1000);
+  question();
+}
+
+function question() {
+  const q = exam.q[cur];
+  const pct = Math.round(cur / exam.q.length * 100);
+  let body = '';
+  if (q.t === 'choice') {
+    body = q.options.map((o, j) => `<label class="opt"><input type="radio" name="a" value="${j}"><span>${o}</span></label>`).join('');
+  } else {
+    body = `${q.t === 'listen' ? `<div style="margin-bottom:10px">${speakBtn(q.say, 'câu hỏi')} <span class="small muted">bấm loa để nghe, nghe được bao nhiêu lần cũng được</span></div>` : ''}
+      <input class="inp" id="txt" autocomplete="off" spellcheck="false" placeholder="Gõ chữ Nga…">
+      <div class="kb" id="kb"></div>`;
+  }
+
+  page.innerHTML = `
+    <section style="margin:26px 0 14px">
+      <div class="between">
+        <span class="tiny muted">Câu ${cur + 1} / ${exam.q.length}</span>
+        <span class="timer" id="timer">${String(Math.floor(timeLeft / 60)).padStart(2, '0')}:${String(timeLeft % 60).padStart(2, '0')}</span>
+      </div>
+      <div class="bar bar-sm" style="margin-top:8px"><i style="width:${pct}%"></i></div>
+    </section>
+    <section class="card">
+      <div class="qbig">${q.q}</div>
+      ${body}
+      <div class="row" style="margin-top:18px">
+        <button class="btn btn-primary" id="next">${cur === exam.q.length - 1 ? 'Nộp bài' : 'Câu tiếp theo'}</button>
+        <span class="tiny muted">Không quay lại sửa được đâu nhé</span>
+      </div>
+    </section>`;
+
+  if (q.t !== 'choice') {
+    const kb = document.getElementById('kb');
+    kb.innerHTML = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'.split('')
+      .map(c => `<button type="button" data-k="${c}">${c}</button>`).join('')
+      + '<button type="button" data-k=" " style="width:60px">␣</button><button type="button" data-k="⌫" style="width:42px">⌫</button>';
+    const inp = document.getElementById('txt');
+    kb.onclick = e => {
+      const b = e.target.closest('[data-k]'); if (!b) return;
+      const k = b.getAttribute('data-k');
+      inp.value = k === '⌫' ? inp.value.slice(0, -1) : inp.value + k;
+      inp.focus();
+    };
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('next').click(); });
+    inp.focus();
+  }
+
+  document.getElementById('next').onclick = () => {
+    if (q.t === 'choice') {
+      const p = page.querySelector('input[name="a"]:checked');
+      answers[cur] = p ? Number(p.value) : null;
+    } else {
+      answers[cur] = document.getElementById('txt').value;
+    }
+    cur++;
+    if (cur >= exam.q.length) { clearInterval(timerId); finish(); } else question();
+  };
+}
+
+/* ---------- chấm và kết quả ---------- */
+function finish() {
+  let correct = 0;
+  const review = exam.q.map((q, i) => {
+    let ok, given, right;
+    if (q.t === 'choice') {
+      ok = answers[i] === q.a;
+      given = answers[i] == null ? '(bỏ trống)' : q.options[answers[i]];
+      right = q.options[q.a];
+    } else {
+      ok = norm(answers[i] || '') === norm(q.a);
+      given = answers[i] || '(bỏ trống)';
+      right = q.a;
+    }
+    if (ok) correct++;
+    return { ok, given, right, q: q.q };
+  });
+
+  const score = Math.round(correct / exam.q.length * 100);
+  const passed = score >= exam.pass;
+  const date = today();
+
+  const d = Store.load();
+  const old = d.exams[levelId] || { best: 0 };
+  d.exams[levelId] = { best: Math.max(old.best, score), passed: passed || !!old.passed, at: date, last: score };
+  Store.save();
+
+  page.innerHTML = `
+    <section class="card center" style="margin:30px 0 18px;padding:34px">
+      <div style="font-family:var(--font-display);font-size:3.4rem;line-height:1;color:${passed ? 'var(--ok)' : 'var(--accent)'}">${score}%</div>
+      <div class="pill ${passed ? 'pill-ok' : 'pill-accent'}" style="margin:12px 0">${correct}/${exam.q.length} câu đúng — ${passed ? 'ĐẠT' : 'CHƯA ĐẠT'}</div>
+      <p class="soft" style="max-width:46ch;margin:0 auto">
+        ${passed
+          ? 'Chúc mừng em! Giấy chứng nhận đã sẵn sàng ở dưới — tải về hoặc chụp màn hình khoe cũng được.'
+          : `Cần ${exam.pass}% mới đạt. Em xem lại phần sai bên dưới, ôn lại vài bài rồi thi lại — thi bao nhiêu lần cũng được, không giới hạn.`}
+      </p>
+      <div class="row" style="justify-content:center;margin-top:18px">
+        ${passed ? '<button class="btn btn-primary" id="dl">Tải chứng nhận về máy</button>' : '<button class="btn btn-primary" onclick="location.reload()">Thi lại</button>'}
+        <a class="btn btn-ghost" href="index.html">Về lộ trình</a>
+      </div>
+    </section>
+
+    ${passed ? '<section id="cert-box"></section>' : ''}
+
+    <section class="card">
+      <h3>Xem lại từng câu</h3>
+      ${review.map((r, i) => `<div class="review-item">
+        <div class="row" style="gap:8px;align-items:flex-start">
+          <span style="color:${r.ok ? 'var(--ok)' : 'var(--err)'};font-weight:700">${r.ok ? '✓' : '✗'}</span>
+          <div style="flex:1"><div>${r.q}</div>
+            ${r.ok ? '' : `<div class="tiny" style="margin-top:3px">Em trả lời: <span class="ru">${esc(r.given)}</span> · Đáp án: <span class="ru" style="color:var(--ok)">${esc(r.right)}</span></div>`}
+          </div>
+        </div></div>`).join('')}
+    </section>`;
+
+  if (passed) showCert(score, date);
+}
+
+/* ---------- chứng nhận ---------- */
+function showCert(score, date) {
+  let box = document.getElementById('cert-box');
+  if (!box) {
+    box = document.createElement('section');
+    box.id = 'cert-box';
+    page.insertBefore(box, page.firstChild.nextSibling);
+  }
+  const name = Store.get('learner', 'Học viên');
+  const cert = certCode(name, levelId, date);
+  box.innerHTML = '<canvas id="cert"></canvas><div class="row" style="justify-content:center;margin-top:12px"><button class="btn btn-accent btn-sm" id="dl2">Tải chứng nhận (PNG)</button></div>';
+  const canvas = document.getElementById('cert');
+  drawCertificate(canvas, {
+    name, score, date, cert, site: SITE.name,
+    code: level.code, levelName: level.name, levelRu: level.ru
+  });
+  const go = () => downloadCertificate(canvas, `chung-nhan-${levelId}-${name.replace(/\s+/g, '-')}.png`);
+  document.getElementById('dl2').onclick = go;
+  const dl = document.getElementById('dl'); if (dl) dl.onclick = go;
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+intro();
+</script>
+</body>
+</html>
