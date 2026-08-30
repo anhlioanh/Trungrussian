@@ -68,11 +68,15 @@
 
 <div id="footer"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
 <script src="data/course.js"></script>
 <script src="data/lessons/a0.js"></script>
 <script src="assets/js/core.js"></script>
 <script src="assets/js/lesson.js"></script>
+<script src="assets/js/auth.js"></script>
 <script>
+Auth.guard(function () {
 mountChrome('hoc.html');
 touchStreak();
 
@@ -158,7 +162,8 @@ if (!data || !meta) {
     if (pass) {
       const d = Store.load();
       const old = d.lessons[id] || {};
-      d.lessons[id] = { done: true, score: Math.max(correct, old.score || 0), total, at: today() };
+      const wrong = Array.from(document.querySelectorAll('.exq.bad')).map(el => Number(el.dataset.i) + 1);
+      d.lessons[id] = { done: true, score: Math.max(correct, old.score || 0), total, at: today(), wrong };
       Store.save();
     }
 
@@ -181,6 +186,8 @@ if (!data || !meta) {
     document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 }
+
+}); // hết Auth.guard
 </script>
 </body>
 </html>

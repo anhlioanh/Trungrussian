@@ -43,12 +43,16 @@
 
 <div id="footer"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
 <script src="data/course.js"></script>
 <script src="data/lessons/a0.js"></script>
 <script src="assets/js/core.js"></script>
 <script src="assets/js/lesson.js"></script>
 <script src="assets/js/srs.js"></script>
+<script src="assets/js/auth.js"></script>
 <script>
+Auth.guard(function () {
 mountChrome('flashcard.html');
 touchStreak();
 
@@ -151,6 +155,8 @@ document.addEventListener('keydown', e => {
 });
 
 start();
+
+}); // hết Auth.guard
 </script>
 </body>
 </html>

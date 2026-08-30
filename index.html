@@ -40,7 +40,7 @@
 <header class="hero"><div class="wrap">
   <span class="pill pill-accent">Русский язык с нуля</span>
   <h1 id="hero-title">Học tiếng Nga cùng Oanh</h1>
-  <p class="lead">Bảng chữ cái đến trình độ C2, dạy bằng tiếng Việt, có phát âm và thẻ ghi nhớ. Không quảng cáo, không tài khoản, không mất tiền — mở ra là học.</p>
+  <p class="lead">Bảng chữ cái đến trình độ C2, dạy bằng tiếng Việt, có phát âm và thẻ ghi nhớ. Không quảng cáo, không mất tiền. Tiến độ lưu theo tài khoản, đổi máy vẫn còn nguyên.</p>
   <div class="row" style="margin-top:22px">
     <a class="btn btn-primary" id="cta" href="hoc.html?id=a0-01">Bắt đầu bài đầu tiên</a>
     <a class="btn btn-ghost" href="flashcard.html">Ôn từ vựng hôm nay</a>
@@ -95,7 +95,7 @@
       <div class="between">
         <div>
           <h3 class="mb0">Tiến độ của em</h3>
-          <p class="small muted mb0">Lưu trong trình duyệt máy này. Đổi máy hoặc xoá lịch sử là mất — nên thỉnh thoảng sao lưu ra file.</p>
+          <p class="small muted mb0">Tiến độ được lưu trên tài khoản của em, tự đồng bộ mỗi khi có thay đổi. Muốn giữ thêm một bản ngoài máy thì tải file sao lưu.</p>
         </div>
         <div class="row">
           <button class="btn btn-ghost btn-sm" id="backup">Sao lưu ra file</button>
@@ -110,10 +110,14 @@
 
 <div id="footer"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
 <script src="data/course.js"></script>
 <script src="data/lessons/a0.js"></script>
 <script src="assets/js/core.js"></script>
+<script src="assets/js/auth.js"></script>
 <script>
+Auth.guard(function () {
 mountChrome('index.html');
 touchStreak();
 
@@ -214,8 +218,13 @@ document.getElementById('restore').onchange = e => {
   r.readAsText(f);
 };
 document.getElementById('wipe').onclick = () => {
-  if (confirm('Xoá toàn bộ tiến độ học? Không lấy lại được đâu.')) { Store.reset(); location.reload(); }
+  if (confirm('Xoá toàn bộ tiến độ học, cả trên tài khoản? Không lấy lại được đâu.')) {
+    Store.reset(); Store.load(); Store.save();
+    setTimeout(() => location.reload(), 900);
+  }
 };
+
+}); // hết Auth.guard
 </script>
 </body>
 </html>

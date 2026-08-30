@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trang giáo viên — Học tiếng Nga cùng Oanh</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .kpi { text-align: center; padding: 14px 10px; }
+  .kpi b { display: block; font-family: var(--font-display); font-size: 2rem; line-height: 1.1; color: var(--brand); }
+  .kpi span { font-size: .76rem; color: var(--text-mute); }
+  .lchip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 99px;
+    background: var(--ok-soft); color: var(--ok); font-size: .78rem; font-weight: 600; margin: 0 5px 5px 0; }
+  .lchip.bad { background: var(--err-soft); color: var(--err); }
+  .avatar-lg { width: 40px; height: 40px; border-radius: 50%; flex: none; display: grid; place-items: center;
+    background: linear-gradient(140deg, var(--brand), var(--accent)); color: #fff; font-weight: 700; }
+</style>
+</head>
+<body>
+<div id="nav"></div>
+
+<div class="wrap">
+  <section style="margin:32px 0 20px">
+    <span class="pill">Chỉ giáo viên xem được</span>
+    <h1 style="margin:10px 0 4px">Lớp của em</h1>
+    <p class="soft">Ai đang học tới đâu, sai ở chỗ nào, thi được bao nhiêu.</p>
+  </section>
+
+  <div id="content"><p class="soft">Đang tải…</p></div>
+</div>
+
+<div id="footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="data/course.js"></script>
+<script src="data/lessons/a0.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+Auth.guard(function () {
+mountChrome('');
+const box = document.getElementById('content');
+
+if (!Auth.isTeacher()) {
+  box.innerHTML = `<div class="card center">
+    <h2>Trang này chỉ dành cho giáo viên</h2>
+    <p class="soft">Tài khoản của em đang là học viên. Nếu đây là tài khoản của thầy, chạy câu lệnh cấp quyền
+      trong <code>supabase/schema.sql</code> rồi tải lại trang.</p>
+    <a class="btn btn-primary" href="index.html">Về trang chủ</a></div>`;
+} else {
+  load();
+}
+
+async function load() {
+  const [pRes, gRes, eRes] = await Promise.all([
+    sb.from('profiles').select('*').order('created_at', { ascending: true }),
+    sb.from('progress').select('*'),
+    sb.from('exam_results').select('*').order('created_at', { ascending: false })
+  ]);
+
+  if (pRes.error) {
+    box.innerHTML = `<div class="card"><h3>Không đọc được dữ liệu</h3>
+      <p class="soft small">${esc(pRes.error.message)}</p>
+      <p class="small muted">Thường là do chưa chạy file <code>supabase/schema.sql</code>, hoặc tài khoản chưa được đặt role = 'teacher'.</p></div>`;
+    return;
+  }
+
+  const profiles = pRes.data || [];
+  const progress = {}; (gRes.data || []).forEach(r => progress[r.user_id] = r);
+  const exams = {}; (eRes.data || []).forEach(r => (exams[r.user_id] = exams[r.user_id] || []).push(r));
+
+  const readyLessons = [];
+  COURSE.levels.forEach(lv => (LESSONS[lv.id] || []).forEach(l => { if (l.ready) readyLessons.push(l); }));
+
+  const t7 = new Date(Date.now() - 7 * 86400000).toISOString();
+  const active = profiles.filter(p => progress[p.id] && progress[p.id].updated_at > t7).length;
+  const totalDone = profiles.reduce((n, p) => n + ((progress[p.id] || {}).lessons_done || 0), 0);
+  const passed = Object.values(exams).flat().filter(e => e.passed).length;
+
+  box.innerHTML = `
+    <section class="card"><div class="grid grid-4" style="gap:0">
+      <div class="kpi"><b>${profiles.length}</b><span>học viên</span></div>
+      <div class="kpi"><b>${active}</b><span>hoạt động 7 ngày qua</span></div>
+      <div class="kpi"><b>${totalDone}</b><span>lượt học xong bài</span></div>
+      <div class="kpi"><b>${passed}</b><span>lượt thi đạt</span></div>
+    </div></section>
+
+    <section>
+      <h2>Danh sách học viên</h2>
+      ${profiles.map(p => card(p, progress[p.id], exams[p.id] || [], readyLessons)).join('') || '<div class="card soft">Chưa có ai đăng ký.</div>'}
+    </section>`;
+
+  document.querySelectorAll('.stu-head').forEach(h => h.onclick = () => h.parentElement.classList.toggle('open'));
+}
+
+function card(p, g, ex, readyLessons) {
+  const data = (g && g.data) || {};
+  const lessons = data.lessons || {};
+  const done = readyLessons.filter(l => lessons[l.id] && lessons[l.id].done);
+  const pct = readyLessons.length ? Math.round(done.length / readyLessons.length * 100) : 0;
+  const name = p.full_name || (p.email || '').split('@')[0];
+  const last = g && g.updated_at ? g.updated_at.slice(0, 10) : '—';
+
+  const lessonChips = readyLessons.map(l => {
+    const r = lessons[l.id];
+    if (!r || !r.done) return '';
+    const wrong = (r.wrong || []).length;
+    return `<span class="lchip ${wrong ? 'bad' : ''}" title="${escAttr(l.title)}">
+      ${esc(l.id.toUpperCase())} · ${r.score}/${r.total}${wrong ? ` · sai câu ${r.wrong.join(', ')}` : ''}</span>`;
+  }).join('') || '<span class="small muted">Chưa học xong bài nào.</span>';
+
+  const examRows = ex.length ? `<div class="table-scroll"><table>
+      <thead><tr><th>Cấp</th><th>Điểm</th><th>Kết quả</th><th>Ngày</th></tr></thead>
+      <tbody>${ex.slice(0, 12).map(e => `<tr>
+        <td>${esc(e.level.toUpperCase())}</td><td>${e.score}%</td>
+        <td>${e.passed ? '<span style="color:var(--ok)">Đạt</span>' : '<span style="color:var(--err)">Chưa đạt</span>'}</td>
+        <td>${esc(e.created_at.slice(0, 10))}</td></tr>`).join('')}</tbody></table></div>`
+    : '<p class="small muted">Chưa thi lần nào.</p>';
+
+  return `<div class="stu">
+    <div class="stu-head">
+      <span class="avatar-lg">${esc((name[0] || '?').toUpperCase())}</span>
+      <div style="flex:1;min-width:0">
+        <div class="row" style="gap:8px">
+          <strong>${esc(name)}</strong>
+          ${p.role === 'teacher' ? '<span class="pill">giáo viên</span>' : ''}
+        </div>
+        <div class="tiny muted">${esc(p.email || '')} · học lần cuối ${esc(last)}</div>
+        <div class="bar bar-sm" style="margin-top:7px"><i style="width:${pct}%"></i></div>
+      </div>
+      <div class="center" style="min-width:70px">
+        <div class="stu-num">${done.length}</div>
+        <div class="tiny muted">bài xong</div>
+      </div>
+      <div class="chev">›</div>
+    </div>
+    <div class="stu-body">
+      <div class="grid grid-4" style="gap:0;margin-bottom:12px">
+        <div class="kpi"><b>${(g && g.words) || 0}</b><span>từ trong bộ thẻ</span></div>
+        <div class="kpi"><b>${(g && g.streak) || 0}</b><span>ngày liên tiếp</span></div>
+        <div class="kpi"><b>${pct}%</b><span>tiến độ</span></div>
+        <div class="kpi"><b>${ex.length}</b><span>lượt thi</span></div>
+      </div>
+      <h3>Bài đã học xong</h3>
+      <div style="margin-bottom:14px">${lessonChips}</div>
+      <p class="tiny muted">Thẻ màu đỏ là bài có câu làm sai — chỗ đó nên ôn lại với em ấy.</p>
+      <h3>Lịch sử thi</h3>
+      ${examRows}
+    </div>
+  </div>`;
+}
+}); // hết Auth.guard
+</script>
+</body>
+</html>

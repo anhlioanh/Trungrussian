@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đăng nhập — Học tiếng Nga cùng Oanh</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card">
+
+    <div class="center" style="margin-bottom:22px">
+      <div class="logo-mark" style="width:48px;height:48px;font-size:26px;margin:0 auto 12px">О</div>
+      <h1 style="font-size:1.6rem;margin-bottom:4px" id="brand">Học tiếng Nga cùng Oanh</h1>
+      <p class="small muted mb0">Đăng nhập để tiến độ học của em được lưu lại,<br>đổi máy hay đổi điện thoại vẫn còn nguyên.</p>
+    </div>
+
+    <div class="card">
+      <div class="tabs">
+        <button id="tab-in" class="on">Đăng nhập</button>
+        <button id="tab-up">Đăng ký</button>
+      </div>
+
+      <div id="msg"></div>
+
+      <form id="form">
+        <div class="field" id="f-name" hidden>
+          <label for="name">Tên của em (hiện trên chứng nhận)</label>
+          <input id="name" autocomplete="name" placeholder="Nguyễn Thị Oanh">
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" autocomplete="email" placeholder="email@gmail.com" required>
+        </div>
+        <div class="field">
+          <label for="pass">Mật khẩu</label>
+          <input id="pass" type="password" autocomplete="current-password" placeholder="ít nhất 6 ký tự" required>
+        </div>
+        <button class="btn btn-primary" id="submit" style="width:100%" type="submit">Đăng nhập</button>
+      </form>
+
+      <div class="center" style="margin-top:10px">
+        <button class="btn btn-ghost btn-sm" id="forgot" style="border:0;background:none;color:var(--text-mute)">Quên mật khẩu?</button>
+      </div>
+
+      <div class="divider">hoặc</div>
+
+      <button class="gbtn" id="google">
+        <svg width="17" height="17" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45 24c0-1.6-.1-2.7-.4-3.9H24v7.1h12c-.2 1.9-1.5 4.7-4.4 6.6l6.7 5.2C42.2 35.3 45 30.1 45 24z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-6.9-5.4c-1.9 1.3-4.4 2.2-7.6 2.2-5.8 0-10.7-3.8-12.5-9.1l-7.1 5.5C8.1 41.1 15.5 46 24 46z"/><path fill="#FBBC05" d="M11.5 28.4c-.5-1.4-.7-2.9-.7-4.4s.3-3 .7-4.4l-7.1-5.5C2.9 17 2 20.4 2 24s.9 7 2.4 9.9l7.1-5.5z"/><path fill="#EA4335" d="M24 10.6c3.3 0 5.5 1.4 6.8 2.6l6-5.9C33 3.6 29.9 2 24 2 15.5 2 8.1 6.9 4.4 14.1l7.1 5.5c1.8-5.3 6.7-9 12.5-9z"/></svg>
+        Tiếp tục với Google
+      </button>
+
+      <p class="tiny muted center" style="margin:16px 0 0">
+        Tiến độ được lưu trên tài khoản của em. Web này miễn phí, không quảng cáo, không bán dữ liệu cho ai.
+      </p>
+    </div>
+
+    <p class="center tiny muted" style="margin-top:18px"><a href="index.html">← Về trang chủ</a></p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="data/course.js"></script>
+<script src="data/lessons/a0.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+document.getElementById('brand').textContent = SITE.name;
+document.title = 'Đăng nhập — ' + SITE.name;
+
+const next = qs('next') || 'index.html';
+let mode = 'in';
+
+const msg = document.getElementById('msg');
+const show = (text, kind) => { msg.innerHTML = `<div class="msg ${kind}">${esc(text)}</div>`; };
+const clear = () => { msg.innerHTML = ''; };
+
+/* nếu đã đăng nhập rồi thì đi thẳng vào học */
+(async () => {
+  if (!SB_OK || !sb) { showSetupNotice(); return; }
+  const s = await Auth.session();
+  if (s) location.replace(next);
+})();
+
+function setMode(m) {
+  mode = m;
+  clear();
+  document.getElementById('tab-in').classList.toggle('on', m === 'in');
+  document.getElementById('tab-up').classList.toggle('on', m === 'up');
+  document.getElementById('f-name').hidden = (m === 'in');
+  document.getElementById('pass').setAttribute('autocomplete', m === 'in' ? 'current-password' : 'new-password');
+  document.getElementById('submit').textContent = m === 'in' ? 'Đăng nhập' : 'Tạo tài khoản';
+}
+document.getElementById('tab-in').onclick = () => setMode('in');
+document.getElementById('tab-up').onclick = () => setMode('up');
+
+document.getElementById('form').onsubmit = async e => {
+  e.preventDefault();
+  clear();
+  const btn = document.getElementById('submit');
+  const email = document.getElementById('email').value.trim();
+  const pass = document.getElementById('pass').value;
+  const name = document.getElementById('name').value.trim();
+
+  if (mode === 'up' && !name) { show('Em điền tên vào đã nhé — tên này sẽ in lên giấy chứng nhận.', 'err'); return; }
+  if (pass.length < 6) { show('Mật khẩu phải từ 6 ký tự trở lên.', 'err'); return; }
+
+  btn.disabled = true;
+  btn.textContent = mode === 'in' ? 'Đang đăng nhập…' : 'Đang tạo tài khoản…';
+
+  const { data, error } = mode === 'in'
+    ? await Auth.signIn(email, pass)
+    : await Auth.signUp(email, pass, name);
+
+  btn.disabled = false;
+  setMode(mode);
+
+  if (error) { show(viLoi(error.message), 'err'); return; }
+
+  if (mode === 'up' && data.user && !data.session) {
+    show('Xong! Em mở email vừa đăng ký, bấm vào đường dẫn xác nhận rồi quay lại đăng nhập.', 'ok');
+    return;
+  }
+  if (mode === 'up') {
+    const d = Store.load(); d.learner = name; Store.save();
+  }
+  location.replace(next);
+};
+
+document.getElementById('google').onclick = async () => {
+  clear();
+  const { error } = await Auth.signInGoogle(next);
+  if (error) show(viLoi(error.message), 'err');
+};
+
+document.getElementById('forgot').onclick = async () => {
+  const email = document.getElementById('email').value.trim();
+  if (!email) { show('Em điền email vào ô phía trên rồi bấm lại nút này.', 'err'); return; }
+  const { error } = await Auth.resetPassword(email);
+  show(error ? viLoi(error.message) : 'Đã gửi thư đặt lại mật khẩu tới ' + email + '. Em kiểm tra hộp thư nhé.', error ? 'err' : 'ok');
+};
+
+/* dịch vài lỗi hay gặp của Supabase sang tiếng Việt */
+function viLoi(m) {
+  const s = (m || '').toLowerCase();
+  if (s.includes('invalid login')) return 'Sai email hoặc mật khẩu.';
+  if (s.includes('already registered') || s.includes('already been registered')) return 'Email này đã có tài khoản rồi. Em chuyển sang tab Đăng nhập nhé.';
+  if (s.includes('email not confirmed')) return 'Email chưa xác nhận. Em mở hộp thư bấm vào đường dẫn xác nhận đã.';
+  if (s.includes('password should be')) return 'Mật khẩu quá ngắn, cần ít nhất 6 ký tự.';
+  if (s.includes('rate limit') || s.includes('too many')) return 'Thử hơi nhiều lần rồi, em đợi một lát rồi làm lại.';
+  if (s.includes('provider is not enabled')) return 'Đăng nhập Google chưa được bật trong Supabase. Xem hướng dẫn ở README.';
+  return 'Có lỗi: ' + m;
+}
+</script>
+</body>
+</html>

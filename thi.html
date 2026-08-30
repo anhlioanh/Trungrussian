@@ -32,13 +32,17 @@
 
 <div id="footer"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
 <script src="data/course.js"></script>
 <script src="data/lessons/a0.js"></script>
 <script src="data/exams.js"></script>
 <script src="assets/js/core.js"></script>
 <script src="assets/js/lesson.js"></script>
 <script src="assets/js/exam.js"></script>
+<script src="assets/js/auth.js"></script>
 <script>
+Auth.guard(function () {
 mountChrome('thi.html');
 
 const levelId = qs('level') || 'a0';
@@ -200,6 +204,7 @@ function finish() {
   const old = d.exams[levelId] || { best: 0 };
   d.exams[levelId] = { best: Math.max(old.best, score), passed: passed || !!old.passed, at: date, last: score };
   Store.save();
+  Auth.logExam(levelId, score, passed);   // lưu lịch sử thi để thầy xem
 
   page.innerHTML = `
     <section class="card center" style="margin:30px 0 18px;padding:34px">
@@ -255,6 +260,8 @@ function showCert(score, date) {
 }
 
 intro();
+
+}); // hết Auth.guard
 </script>
 </body>
 </html>

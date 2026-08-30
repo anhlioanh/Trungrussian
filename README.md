@@ -5,7 +5,7 @@ Chạy hoàn toàn bằng HTML/CSS/JS thuần — không cần máy chủ, khôn
 
 ## Xem thử trên máy
 
-Mở thẳng file `index.html` bằng trình duyệt là chạy được (bấm đúp cũng được).
+Mở thẳng file `index.html` bằng trình duyệt là chạy được — nhưng phải nối Supabase trước (xem mục *Nối Supabase* bên dưới), vì web yêu cầu đăng nhập.
 
 ## Đưa lên mạng bằng GitHub Pages (miễn phí)
 
@@ -36,12 +36,18 @@ index.html          trang chủ: lộ trình 7 cấp, tiến độ, sao lưu
 hoc.html            trình phát bài học  (hoc.html?id=a0-03)
 flashcard.html      thẻ từ vựng lặp lại ngắt quãng
 thi.html            kì thi cuối cấp + giấy chứng nhận  (thi.html?level=a0)
+dangnhap.html       đăng ký / đăng nhập (email+mật khẩu, Google)
+giaovien.html       trang giáo viên: xem tiến độ cả lớp
 
 assets/css/style.css   toàn bộ giao diện — đổi màu ở khối :root
 assets/js/core.js      cấu hình web, lưu tiến độ, phát âm
 assets/js/lesson.js    dựng bài học, chấm bài tập
 assets/js/srs.js       thuật toán lặp lại ngắt quãng
 assets/js/exam.js      chấm thi, vẽ giấy chứng nhận
+assets/js/auth.js      tài khoản + đồng bộ tiến độ lên Supabase
+assets/js/supabase-config.js   KHOÁ SUPABASE — em dán vào đây
+
+supabase/schema.sql    bảng và phân quyền, chạy một lần trong SQL Editor
 
 data/course.js         lộ trình A0→C2 và danh sách bài từng cấp
 data/lessons/a0.js     nội dung cấp A0 (10 bài)
@@ -96,8 +102,69 @@ LESSON_DATA['a1-01'] = {
 
 Trong `data/exams.js`, thêm khoá mới theo mẫu của `a0`. Các loại câu hỏi giống hệt bài tập (`choice`, `type`, `listen`).
 
+
+## Nối Supabase (tài khoản + lưu tiến độ thật)
+
+Web bắt buộc đăng nhập mới học được. Tiến độ lưu trên Supabase nên đổi máy, đổi điện thoại vẫn còn nguyên.
+
+### 1. Tạo dự án
+
+Vào https://supabase.com → **New project**. Đặt tên gì cũng được, chọn region **Southeast Asia (Singapore)** cho gần Việt Nam. Nhớ lưu mật khẩu database nó bắt đặt.
+
+### 2. Tạo bảng
+
+Vào **SQL Editor** → **New query** → dán toàn bộ nội dung file `supabase/schema.sql` → **Run**. Chạy một lần duy nhất, tạo 3 bảng và toàn bộ quy tắc phân quyền.
+
+### 3. Dán khoá vào web
+
+Vào **Settings → API**, chép hai giá trị:
+
+- **Project URL** → dán vào `SUPABASE_URL`
+- **anon public** key → dán vào `SUPABASE_ANON_KEY`
+
+Hai dòng đó nằm trong `assets/js/supabase-config.js`. Hai khoá này công khai được, an toàn nằm ở Row Level Security. **Đừng bao giờ dán `service_role` key vào đây.**
+
+### 4. Cấu hình đăng nhập
+
+Vào **Authentication → URL Configuration**:
+
+- **Site URL**: `https://trungrussian.vercel.app`
+- **Redirect URLs**: thêm `https://trungrussian.vercel.app/dangnhap.html`
+
+Vào **Authentication → Providers → Email**: tắt **Confirm email** nếu muốn đăng ký xong vào học luôn, khỏi phải mở hộp thư. Để bật thì an toàn hơn nhưng thêm một bước cho người học.
+
+### 5. Bật đăng nhập Google
+
+1. Vào https://console.cloud.google.com → tạo project → **APIs & Services → Credentials → Create credentials → OAuth client ID** → loại **Web application**.
+2. Ở ô **Authorized redirect URIs**, dán đường dẫn callback mà Supabase hiện sẵn trong mục Google provider, dạng:
+   `https://<mã-dự-án>.supabase.co/auth/v1/callback`
+3. Ở ô **Authorized JavaScript origins**, dán `https://trungrussian.vercel.app`
+4. Chép **Client ID** và **Client Secret** về dán vào Supabase → **Authentication → Providers → Google** → bật lên → **Save**.
+
+Chưa làm bước này thì nút Google vẫn hiện nhưng bấm vào sẽ báo chưa bật — phần email + mật khẩu vẫn chạy bình thường.
+
+### 6. Tự đặt mình làm giáo viên
+
+Đăng ký một tài khoản trên web bằng email của em trước, rồi vào **SQL Editor** chạy:
+
+```sql
+update public.profiles set role = 'teacher' where email = 'email-cua-em@gmail.com';
+```
+
+Tải lại web, thanh trên cùng sẽ hiện thêm mục **Giáo viên** — vào đó xem cả lớp học tới đâu, sai câu nào, thi được bao nhiêu điểm.
+
+### Dữ liệu nằm ở đâu
+
+| Bảng | Chứa gì |
+|---|---|
+| `profiles` | tên, email, vai trò (student / teacher) |
+| `progress` | toàn bộ tiến độ của mỗi người dưới dạng JSON + vài cột tóm tắt để trang giáo viên đọc nhanh |
+| `exam_results` | lịch sử từng lần thi |
+
+Row Level Security bật sẵn: mỗi người chỉ đọc/ghi được dữ liệu của chính mình, riêng tài khoản `role = 'teacher'` đọc được tất cả và không sửa được gì của ai.
+
 ## Vài điều nên biết
 
-- **Tiến độ lưu trong `localStorage`** của trình duyệt người học, không gửi đi đâu. Đổi máy hoặc xoá lịch sử là mất — trang chủ có nút *Sao lưu ra file* và *Khôi phục*.
+- **Tiến độ lưu trên Supabase** theo tài khoản, kèm bản dự phòng trong `localStorage` để web vẫn mượt khi mạng chập chờn. Trang chủ vẫn có nút *Sao lưu ra file* và *Khôi phục*.
 - **Phát âm** dùng giọng đọc sẵn có trong trình duyệt (Web Speech API). Chrome trên Windows/Android và Safari trên iPhone đều có giọng Nga. Máy nào không có giọng Nga thì nút loa sẽ đọc bằng giọng mặc định nghe hơi lạ — đó là hạn chế của máy người dùng, không phải lỗi web.
 - **Giấy chứng nhận** là chứng nhận nội bộ của website này, ghi nhận nỗ lực người học. Nó không phải và không được trình bày như chứng chỉ ТРКИ của nhà nước Nga — điều này được ghi rõ ngay trên giấy.

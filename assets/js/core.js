@@ -30,8 +30,10 @@ const Store = {
     }, d || {});
     return this._data;
   },
+  onSave: null,          // auth.js gắn vào đây để đồng bộ lên Supabase
   save() {
     try { localStorage.setItem(KEY, JSON.stringify(this._data)); } catch (e) {}
+    if (typeof this.onSave === 'function') { try { this.onSave(); } catch (e) {} }
   },
   get(path, fallback) {
     const d = this.load();
