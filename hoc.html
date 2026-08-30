@@ -77,6 +77,7 @@
 <script src="data/lessons/b1.js"></script>
 <script src="data/lessons/b2.js"></script>
 <script src="assets/js/core.js"></script>
+<script src="assets/js/dict.js"></script>
 <script src="assets/js/lesson.js"></script>
 <script src="assets/js/lecture.js"></script>
 <script src="assets/js/auth.js"></script>
@@ -126,6 +127,7 @@ if (!data || !meta) {
       </button>
     </section>
 
+    <div class="dict-hint">📖 Bấm vào bất kỳ từ tiếng Nga nào bên dưới để tra nghĩa</div>
     <section id="theory">${renderBlocks(data.blocks)}</section>
 
     <hr>
@@ -152,6 +154,10 @@ if (!data || !meta) {
       ${next ? `<a class="btn btn-ghost btn-sm" href="${nextHref}">${nextLocked ? '🔒 ' : ''}${esc(next.title)} →</a>`
              : `<a class="btn btn-accent btn-sm" href="${guest ? 'dangnhap.html' : 'thi.html?level=' + levelId}">Thi cuối cấp ${esc(level.code)} →</a>`}
     </nav>`;
+
+  /* từ điển bấm-vào-từ: chỉ gắn cho phần lý thuyết, không gắn vào bài tập
+     (để bài tập không bị tra nghĩa mất tác dụng luyện) */
+  Dict.attach(document.getElementById('theory'));
 
   /* bài giảng tự chạy */
   Lecture.mount();
@@ -183,15 +189,20 @@ if (!data || !meta) {
     const pass = pct >= 70;
     const added = pass ? seedCards(data.vocab) : 0;
 
-    if (pass) {
-      const d = Store.load();
-      const old = d.lessons[id] || {};
-      const wrong = Array.from(document.querySelectorAll('.exq.bad')).map(el => Number(el.dataset.i) + 1);
-      const wasDone = old.done;
-      d.lessons[id] = { done: true, score: Math.max(correct, old.score || 0), total, at: today(), wrong };
-      Store.save();
-      if (!wasDone) bumpHistory('lessons', 1);
-    }
+    /* ghi lại câu sai — ghi cả khi CHƯA đạt, vì đó mới đúng là chỗ yếu thật */
+    const d = Store.load();
+    const old = d.lessons[id] || {};
+    const wrong = Array.from(document.querySelectorAll('.exq.bad')).map(el => Number(el.dataset.i) + 1);
+    const wasDone = old.done;
+    d.lessons[id] = {
+      done: wasDone || pass,
+      score: Math.max(correct, old.score || 0),
+      total, at: today(), wrong,
+      tries: (old.tries || 0) + 1,
+      missed: (old.missed || 0) + wrong.length
+    };
+    Store.save();
+    if (pass && !wasDone) bumpHistory('lessons', 1);
 
     document.getElementById('result').innerHTML = `
       <div class="card score-box" style="margin-top:16px">

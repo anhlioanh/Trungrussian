@@ -170,7 +170,8 @@ function mergeProgress(a, b) {
   Object.keys(a.lessons || {}).forEach(k => {
     const x = a.lessons[k], y = (b.lessons || {})[k];
     if (!y) { out.lessons[k] = x; return; }
-    out.lessons[k] = { done: x.done || y.done, score: Math.max(x.score || 0, y.score || 0), total: y.total || x.total, at: y.at || x.at, wrong: y.wrong || x.wrong };
+    out.lessons[k] = { done: x.done || y.done, score: Math.max(x.score || 0, y.score || 0), total: y.total || x.total, at: y.at || x.at, wrong: y.wrong || x.wrong,
+      tries: Math.max(x.tries || 0, y.tries || 0), missed: Math.max(x.missed || 0, y.missed || 0) };
   });
 
   out.cards = Object.assign({}, a.cards, b.cards);

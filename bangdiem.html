@@ -30,6 +30,7 @@
 <script src="data/lessons/b2.js"></script>
 <script src="data/exams.js"></script>
 <script src="assets/js/core.js"></script>
+<script src="assets/js/dict.js"></script>
 <script src="assets/js/auth.js"></script>
 <script>
 Auth.guard(function () {
@@ -147,6 +148,11 @@ page.innerHTML = `
   </section>`}
 
   <section class="card">
+    <h3>Chỗ em hay sai</h3>
+    <div id="weak"></div>
+  </section>
+
+  <section class="card">
     <h3>Huy hiệu</h3>
     <div class="badges" id="badges"></div>
   </section>
@@ -173,6 +179,47 @@ page.innerHTML = `
       </tbody>
     </table></div>
   </section>`;
+
+/* ---------- chỗ hay sai ----------
+   Không đoán mò, không chấm điểm "DNA": chỉ đếm đúng số câu đã làm sai
+   ở từng bài, rồi chỉ thẳng bài đó để em quay lại xem. */
+(function () {
+  const rows = [];
+  Object.keys(d.lessons || {}).forEach(id => {
+    const l = d.lessons[id];
+    if (!l || !l.total) return;
+    const missed = l.missed != null ? l.missed : ((l.wrong || []).length);
+    if (!missed) return;
+    const lv = id.split('-')[0];
+    const meta = (LESSONS[lv] || []).find(x => x.id === id);
+    if (!meta) return;
+    const asked = l.total * (l.tries || 1);
+    rows.push({ id, title: meta.title, lv, missed, asked, rate: missed / asked });
+  });
+
+  const box = document.getElementById('weak');
+  if (!rows.length) {
+    box.innerHTML = `<p class="small soft mb0">Chưa có dữ liệu. Khi em làm bài tập và có câu sai,
+      chỗ này sẽ liệt kê đúng những bài em sai nhiều nhất để quay lại ôn — không phải để chấm điểm em.</p>`;
+    return;
+  }
+
+  rows.sort((a, b) => b.missed - a.missed || b.rate - a.rate);
+  const top = rows.slice(0, 6);
+  const max = top[0].missed;
+
+  box.innerHTML =
+    `<p class="small soft" style="margin-bottom:12px">Xếp theo số câu em đã làm sai. Bấm vào tên bài để mở lại phần lý thuyết của bài đó.</p>` +
+    top.map(r => `
+      <div class="weak-row">
+        <span class="pill pill-mute" style="flex:none">${esc(Dict.levelName(r.lv))}</span>
+        <a href="hoc.html?id=${esc(r.id)}" style="flex:1;min-width:0;font-size:.92rem">${esc(r.title)}</a>
+        <span class="weak-bar"><i style="width:${Math.round(r.missed / max * 100)}%"></i></span>
+        <span class="weak-n">${r.missed} câu sai / ${r.asked} câu đã làm</span>
+      </div>`).join('') +
+    `<p class="tiny muted" style="margin-top:12px">Sai nhiều ở một bài không có nghĩa là em kém — thường chỉ có nghĩa là bài đó
+      cần đọc lại lý thuyết một lượt nữa. Làm lại bài, con số này sẽ tự cập nhật.</p>`;
+})();
 
 /* huy hiệu */
 document.getElementById('badges').innerHTML = earnedBadges().map(b =>

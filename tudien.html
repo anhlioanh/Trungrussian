@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Từ điển — Học tiếng Nga cùng Oanh</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div id="nav"></div>
+
+<div class="wrap narrow">
+  <section style="margin:30px 0 16px">
+    <h1 style="margin-bottom:4px">Từ điển</h1>
+    <p class="soft mb0">Toàn bộ từ đã dạy trong web, tra được cả hai chiều: gõ tiếng Nga hoặc gõ tiếng Việt đều ra.</p>
+  </section>
+
+  <input class="dict-search" id="q" type="search" autocomplete="off" spellcheck="false"
+         placeholder="Gõ работа, hoặc gõ “làm việc”…">
+  <div class="row" style="gap:6px;margin-top:10px;flex-wrap:wrap">
+    <span class="tiny muted">Không có bàn phím Nga?</span>
+    <span class="kb" id="kb" style="margin:0"></span>
+  </div>
+
+  <div id="count" class="tiny muted" style="margin-top:14px"></div>
+  <div class="dict-results" id="out"></div>
+</div>
+
+<div id="footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="data/course.js"></script>
+<script src="data/lessons/a0.js"></script>
+<script src="data/lessons/a1.js"></script>
+<script src="data/lessons/a2.js"></script>
+<script src="data/lessons/b1.js"></script>
+<script src="data/lessons/b2.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/dict.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+Auth.guard(function () {
+mountChrome('tudien.html');
+touchStreak();
+Dict.build();
+
+const out = document.getElementById('out');
+const count = document.getElementById('count');
+const q = document.getElementById('q');
+
+document.getElementById('count').textContent = `Từ điển có ${Dict.entries.length} từ, lấy từ ${Object.keys(LESSON_DATA).length} bài học.`;
+
+/* bàn phím Nga ảo */
+const kb = document.getElementById('kb');
+kb.innerHTML = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'.split('')
+  .map(c => `<button type="button" data-k="${c}">${c}</button>`).join('') +
+  '<button type="button" data-k="⌫" style="width:44px">⌫</button>';
+kb.addEventListener('click', e => {
+  const b = e.target.closest('[data-k]'); if (!b) return;
+  const k = b.getAttribute('data-k');
+  q.value = (k === '⌫') ? q.value.slice(0, -1) : q.value + k;
+  q.focus(); render();
+});
+
+function render() {
+  const text = q.value.trim();
+  if (!text) {
+    out.innerHTML = '';
+    count.textContent = `Từ điển có ${Dict.entries.length} từ, lấy từ ${Object.keys(LESSON_DATA).length} bài học.`;
+    return;
+  }
+  const hits = Dict.search(text, 60);
+  count.textContent = hits.length ? `${hits.length} kết quả` : 'Không tìm thấy từ nào.';
+  if (!hits.length) {
+    out.innerHTML = `<div class="callout note"><p class="mb0">Không có từ nào khớp. Nếu em đang tra một từ gặp trong bài đọc,
+      có thể nó đang ở dạng đã chia — thử gõ dạng gốc, hoặc bấm thẳng vào từ đó ngay trong trang bài học.</p></div>`;
+    return;
+  }
+  out.innerHTML = hits.map(e =>
+    `<div class="dict-res">${Dict.cardHTML(e.ru, { exact: true, items: [e] })}</div>`).join('');
+}
+
+let t;
+q.addEventListener('input', () => { clearTimeout(t); t = setTimeout(render, 120); });
+
+/* cho phép mở sẵn một từ: tudien.html?w=работа */
+const pre = qs('w');
+if (pre) { q.value = pre; render(); }
+q.focus();
+
+}, { guest: true });
+</script>
+</body>
+</html>

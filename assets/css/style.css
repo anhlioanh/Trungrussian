@@ -463,3 +463,50 @@ body.lec-on { overflow: hidden; }
   background: var(--text); color: var(--bg); font-size: .76rem; line-height: 1.45;
   padding: 6px 10px; border-radius: 7px; white-space: nowrap; box-shadow: var(--shadow);
 }
+
+/* ===== Từ điển bấm-vào-từ (dict.js) ===== */
+.dict-word { cursor: pointer; border-bottom: 1px dotted transparent; transition: border-color .12s, background .12s; }
+.dict-word:hover { border-bottom-color: var(--brand); background: var(--brand-soft); border-radius: 3px; }
+
+.dict-pop {
+  position: absolute; z-index: 60; width: min(340px, calc(100vw - 20px));
+  background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius);
+  box-shadow: 0 12px 34px rgba(0,0,0,.16); padding: 14px 16px 12px;
+}
+.dict-x { position: absolute; top: 6px; right: 8px; border: 0; background: none; cursor: pointer;
+  font-size: 1.3rem; line-height: 1; color: var(--text-mute); padding: 2px 5px; }
+.dict-x:hover { color: var(--text); }
+.dict-entry + .dict-entry { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+.dict-head { display: flex; align-items: center; gap: 8px; padding-right: 18px; }
+.dict-w { font-family: var(--font-ru); font-size: 1.22rem; font-weight: 700; }
+.dict-lv { font-size: .68rem; font-weight: 700; letter-spacing: .04em; padding: 2px 7px; border-radius: 99px;
+  background: var(--brand-soft); color: var(--brand); }
+.dict-vn { margin-top: 5px; color: var(--text); font-size: .95rem; }
+.dict-note { margin-top: 4px; font-size: .82rem; color: var(--text-mute); font-style: italic; }
+.dict-guess { font-size: .8rem; color: var(--text-mute); margin: 0 0 10px; padding-right: 18px; }
+.dict-miss { font-size: .87rem; color: var(--text-soft); margin: 8px 0 0; }
+.dict-lessons { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.dict-lesson { font-size: .74rem; padding: 3px 8px; border-radius: 99px; background: var(--bg-soft);
+  color: var(--text-soft); text-decoration: none; border: 1px solid var(--border); }
+.dict-lesson:hover { border-color: var(--brand); color: var(--brand); }
+.dict-add { margin-top: 10px; width: 100%; font: inherit; font-size: .82rem; font-weight: 600; cursor: pointer;
+  padding: 7px 10px; border-radius: var(--radius-sm); border: 1px solid var(--brand); background: var(--brand); color: #fff; }
+.dict-add:hover { filter: brightness(1.1); }
+.dict-add.has, .dict-add:disabled { background: var(--ok-soft); color: var(--ok); border-color: var(--ok-soft); cursor: default; filter: none; }
+
+.dict-hint { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; color: var(--text-mute);
+  background: var(--bg-soft); border-radius: 99px; padding: 5px 12px; margin-bottom: 14px; }
+
+/* trang tudien.html */
+.dict-search { width: 100%; font: inherit; font-size: 1.05rem; padding: 13px 16px;
+  border: 1px solid var(--border-strong); border-radius: var(--radius); background: var(--surface); color: var(--text); }
+.dict-search:focus { outline: none; border-color: var(--brand); }
+.dict-results { display: grid; gap: 10px; margin-top: 16px; }
+.dict-res { padding: 14px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+
+/* chỗ hay sai (bảng điểm) */
+.weak-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.weak-row:last-child { border-bottom: 0; }
+.weak-bar { flex: 1; height: 7px; border-radius: 99px; background: var(--bg-soft); overflow: hidden; min-width: 60px; }
+.weak-bar i { display: block; height: 100%; background: var(--err); border-radius: 99px; }
+.weak-n { font-size: .78rem; color: var(--text-mute); white-space: nowrap; }

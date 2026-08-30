@@ -41,12 +41,15 @@ kiemtra.html        kiểm tra đầu vào 2 vòng → xếp lớp
 bangdiem.html       bảng điểm cá nhân, huy hiệu, bảng xếp hạng
 giaovien.html       trang giáo viên: xem tiến độ cả lớp
 tuhoc.html          trang tự học C1–C2 (không phải bài giảng, là lộ trình gợi ý)
+tudien.html         từ điển tra hai chiều Nga–Việt, dựng từ vốn từ của 114 bài
 
 assets/css/style.css   toàn bộ giao diện — đổi màu ở khối :root
 assets/js/core.js      cấu hình web, lưu tiến độ, phát âm
 assets/js/lesson.js    dựng bài học, chấm bài tập
 assets/js/srs.js       thuật toán lặp lại ngắt quãng
 assets/js/exam.js      chấm thi, vẽ giấy chứng nhận
+assets/js/dict.js      từ điển: dựng chỉ mục từ LESSON_DATA, dò dạng biến cách,
+                        và biến từ tiếng Nga trong bài thành từ bấm-tra-được
 assets/js/auth.js      tài khoản + đồng bộ tiến độ lên Supabase
 assets/js/supabase-config.js   KHOÁ SUPABASE — em dán vào đây
 
@@ -203,3 +206,21 @@ Row Level Security bật sẵn: mỗi người chỉ đọc/ghi được dữ li
 - **Tiến độ lưu trên Supabase** theo tài khoản, kèm bản dự phòng trong `localStorage` để web vẫn mượt khi mạng chập chờn. Trang chủ vẫn có nút *Sao lưu ra file* và *Khôi phục*.
 - **Phát âm** dùng giọng đọc sẵn có trong trình duyệt (Web Speech API). Chrome trên Windows/Android và Safari trên iPhone đều có giọng Nga. Máy nào không có giọng Nga thì nút loa sẽ đọc bằng giọng mặc định nghe hơi lạ — đó là hạn chế của máy người dùng, không phải lỗi web.
 - **Giấy chứng nhận** là chứng nhận nội bộ của website này, ghi nhận nỗ lực người học. Nó không phải và không được trình bày như chứng chỉ ТРКИ của nhà nước Nga — điều này được ghi rõ ngay trên giấy.
+
+## Từ điển hoạt động thế nào
+
+`assets/js/dict.js` không gọi API nào cả — nó dựng từ điển ngay lúc chạy từ toàn bộ
+mục `vocab` của 114 bài (1 301 từ), cộng thêm bảng `DICT_CORE` gồm ~230 từ chức năng
+(đại từ đã biến cách, động từ bất quy tắc, liên từ, thuật ngữ ngữ pháp) — đó là nhóm
+từ xuất hiện dày trong lời giảng nhưng không nằm trong bảng từ vựng bài nào.
+
+Tiếng Nga biến cách nên tra đúng dạng gốc là phần khó nhất. Cách làm: chuẩn hoá từ
+(bỏ trọng âm, ё→е), tra khớp thẳng trước; không thấy thì cắt dần tối đa 5 chữ cuối
+để dò thân từ, và chỉ nhận kết quả khi thân từ chiếm ≥ 50% độ dài từ gốc.
+Hiện phủ khoảng **73%** số lượt từ tiếng Nga trong phần lý thuyết. Khi chỉ là dò
+gần đúng, thẻ tra nghĩa nói rõ *"dạng gốc có lẽ là…"* chứ không khẳng định.
+
+Muốn tăng độ phủ thì thêm từ vào `DICT_CORE`, không cần đụng gì khác.
+
+Từ điển chỉ gắn vào phần **lý thuyết** của bài (`#theory`), cố ý không gắn vào phần
+bài tập — để bài tập còn tác dụng luyện.
