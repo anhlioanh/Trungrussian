@@ -40,6 +40,7 @@ dangnhap.html       đăng ký / đăng nhập (email+mật khẩu, Google)
 kiemtra.html        kiểm tra đầu vào 2 vòng → xếp lớp
 bangdiem.html       bảng điểm cá nhân, huy hiệu, bảng xếp hạng
 giaovien.html       trang giáo viên: xem tiến độ cả lớp
+tuhoc.html          trang tự học C1–C2 (không phải bài giảng, là lộ trình gợi ý)
 
 assets/css/style.css   toàn bộ giao diện — đổi màu ở khối :root
 assets/js/core.js      cấu hình web, lưu tiến độ, phát âm
@@ -52,6 +53,7 @@ assets/js/supabase-config.js   KHOÁ SUPABASE — em dán vào đây
 supabase/schema.sql    bảng và phân quyền, chạy một lần trong SQL Editor
 
 data/course.js         lộ trình A0→C2 và danh sách bài từng cấp
+                        (c1, c2 có cờ selfStudy: true, không có LESSONS — trỏ sang tuhoc.html)
 data/lessons/a0.js     nội dung cấp A0 (10 bài)
 data/lessons/a1.js     nội dung cấp A1 (24 bài)
 data/lessons/a2.js     nội dung cấp A2 (24 bài)

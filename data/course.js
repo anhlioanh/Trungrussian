@@ -48,19 +48,21 @@ const COURSE = {
     },
     {
       id: 'c1', code: 'C1', name: 'Cao cấp', ru: 'ТРКИ-3',
-      tag: 'Chuyên nghiệp',
+      tag: 'Tự học có định hướng',
       goal: 'Làm việc bằng tiếng Nga ở vị trí đòi hỏi ngôn ngữ: nhà báo, biên dịch, quản lý.',
-      words: '12 000 từ', hours: '1000+ giờ', lessonCount: 20,
-      desc: 'Ngôn ngữ trở thành công cụ tinh vi: sắc thái, hàm ý, thành ngữ, chơi chữ.',
-      can: ['Hiểu hàm ý, châm biếm, sắc thái', 'Thành ngữ và tục ngữ tiếng Nga', 'Viết văn bản dài mạch lạc, đúng phong cách', 'Tranh luận, thuyết phục']
+      words: '12 000 từ', hours: '1000+ giờ',
+      desc: 'Ngôn ngữ trở thành công cụ tinh vi: sắc thái, hàm ý, thành ngữ, chơi chữ. Từ đây không còn là bài giảng nữa — xem trang tự học để biết đọc gì, nghe gì.',
+      can: ['Hiểu hàm ý, châm biếm, sắc thái', 'Thành ngữ và tục ngữ tiếng Nga', 'Viết văn bản dài mạch lạc, đúng phong cách', 'Tranh luận, thuyết phục'],
+      selfStudy: true, guide: 'tuhoc.html#c1'
     },
     {
       id: 'c2', code: 'C2', name: 'Thành thạo', ru: 'ТРКИ-4',
-      tag: 'Gần như người bản xứ',
+      tag: 'Tự học có định hướng',
       goal: 'Ngang trình độ người Nga có học vấn.',
-      words: '20 000+ từ', hours: 'nhiều năm', lessonCount: 16,
+      words: '20 000+ từ', hours: 'nhiều năm',
       desc: 'Mức của người dạy tiếng Nga cho người Nga. Ở đây việc học không còn là bài vở mà là sống trong ngôn ngữ.',
-      can: ['Đọc văn học cổ điển nguyên bản', 'Nắm phương ngữ, tiếng lóng, biến thể lịch sử', 'Dịch thuật chuyên nghiệp hai chiều', 'Viết sáng tạo bằng tiếng Nga']
+      can: ['Đọc văn học cổ điển nguyên bản', 'Nắm phương ngữ, tiếng lóng, biến thể lịch sử', 'Dịch thuật chuyên nghiệp hai chiều', 'Viết sáng tạo bằng tiếng Nga'],
+      selfStudy: true, guide: 'tuhoc.html#c2'
     }
   ]
 };
@@ -191,44 +193,6 @@ const LESSONS = {
     { id: 'b2-27', title: 'Thi thử: реферирование', sub: 'Đề thử riêng cho реферирование, có bản mẫu và bản lỗi', ready: true },
     { id: 'b2-28', title: 'Ôn tập toàn cấp B2', sub: 'Bản đồ cả cấp B2 và bảng tự kiểm 12 dòng', ready: true }
   ],
-  c1: [
-    { id: 'c1-01', title: 'Hàm ý và điều không nói ra' },
-    { id: 'c1-02', title: 'Châm biếm và hài hước Nga' },
-    { id: 'c1-03', title: 'Thành ngữ phần 2 — kho tàng dân gian' },
-    { id: 'c1-04', title: 'Tục ngữ và cách dùng đúng chỗ' },
-    { id: 'c1-05', title: 'Từ vay mượn và tiếng Nga hiện đại' },
-    { id: 'c1-06', title: 'Ngôn ngữ mạng và giới trẻ' },
-    { id: 'c1-07', title: 'Văn học Nga thế kỷ 19: ngôn ngữ Pushkin' },
-    { id: 'c1-08', title: 'Văn học Nga thế kỷ 20' },
-    { id: 'c1-09', title: 'Điện ảnh Nga không phụ đề' },
-    { id: 'c1-10', title: 'Nói trước công chúng' },
-    { id: 'c1-11', title: 'Đàm phán và ngôn ngữ ngoại giao' },
-    { id: 'c1-12', title: 'Viết bình luận, xã luận' },
-    { id: 'c1-13', title: 'Biên tập văn bản tiếng Nga' },
-    { id: 'c1-14', title: 'Phương ngữ và biến thể vùng miền' },
-    { id: 'c1-15', title: 'Lịch sử tiếng Nga qua các thời kỳ' },
-    { id: 'c1-16', title: 'Ngữ điệu và biểu cảm ИК-1 đến ИК-7' },
-    { id: 'c1-17', title: 'Từ nguyên: nhớ từ bằng gốc rễ' },
-    { id: 'c1-18', title: 'Sửa lỗi tinh vi còn sót lại' },
-    { id: 'c1-19', title: 'Chiến thuật thi ТРКИ-3' },
-    { id: 'c1-20', title: 'Ôn tập toàn cấp C1' }
-  ],
-  c2: [
-    { id: 'c2-01', title: 'Dostoevsky nguyên bản' },
-    { id: 'c2-02', title: 'Tolstoy và câu văn dài' },
-    { id: 'c2-03', title: 'Thơ Nga và luật thơ' },
-    { id: 'c2-04', title: 'Tiếng Nga cổ và giáo hội Slav' },
-    { id: 'c2-05', title: 'Dịch văn học' },
-    { id: 'c2-06', title: 'Dịch cabin và dịch đuổi' },
-    { id: 'c2-07', title: 'Ngôn ngữ pháp lý' },
-    { id: 'c2-08', title: 'Ngôn ngữ y học' },
-    { id: 'c2-09', title: 'Viết sáng tạo bằng tiếng Nga' },
-    { id: 'c2-10', title: 'Phân tích diễn ngôn' },
-    { id: 'c2-11', title: 'Ngữ pháp lịch sử: vì sao lại thế' },
-    { id: 'c2-12', title: 'Dạy tiếng Nga cho người khác' },
-    { id: 'c2-13', title: 'Chơi chữ và sáng tạo ngôn từ' },
-    { id: 'c2-14', title: 'Tiếng Nga trong không gian hậu Xô viết' },
-    { id: 'c2-15', title: 'Chiến thuật thi ТРКИ-4' },
-    { id: 'c2-16', title: 'Chặng cuối — và học suốt đời' }
-  ]
+  /* c1, c2: không có danh sách bài giảng — cấp này là tự học có định hướng,
+     xem trang tuhoc.html (COURSE.levels[...].guide trỏ tới đó). */
 };
