@@ -1254,3 +1254,431 @@ LESSON_DATA['a1-18'] = {
     { t: 'listen', q: 'Nghe và gõ lại:', say: 'интересная книга', a: 'интересная книга' }
   ]
 };
+
+/* ---------------------------------------------------------- BÀI 19 */
+LESSON_DATA['a1-19'] = {
+  level: 'a1',
+  intro: 'Từ bài này trở đi là <b>tiếng Nga dùng được ngay</b>. Mua đồ ăn, gọi món, hỏi giá, trả tiền — những câu em cần trong ngày đầu tiên đặt chân xuống nước Nga.',
+  blocks: [
+    { t: 'h', text: 'Chỗ mua bán' },
+    { t: 'words', items: [
+      { ru: 'магази́н', vn: 'cửa hàng' }, { ru: 'суперма́ркет', vn: 'siêu thị' },
+      { ru: 'ры́нок', vn: 'chợ' }, { ru: 'апте́ка', vn: 'hiệu thuốc' },
+      { ru: 'кафе́', vn: 'quán cà phê (không đổi đuôi)' }, { ru: 'рестора́н', vn: 'nhà hàng' },
+      { ru: 'столо́вая', vn: 'nhà ăn, căng tin' }, { ru: 'ка́сса', vn: 'quầy thu ngân' }
+    ]},
+    { t: 'h', text: 'Đồ ăn thức uống' },
+    { t: 'words', items: [
+      { ru: 'хлеб', vn: 'bánh mì' }, { ru: 'молоко́', vn: 'sữa' },
+      { ru: 'мя́со', vn: 'thịt' }, { ru: 'ры́ба', vn: 'cá' },
+      { ru: 'о́вощи', vn: 'rau củ' }, { ru: 'фру́кты', vn: 'hoa quả' },
+      { ru: 'я́йца', vn: 'trứng' }, { ru: 'сыр', vn: 'phô mai' },
+      { ru: 'ма́сло', vn: 'bơ, dầu' }, { ru: 'рис', vn: 'gạo, cơm' },
+      { ru: 'карто́шка', vn: 'khoai tây' }, { ru: 'суп', vn: 'súp, canh' },
+      { ru: 'сала́т', vn: 'sa lát' }, { ru: 'вода́', vn: 'nước' },
+      { ru: 'сок', vn: 'nước ép' }, { ru: 'ко́фе', vn: 'cà phê (không đổi đuôi)' }
+    ]},
+    { t: 'h', text: 'Trong cửa hàng' },
+    { t: 'dialog', lines: [
+      { who: 'О', ru: 'Здра́вствуйте! У вас есть хлеб?', vn: 'Xin chào! Ở đây có bánh mì không ạ?' },
+      { who: 'П', ru: 'Да, коне́чно. Како́й вы хоти́те?', vn: 'Có chứ. Chị muốn loại nào?' },
+      { who: 'О', ru: 'Да́йте, пожа́луйста, чёрный хлеб.', vn: 'Cho tôi bánh mì đen ạ.' },
+      { who: 'П', ru: 'Что-нибу́дь ещё?', vn: 'Còn gì nữa không ạ?' },
+      { who: 'О', ru: 'Ещё молоко́ и два ки́ло я́блок. Ско́лько всё сто́ит?', vn: 'Thêm sữa và hai cân táo. Tất cả bao nhiêu tiền ạ?' },
+      { who: 'П', ru: 'Три́ста пятьдеся́т рубле́й.', vn: '350 rúp.' },
+      { who: 'О', ru: 'Вот, пожа́луйста. Спаси́бо!', vn: 'Đây ạ. Cảm ơn!' }
+    ]},
+    { t: 'note', html: '<span class="ru">Да́йте, пожа́луйста…</span> là câu vạn năng khi mua bán — nghĩa là "làm ơn đưa cho tôi". Sau nó là <b>cách 4</b>: <span class="ru">да́йте хлеб</span>, <span class="ru">да́йте во́ду</span>. Thể mệnh lệnh em sẽ học kỹ ở bài 22, giờ cứ nhớ nguyên cụm.' },
+    { t: 'h', text: 'Trong quán ăn' },
+    { t: 'dialog', lines: [
+      { who: 'О', ru: 'Меню́, пожа́луйста.', vn: 'Cho tôi xin thực đơn.' },
+      { who: 'К', ru: 'Пожа́луйста. Что вы бу́дете зака́зывать?', vn: 'Đây ạ. Chị dùng gì ạ?' },
+      { who: 'О', ru: 'Я бу́ду суп и сала́т. И чай без са́хара.', vn: 'Cho tôi súp và sa lát. Với trà không đường.' },
+      { who: 'К', ru: 'Хорошо́. Прия́тного аппети́та!', vn: 'Vâng ạ. Chúc chị ngon miệng!' },
+      { who: 'О', ru: 'Спаси́бо. Счёт, пожа́луйста.', vn: 'Cảm ơn. Cho tôi thanh toán ạ.' }
+    ]},
+    { t: 'tip', html: 'Để ý <span class="ru">Я бу́ду суп</span> — đúng là thì tương lai ở bài 11, nhưng trong quán ăn nó có nghĩa "tôi gọi món này". Người Nga gọi món bằng đúng cấu trúc đó, không cần động từ nào khác.' },
+    { t: 'h', text: 'Câu cần thuộc lòng' },
+    { t: 'words', items: [
+      { ru: 'Ско́лько сто́ит?', vn: 'Bao nhiêu tiền?' },
+      { ru: 'У вас есть…?', vn: 'Ở đây có… không?' },
+      { ru: 'Да́йте, пожа́луйста…', vn: 'Làm ơn cho tôi…' },
+      { ru: 'Я хочу́ купи́ть…', vn: 'Tôi muốn mua…' },
+      { ru: 'Э́то до́рого.', vn: 'Cái này đắt quá.' },
+      { ru: 'Мо́жно посмотре́ть?', vn: 'Tôi xem được không?' },
+      { ru: 'Я про́сто смотрю́.', vn: 'Tôi chỉ xem thôi.' },
+      { ru: 'Счёт, пожа́луйста.', vn: 'Cho tôi thanh toán.' },
+      { ru: 'О́чень вку́сно!', vn: 'Ngon quá!' }
+    ]},
+    { t: 'warn', html: 'Ba từ <b>không bao giờ đổi đuôi</b> dù đứng ở cách nào: <span class="ru">ко́фе, кафе́, метро́</span> (và cả <span class="ru">такси́</span>). Chúng là từ mượn nước ngoài nên tiếng Nga cho miễn. Nói <span class="ru">в кафе́</span>, <span class="ru">с ко́фе</span> — y nguyên.' }
+  ],
+  vocab: [
+    { ru: 'магази́н', vn: 'cửa hàng' }, { ru: 'ры́нок', vn: 'chợ' }, { ru: 'кафе́', vn: 'quán cà phê' },
+    { ru: 'хлеб', vn: 'bánh mì' }, { ru: 'мя́со', vn: 'thịt' }, { ru: 'ры́ба', vn: 'cá' },
+    { ru: 'о́вощи', vn: 'rau củ' }, { ru: 'фру́кты', vn: 'hoa quả' }, { ru: 'сыр', vn: 'phô mai' },
+    { ru: 'счёт', vn: 'hoá đơn' }, { ru: 'меню́', vn: 'thực đơn' }, { ru: 'вку́сно', vn: 'ngon' },
+    { ru: 'купи́ть', vn: 'mua' }, { ru: 'Прия́тного аппети́та!', vn: 'Chúc ngon miệng!' }
+  ],
+  ex: [
+    { t: 'choice', q: 'Muốn hỏi "Ở đây có bánh mì không?" em nói:', options: ['Где хлеб?', 'У вас есть хлеб?', 'Э́то хлеб?', 'Ско́лько хлеб?'], a: 1, why: 'У вас есть…? là câu hỏi có sẵn hàng hay không, dùng ở mọi cửa hàng.' },
+    { t: 'type', q: 'Xin thanh toán trong nhà hàng: ___, пожа́луйста.', a: 'счёт', alt: ['счет'], hint: 'Từ chỉ hoá đơn.' },
+    { t: 'choice', q: 'Sau <span class="ru">Да́йте, пожа́луйста</span> thì danh từ ở cách nào?', options: ['Cách 1', 'Cách 2', 'Cách 4', 'Cách 6'], a: 2, why: 'Đó là tân ngữ trực tiếp nên dùng cách 4: дайте воду, дайте книгу.' },
+    { t: 'choice', q: 'Từ nào <b>không bao giờ đổi đuôi</b>?', options: ['хлеб', 'ко́фе', 'вода́', 'магази́н'], a: 1, why: 'кофе, кафе, метро, такси là từ mượn nên giữ nguyên ở mọi cách.' },
+    { t: 'choice', q: 'Trong quán ăn, "Cho tôi súp" nói tự nhiên nhất là:', options: ['Я хочу́ суп.', 'Я бу́ду суп.', 'Я ем суп.', 'Суп мне.'], a: 1, why: 'Người Nga gọi món bằng “Я буду…” — đúng cấu trúc thì tương lai ở bài 11.' },
+    { t: 'match', q: 'Nối:', pairs: [['ры́нок', 'chợ'], ['апте́ка', 'hiệu thuốc'], ['о́вощи', 'rau củ'], ['вку́сно', 'ngon']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'сколько стоит', a: 'сколько стоит' },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'дайте пожалуйста', a: 'дайте пожалуйста' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 20 */
+LESSON_DATA['a1-20'] = {
+  level: 'a1',
+  intro: 'Lạc đường ở một thành phố Nga mà không hỏi được là chuyện đáng sợ. Bài này cho em đủ chữ để hỏi đường, hiểu câu trả lời, và đi lại bằng mọi phương tiện.',
+  blocks: [
+    { t: 'h', text: 'Câu hỏi mở đường' },
+    { t: 'words', items: [
+      { ru: 'Скажи́те, пожа́луйста…', vn: 'Làm ơn cho hỏi… (luôn mở đầu bằng câu này)' },
+      { ru: 'Где нахо́дится вокза́л?', vn: 'Nhà ga ở chỗ nào ạ?' },
+      { ru: 'Как пройти́ до метро́?', vn: 'Đi bộ đến ga tàu điện ngầm thế nào ạ?' },
+      { ru: 'Как прое́хать до це́нтра?', vn: 'Đi xe đến trung tâm thế nào ạ?' },
+      { ru: 'Э́то далеко́?', vn: 'Có xa không ạ?' },
+      { ru: 'Я заблуди́лся. / Я заблуди́лась.', vn: 'Tôi bị lạc. (nam / nữ)' }
+    ]},
+    { t: 'note', html: 'Phân biệt <span class="ru">пройти́</span> (đi bộ đến) và <span class="ru">прое́хать</span> (đi bằng xe đến). Hỏi sai thì người ta chỉ đường sai — chỉ cho em đi bộ 5 cây số chẳng hạn.' },
+    { t: 'h', text: 'Hiểu câu trả lời' },
+    { t: 'words', items: [
+      { ru: 'пря́мо', vn: 'thẳng' }, { ru: 'напра́во', vn: 'sang phải' },
+      { ru: 'нале́во', vn: 'sang trái' }, { ru: 'наза́д', vn: 'quay lại' },
+      { ru: 'ря́дом', vn: 'ngay cạnh' }, { ru: 'бли́зко', vn: 'gần' },
+      { ru: 'далеко́', vn: 'xa' }, { ru: 'напро́тив', vn: 'đối diện' },
+      { ru: 'на углу́', vn: 'ở góc phố' }, { ru: 'че́рез доро́гу', vn: 'bên kia đường' }
+    ]},
+    { t: 'dialog', lines: [
+      { who: 'О', ru: 'Скажи́те, пожа́луйста, как пройти́ до апте́ки?', vn: 'Làm ơn cho hỏi đi bộ đến hiệu thuốc thế nào ạ?' },
+      { who: 'Н', ru: 'Иди́те пря́мо, пото́м напра́во. Апте́ка бу́дет на углу́.', vn: 'Chị đi thẳng, rồi rẽ phải. Hiệu thuốc ở ngay góc phố.' },
+      { who: 'О', ru: 'Э́то далеко́?', vn: 'Có xa không ạ?' },
+      { who: 'Н', ru: 'Нет, пять мину́т пешко́м.', vn: 'Không, đi bộ năm phút.' },
+      { who: 'О', ru: 'Большо́е спаси́бо!', vn: 'Cảm ơn chị nhiều!' }
+    ]},
+    { t: 'h', text: 'Phương tiện — dùng НА + cách 6' },
+    { t: 'table', head: ['Phương tiện', 'Đi bằng…', 'Ghi chú'], rows: [
+      ['авто́бус', 'на авто́бус<b>е</b>', 'xe buýt'],
+      ['метро́', 'на метро́', 'không đổi đuôi'],
+      ['такси́', 'на такси́', 'không đổi đuôi'],
+      ['маши́на', 'на маши́н<b>е</b>', 'ô tô riêng'],
+      ['по́езд', 'на по́езд<b>е</b>', 'tàu hoả'],
+      ['самолёт', 'на самолёт<b>е</b>', 'máy bay'],
+      ['трамва́й', 'на трамва́<b>е</b>', 'tàu điện'],
+      ['—', 'пешко́м', 'đi bộ (không có giới từ)']
+    ]},
+    { t: 'warn', html: 'Người Việt hay nói <span class="ru">с авто́бусом</span> vì tiếng Việt là "bằng xe buýt" — nghe như công cụ ở cách 5. Nhưng phương tiện đi lại dùng <b>на + cách 6</b>. Riêng <span class="ru">пешко́м</span> đứng trần, không giới từ.' },
+    { t: 'h', text: 'Từ về thành phố' },
+    { t: 'words', items: [
+      { ru: 'у́лица', vn: 'đường phố' }, { ru: 'пло́щадь', vn: 'quảng trường' },
+      { ru: 'остано́вка', vn: 'bến (xe buýt)' }, { ru: 'ста́нция', vn: 'ga (tàu điện ngầm)' },
+      { ru: 'вокза́л', vn: 'nhà ga lớn' }, { ru: 'аэропо́рт', vn: 'sân bay' },
+      { ru: 'мост', vn: 'cây cầu' }, { ru: 'светофо́р', vn: 'đèn giao thông' },
+      { ru: 'перекрёсток', vn: 'ngã tư' }, { ru: 'вы́ход', vn: 'lối ra' },
+      { ru: 'вход', vn: 'lối vào' }, { ru: 'биле́т', vn: 'vé' }
+    ]},
+    { t: 'tip', html: 'Hai từ trên biển báo mà em phải phân biệt ngay từ hôm đầu: <span class="ru"><b>ВХОД</b></span> là lối vào, <span class="ru"><b>ВЫХОД</b></span> là lối ra. Chỉ khác một chữ, mà đi nhầm là ngược hẳn hướng.' }
+  ],
+  vocab: [
+    { ru: 'Скажи́те, пожа́луйста', vn: 'Làm ơn cho hỏi' }, { ru: 'пря́мо', vn: 'thẳng' },
+    { ru: 'напра́во', vn: 'sang phải' }, { ru: 'нале́во', vn: 'sang trái' },
+    { ru: 'далеко́', vn: 'xa' }, { ru: 'бли́зко', vn: 'gần' }, { ru: 'пешко́м', vn: 'đi bộ' },
+    { ru: 'авто́бус', vn: 'xe buýt' }, { ru: 'по́езд', vn: 'tàu hoả' }, { ru: 'остано́вка', vn: 'bến xe' },
+    { ru: 'у́лица', vn: 'đường phố' }, { ru: 'вы́ход', vn: 'lối ra' }, { ru: 'вход', vn: 'lối vào' }
+  ],
+  ex: [
+    { t: 'choice', q: '"Đi bằng xe buýt" nói đúng là:', options: ['с авто́бусом', 'на авто́бусе', 'в авто́бус', 'авто́бусом'], a: 1, why: 'Phương tiện đi lại dùng на + cách 6.' },
+    { t: 'choice', q: '"Đi bộ" trong tiếng Nga là:', options: ['на нога́х', 'пешко́м', 'с нога́ми', 'иду́'], a: 1, why: 'пешком đứng một mình, không cần giới từ.' },
+    { t: 'choice', q: 'Trên biển báo, <span class="ru ru-big">ВЫХОД</span> nghĩa là:', options: ['Lối vào', 'Lối ra', 'Cấm vào', 'Nhà vệ sinh'], a: 1, why: 'ВЫХОД = lối ra, ВХОД = lối vào. Chỉ khác một chữ.' },
+    { t: 'choice', q: 'Hỏi đường đi bộ thì dùng động từ nào?', options: ['прое́хать', 'пройти́', 'уе́хать', 'приходи́ть'], a: 1, why: 'пройти là đi bộ đến, проехать là đi bằng xe đến.' },
+    { t: 'type', q: 'Điền: Иди́те ___ , пото́м напра́во. (đi thẳng)', a: 'прямо', alt: ['пря́мо'], hint: 'Từ chỉ hướng thẳng.' },
+    { t: 'match', q: 'Nối:', pairs: [['нале́во', 'sang trái'], ['напро́тив', 'đối diện'], ['остано́вка', 'bến xe'], ['светофо́р', 'đèn giao thông']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'скажите пожалуйста', a: 'скажите пожалуйста' },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'это далеко', a: 'это далеко' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 21 */
+LESSON_DATA['a1-21'] = {
+  level: 'a1',
+  intro: 'Tiếng Việt chỉ có một chữ "đi". Tiếng Nga có <b>bốn</b>, và chọn sai là nghĩa lệch hẳn. Đây là bài khó nhất cấp A1 — nhưng cũng là bài khiến tiếng Nga của em nghe khác hẳn người mới học.',
+  blocks: [
+    { t: 'h', text: 'Hai trục phân biệt' },
+    { t: 'p', html: 'Tiếng Nga chia động từ chuyển động theo <b>hai câu hỏi</b> cùng lúc: <b>(1)</b> đi bằng chân hay bằng xe? <b>(2)</b> đang đi một lần theo một hướng, hay đi lại thường xuyên?' },
+    { t: 'table', head: ['', 'Một lần, một hướng, lúc này', 'Thường xuyên, đi rồi về'], rows: [
+      ['Đi <b>bộ</b>', '<b>идти́</b>', '<b>ходи́ть</b>'],
+      ['Đi <b>bằng xe</b>', '<b>е́хать</b>', '<b>е́здить</b>']
+    ]},
+    { t: 'words', items: [
+      { ru: 'Я иду́ в университе́т.', vn: 'Tôi đang đi tới trường (ngay bây giờ, trên đường).' },
+      { ru: 'Я хожу́ в университе́т ка́ждый день.', vn: 'Ngày nào tôi cũng tới trường (đi rồi về, đều đặn).' },
+      { ru: 'Я е́ду в Москву́.', vn: 'Tôi đang trên đường tới Moskva.' },
+      { ru: 'Я е́зжу в Москву́ ка́ждый год.', vn: 'Năm nào tôi cũng đi Moskva.' }
+    ]},
+    { t: 'tip', html: 'Mẹo nhận biết nhanh: có <span class="ru">сейча́с</span> (bây giờ) thì dùng <b>идти́ / е́хать</b>; có <span class="ru">ка́ждый день, ча́сто, обы́чно</span> thì dùng <b>ходи́ть / е́здить</b>.' },
+    { t: 'h', text: 'Chia bốn động từ' },
+    { t: 'table', head: ['Ngôi', 'идти́', 'ходи́ть', 'е́хать', 'е́здить'], rows: [
+      ['я', 'иду́', 'хожу́', 'е́ду', 'е́зжу'],
+      ['ты', 'идёшь', 'хо́дишь', 'е́дешь', 'е́здишь'],
+      ['он / она́', 'идёт', 'хо́дит', 'е́дет', 'е́здит'],
+      ['мы', 'идём', 'хо́дим', 'е́дем', 'е́здим'],
+      ['вы', 'идёте', 'хо́дите', 'е́дете', 'е́здите'],
+      ['они́', 'иду́т', 'хо́дят', 'е́дут', 'е́здят']
+    ]},
+    { t: 'note', html: 'Để ý <span class="ru">хожу́</span> và <span class="ru">е́зжу</span> — phụ âm ở gốc biến đổi chỉ ở ngôi <b>я</b>, giống hiện tượng chữ л chen vào ở bài 6. Tiếng Nga rất hay có kiểu "ngôi я là ngôi khác người".' },
+    { t: 'h', text: 'Quá khứ' },
+    { t: 'table', head: ['Động từ', 'Nam', 'Nữ', 'Số nhiều'], rows: [
+      ['идти́', 'шёл', 'шла', 'шли'],
+      ['ходи́ть', 'ходи́л', 'ходи́ла', 'ходи́ли'],
+      ['е́хать', 'е́хал', 'е́хала', 'е́хали'],
+      ['е́здить', 'е́здил', 'е́здила', 'е́здили']
+    ]},
+    { t: 'p', html: 'Ở quá khứ có một sắc thái đẹp: <span class="ru">Вчера́ я <b>ходи́л</b> в кино́</span> nghĩa là "hôm qua tôi đi xem phim <b>rồi về</b>" — cả chuyến đi trọn vẹn. Còn <span class="ru">Я <b>шёл</b> в кино́</span> là "tôi đang trên đường đến rạp" — chuyện chưa xong.' },
+    { t: 'h', text: 'Lỗi kinh điển của người Việt' },
+    { t: 'warn', html: 'Vì tiếng Việt chỉ có "đi", ta hay dùng bừa <span class="ru">идти́</span> cho mọi trường hợp. Ba câu sai hay gặp nhất:<br>✗ <span class="ru">Я иду́ в Москву́</span> → phải là <span class="ru">е́ду</span> (không ai đi bộ tới Moskva).<br>✗ <span class="ru">Я иду́ в шко́лу ка́ждый день</span> → phải là <span class="ru">хожу́</span>.<br>✗ <span class="ru">Я е́зжу сейча́с домо́й</span> → phải là <span class="ru">е́ду</span>.' },
+    { t: 'h', text: 'Câu dùng hằng ngày' },
+    { t: 'words', items: [
+      { ru: 'Куда́ ты идёшь?', vn: 'Cậu đang đi đâu đấy?' },
+      { ru: 'Я иду́ домо́й.', vn: 'Tôi đang về nhà.' },
+      { ru: 'Мы е́дем на метро́.', vn: 'Chúng tôi đang đi tàu điện ngầm.' },
+      { ru: 'Он ча́сто хо́дит в спортза́л.', vn: 'Anh ấy hay đi phòng tập.' },
+      { ru: 'Ле́том я е́зжу к роди́телям.', vn: 'Mùa hè tôi về chỗ bố mẹ.' },
+      { ru: 'Идёт дождь.', vn: 'Trời đang mưa. (nghĩa đen: mưa đang đi)' }
+    ]},
+    { t: 'tip', html: 'Câu cuối là một món quà: người Nga nói mưa và tuyết <b>đi</b> — <span class="ru">идёт дождь</span>, <span class="ru">идёт снег</span>. Và cả thời gian cũng đi: <span class="ru">вре́мя идёт</span>.' }
+  ],
+  vocab: [
+    { ru: 'идти́', vn: 'đi bộ (lúc này, một hướng)' }, { ru: 'ходи́ть', vn: 'đi bộ (thường xuyên)' },
+    { ru: 'е́хать', vn: 'đi xe (lúc này)' }, { ru: 'е́здить', vn: 'đi xe (thường xuyên)' },
+    { ru: 'ка́ждый день', vn: 'mỗi ngày' }, { ru: 'ча́сто', vn: 'thường xuyên' },
+    { ru: 'обы́чно', vn: 'thường thì' }, { ru: 'дождь', vn: 'mưa' }, { ru: 'снег', vn: 'tuyết' }
+  ],
+  ex: [
+    { t: 'choice', q: 'Chọn đúng: Я ___ в Москву́ на по́езде.', options: ['иду́', 'е́ду', 'хожу́', 'е́зжу'], a: 1, why: 'Đi tàu là bằng phương tiện, và đang đi một lần → еду.' },
+    { t: 'choice', q: 'Chọn đúng: Я ___ в университе́т ка́ждый день.', options: ['иду́', 'е́ду', 'хожу́', 'е́ду сейча́с'], a: 2, why: 'Lặp đi lặp lại hằng ngày, đi bộ → хожу.' },
+    { t: 'choice', q: 'Từ nào báo hiệu phải dùng <span class="ru">ходи́ть / е́здить</span>?', options: ['сейча́с', 'ка́ждый день', 'сего́дня', 'уже́'], a: 1, why: 'каждый день, часто, обычно = hành động lặp lại.' },
+    { t: 'type', q: 'Điền: Куда́ ты ___ ? (idi — cậu đang đi bộ đâu đấy)', a: 'идёшь', alt: ['идешь'], hint: 'Ngôi ты của идти.' },
+    { t: 'choice', q: '<span class="ru ru-big">Идёт дождь</span> nghĩa là:', options: ['Mưa đã tạnh', 'Trời đang mưa', 'Sắp mưa', 'Đi trong mưa'], a: 1, why: 'Người Nga nói mưa “đi”: идёт дождь, идёт снег.' },
+    { t: 'choice', q: '<span class="ru">Вчера́ я ходи́л в кино́</span> nhấn mạnh điều gì?', options: ['Đang trên đường đến rạp', 'Cả chuyến đi rồi về, đã xong', 'Sẽ đi vào ngày mai', 'Đi bằng xe'], a: 1, why: 'ходил ở quá khứ mang nghĩa chuyến đi trọn vẹn: đi và đã về.' },
+    { t: 'match', q: 'Nối:', pairs: [['идти́', 'đang đi bộ'], ['ходи́ть', 'hay đi bộ'], ['е́хать', 'đang đi xe'], ['е́здить', 'hay đi xe']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'я иду домой', a: 'я иду домой' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 22 */
+LESSON_DATA['a1-22'] = {
+  level: 'a1',
+  intro: 'Thể mệnh lệnh — dùng để nhờ vả, mời mọc, chỉ dẫn. Thật ra em đã dùng nó suốt từ A0 mà chưa biết tên: <span class="ru">Скажи́те, Да́йте, Извини́те</span> đều là mệnh lệnh cả.',
+  blocks: [
+    { t: 'h', text: 'Cách tạo: lấy từ ngôi ОНИ́' },
+    { t: 'p', html: 'Ba bước: chia động từ ở ngôi <b>они́</b> → bỏ đuôi → thêm <b>-й</b> hoặc <b>-и</b>. Muốn lịch sự hoặc nói với nhiều người thì thêm <b>-те</b>.' },
+    { t: 'table', head: ['Nguyên thể', 'Ngôi они́', 'Với ты', 'Với вы (lịch sự)'], rows: [
+      ['чита́ть', 'чита́<b>ют</b>', 'чита́й', 'чита́й<b>те</b>'],
+      ['слу́шать', 'слу́ша<b>ют</b>', 'слу́шай', 'слу́шай<b>те</b>'],
+      ['рабо́тать', 'рабо́та<b>ют</b>', 'рабо́тай', 'рабо́тай<b>те</b>'],
+      ['говори́ть', 'говор<b>я́т</b>', 'говори́', 'говори́<b>те</b>'],
+      ['смотре́ть', 'смо́тр<b>ят</b>', 'смотри́', 'смотри́<b>те</b>'],
+      ['идти́', 'ид<b>у́т</b>', 'иди́', 'иди́<b>те</b>'],
+      ['писа́ть', 'пи́ш<b>ут</b>', 'пиши́', 'пиши́<b>те</b>']
+    ]},
+    { t: 'tip', html: 'Quy tắc chọn -й hay -и: gốc kết thúc bằng <b>nguyên âm</b> thì thêm <b>-й</b> (чита-й), kết thúc bằng <b>phụ âm</b> thì thêm <b>-и</b> (говор-и). Nghe thì phức tạp, đọc thử hai kiểu là tai tự chọn được cái xuôi.' },
+    { t: 'h', text: 'Bốn dạng bất quy tắc phải thuộc' },
+    { t: 'words', items: [
+      { ru: 'дать → дай / да́йте', vn: 'đưa cho — Дайте, пожалуйста!' },
+      { ru: 'есть → ешь / е́шьте', vn: 'ăn đi' },
+      { ru: 'пить → пей / пе́йте', vn: 'uống đi' },
+      { ru: 'быть → будь / бу́дьте', vn: 'hãy là — Будьте добры!' }
+    ]},
+    { t: 'h', text: 'Những câu mệnh lệnh em dùng mỗi ngày' },
+    { t: 'words', items: [
+      { ru: 'Скажи́те, пожа́луйста…', vn: 'Làm ơn cho hỏi…' },
+      { ru: 'Да́йте, пожа́луйста…', vn: 'Làm ơn cho tôi…' },
+      { ru: 'Повтори́те, пожа́луйста.', vn: 'Xin nhắc lại ạ.' },
+      { ru: 'Говори́те ме́дленнее.', vn: 'Xin nói chậm hơn.' },
+      { ru: 'Помоги́те, пожа́луйста!', vn: 'Làm ơn giúp tôi với!' },
+      { ru: 'Подожди́те мину́ту.', vn: 'Đợi một phút ạ.' },
+      { ru: 'Извини́те.', vn: 'Xin lỗi.' },
+      { ru: 'Проходи́те, пожа́луйста.', vn: 'Mời vào ạ.' },
+      { ru: 'Бу́дьте добры́…', vn: 'Làm ơn… (rất lịch sự)' }
+    ]},
+    { t: 'warn', html: 'Thể mệnh lệnh trần trụi nghe hơi cộc. Người Nga gần như <b>luôn</b> thêm <span class="ru">пожа́луйста</span>. So sánh: <span class="ru">Скажи́те!</span> (Nói đi!) và <span class="ru">Скажи́те, пожа́луйста</span> (Làm ơn cho hỏi). Một từ đổi hẳn thái độ.' },
+    { t: 'h', text: 'Rủ rê: Дава́й / Дава́йте' },
+    { t: 'words', items: [
+      { ru: 'Дава́й пойдём в кафе́!', vn: 'Đi quán cà phê đi!' },
+      { ru: 'Дава́йте начнём.', vn: 'Chúng ta bắt đầu nào.' },
+      { ru: 'Дава́й на «ты»!', vn: 'Mình xưng "ты" với nhau nhé!' }
+    ]},
+    { t: 'h', text: 'Cấm đoán: не + mệnh lệnh' },
+    { t: 'words', items: [
+      { ru: 'Не говори́те так бы́стро.', vn: 'Đừng nói nhanh thế.' },
+      { ru: 'Не волну́йтесь.', vn: 'Đừng lo.' },
+      { ru: 'Не забыва́й меня́.', vn: 'Đừng quên tôi nhé.' }
+    ]},
+    { t: 'note', html: 'Trên biển báo ở Nga em sẽ thấy dạng khác — dùng nguyên thể cho ngắn gọn: <span class="ru">Не кури́ть</span> (cấm hút thuốc), <span class="ru">Не входи́ть</span> (cấm vào). Đó là mệnh lệnh dành cho tất cả mọi người, không nhắm vào ai cụ thể.' }
+  ],
+  vocab: [
+    { ru: 'Повтори́те', vn: 'Nhắc lại đi' }, { ru: 'Помоги́те', vn: 'Giúp với' },
+    { ru: 'Подожди́те', vn: 'Đợi đã' }, { ru: 'Бу́дьте добры́', vn: 'Làm ơn (rất lịch sự)' },
+    { ru: 'Дава́йте', vn: 'Chúng ta hãy…' }, { ru: 'ме́дленнее', vn: 'chậm hơn' },
+    { ru: 'Не волну́йтесь', vn: 'Đừng lo' }, { ru: 'кури́ть', vn: 'hút thuốc' }
+  ],
+  ex: [
+    { t: 'choice', q: 'Thể mệnh lệnh được tạo từ dạng nào của động từ?', options: ['Nguyên thể', 'Ngôi я', 'Ngôi они́', 'Quá khứ'], a: 2, why: 'Lấy ngôi они, bỏ đuôi, thêm -й hoặc -и.' },
+    { t: 'type', q: 'Tạo mệnh lệnh lịch sự từ <span class="ru">чита́ть</span>:', a: 'читайте', alt: ['чита́йте'], hint: 'читают → чита- → thêm -й rồi -те.' },
+    { t: 'choice', q: 'Mệnh lệnh lịch sự của <span class="ru">говори́ть</span> là:', options: ['говоря́йте', 'говори́те', 'говори́йте', 'говора́йте'], a: 1, why: 'говорят → говор- kết thúc bằng phụ âm nên thêm -и: говорите.' },
+    { t: 'choice', q: 'Vì sao người Nga gần như luôn thêm <span class="ru">пожа́луйста</span> vào câu mệnh lệnh?', options: ['Vì ngữ pháp bắt buộc', 'Vì mệnh lệnh trần nghe cộc', 'Vì để câu dài hơn', 'Vì đó là chủ ngữ'], a: 1, why: 'Không bắt buộc về ngữ pháp, nhưng thiếu nó thì nghe như ra lệnh.' },
+    { t: 'choice', q: '"Chúng ta đi quán cà phê nào!" bắt đầu bằng từ nào?', options: ['Иди́те', 'Дава́й', 'Бу́дьте', 'Не ходи́'], a: 1, why: 'Давай / Давайте dùng để rủ rê, nghĩa là “chúng ta hãy…”.' },
+    { t: 'type', q: 'Nhờ ai đó nói chậm lại: Говори́те ___ , пожа́луйста.', a: 'медленнее', alt: ['ме́дленнее'], hint: 'Nghĩa là “chậm hơn”.' },
+    { t: 'match', q: 'Nối:', pairs: [['Помоги́те!', 'Giúp với!'], ['Подожди́те', 'Đợi đã'], ['Повтори́те', 'Nhắc lại đi'], ['Не волну́йтесь', 'Đừng lo']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'повторите пожалуйста', a: 'повторите пожалуйста' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 23 */
+LESSON_DATA['a1-23'] = {
+  level: 'a1',
+  intro: 'Bài cuối trước khi ôn tập. Viết được một lá thư hoặc tin nhắn tử tế là mốc thật sự của trình độ A1 — nó gom hết mọi thứ em đã học vào một chỗ.',
+  blocks: [
+    { t: 'h', text: 'Mở đầu thư' },
+    { t: 'table', head: ['Mức độ', 'Cách viết', 'Dùng với ai'], rows: [
+      ['Thân mật', 'Приве́т, О́ля!', 'Bạn bè, người cùng tuổi'],
+      ['Trìu mến', 'Дорога́я ма́ма! · Дорого́й друг!', 'Người thân'],
+      ['Lịch sự', 'Здра́вствуйте, Ива́н Петро́вич!', 'Thầy cô, cấp trên, người lạ'],
+      ['Trang trọng', 'Уважа́емый профе́ссор!', 'Thư chính thức']
+    ]},
+    { t: 'note', html: 'Người Nga gọi nhau bằng <b>tên + tên đệm theo bố</b> khi lịch sự: <span class="ru">Ива́н Петро́вич</span> nghĩa là "Ivan con trai của Pyotr". Gọi thầy giáo bằng mỗi tên trống không là bất lịch sự, nhưng gọi bằng họ lại càng lạ. Cứ dùng tên + tên đệm.' },
+    { t: 'h', text: 'Thân thư — những câu đỡ khung' },
+    { t: 'words', items: [
+      { ru: 'Как дела́?', vn: 'Dạo này thế nào?' },
+      { ru: 'Как ты живёшь?', vn: 'Cậu sống thế nào?' },
+      { ru: 'У меня́ всё хорошо́.', vn: 'Tôi vẫn ổn cả.' },
+      { ru: 'Спаси́бо за письмо́.', vn: 'Cảm ơn vì lá thư.' },
+      { ru: 'Извини́, что до́лго не писа́л.', vn: 'Xin lỗi vì lâu rồi không viết. (nam)' },
+      { ru: 'Сейча́с я живу́ в Ирку́тске.', vn: 'Hiện tôi đang sống ở Irkutsk.' },
+      { ru: 'Я изуча́ю ру́сский язы́к.', vn: 'Tôi đang học tiếng Nga.' },
+      { ru: 'Здесь о́чень краси́во.', vn: 'Ở đây rất đẹp.' },
+      { ru: 'Я скуча́ю по до́му.', vn: 'Tôi nhớ nhà.' }
+    ]},
+    { t: 'h', text: 'Kết thư' },
+    { t: 'words', items: [
+      { ru: 'Жду отве́та.', vn: 'Mong thư trả lời.' },
+      { ru: 'Переда́й приве́т ма́ме.', vn: 'Cho tôi gửi lời chào mẹ.' },
+      { ru: 'До встре́чи!', vn: 'Hẹn gặp lại!' },
+      { ru: 'Пока́!', vn: 'Bai! (thân mật)' },
+      { ru: 'Целу́ю.', vn: 'Hôn em / con. (rất thân)' },
+      { ru: 'С уваже́нием,', vn: 'Trân trọng, (thư trang trọng)' }
+    ]},
+    { t: 'h', text: 'Một lá thư hoàn chỉnh' },
+    { t: 'dialog', lines: [
+      { who: '1', ru: 'Приве́т, Оа́нь!', vn: 'Chào Oanh!' },
+      { who: '2', ru: 'Как дела́? У меня́ всё хорошо́.', vn: 'Dạo này thế nào? Tớ vẫn ổn.' },
+      { who: '3', ru: 'Сейча́с я живу́ в Ирку́тске и изуча́ю ру́сский язы́к.', vn: 'Giờ tớ sống ở Irkutsk và đang học tiếng Nga.' },
+      { who: '4', ru: 'Здесь хо́лодно, но о́чень краси́во. Зимо́й мно́го сне́га.', vn: 'Ở đây lạnh nhưng rất đẹp. Mùa đông nhiều tuyết lắm.' },
+      { who: '5', ru: 'Ка́ждый день я хожу́ в университе́т. У меня́ есть но́вые друзья́.', vn: 'Ngày nào tớ cũng đến trường. Tớ có mấy người bạn mới.' },
+      { who: '6', ru: 'А как ты? Что но́вого?', vn: 'Còn cậu thì sao? Có gì mới không?' },
+      { who: '7', ru: 'Жду отве́та. Переда́й приве́т роди́телям!', vn: 'Mong thư của cậu. Cho tớ gửi lời chào bố mẹ nhé!' },
+      { who: '8', ru: 'Пока́! Чунг', vn: 'Bai! Trung' }
+    ]},
+    { t: 'tip', html: 'Đọc lại lá thư trên và đếm xem: có cách 6 (<span class="ru">в Ирку́тске</span>), cách 4 (<span class="ru">в университе́т</span>), cách 2 (<span class="ru">мно́го сне́га</span>), cách 3 (<span class="ru">роди́телям</span>), cách 5 (<span class="ru">зимо́й</span>), tính từ hoà hợp (<span class="ru">но́вые друзья́</span>), động từ chuyển động (<span class="ru">хожу́</span>). Cả cấp A1 nằm gọn trong tám dòng.' },
+    { t: 'h', text: 'Tin nhắn ngắn' },
+    { t: 'words', items: [
+      { ru: 'Ты где?', vn: 'Cậu ở đâu?' },
+      { ru: 'Я опа́здываю на 10 мину́т.', vn: 'Tớ muộn 10 phút.' },
+      { ru: 'Позвони́ мне.', vn: 'Gọi tớ nhé.' },
+      { ru: 'Договори́лись!', vn: 'Chốt nhé!' },
+      { ru: 'Всё в поря́дке.', vn: 'Ổn cả.' },
+      { ru: 'Уже́ иду́!', vn: 'Đang đến đây!' }
+    ]}
+  ],
+  vocab: [
+    { ru: 'Дорого́й / Дорога́я', vn: 'Thân mến (mở thư)' }, { ru: 'Уважа́емый', vn: 'Kính gửi' },
+    { ru: 'Жду отве́та', vn: 'Mong thư trả lời' }, { ru: 'С уваже́нием', vn: 'Trân trọng' },
+    { ru: 'Переда́й приве́т', vn: 'Cho gửi lời chào' }, { ru: 'скуча́ть', vn: 'nhớ (ai đó)' },
+    { ru: 'Договори́лись', vn: 'Chốt nhé' }, { ru: 'опа́здывать', vn: 'đến muộn' },
+    { ru: 'Всё в поря́дке', vn: 'Ổn cả' }, { ru: 'Что но́вого?', vn: 'Có gì mới không?' }
+  ],
+  ex: [
+    { t: 'choice', q: 'Viết thư cho giáo sư, em mở đầu bằng:', options: ['Приве́т, Ива́н!', 'Здра́вствуйте, Ива́н Петро́вич!', 'Эй, профе́ссор!', 'Дорого́й Ива́н!'], a: 1, why: 'Lịch sự thì dùng Здравствуйте + tên và tên đệm theo bố.' },
+    { t: 'choice', q: '<span class="ru ru-big">Ива́н Петро́вич</span> nghĩa là gì?', options: ['Ivan họ Petrov', 'Ivan con trai của Pyotr', 'Ivan và Pyotr', 'Ông Ivan Petrovich là hai người'], a: 1, why: 'Tên đệm của người Nga tạo từ tên bố. Đây là cách gọi lịch sự chuẩn mực.' },
+    { t: 'type', q: 'Kết thư trang trọng: С ___ , Чунг', a: 'уважением', alt: ['уваже́нием'], hint: 'Nghĩa là “trân trọng”, ở cách 5.' },
+    { t: 'choice', q: '"Cho tớ gửi lời chào mẹ" nói là:', options: ['Скажи́ ма́ме приве́т', 'Переда́й приве́т ма́ме', 'Приве́т для ма́ма', 'Ма́ма приве́т'], a: 1, why: 'Передай привет + cách 3 (маме) là cụm cố định.' },
+    { t: 'choice', q: '<span class="ru ru-big">Договори́лись!</span> dùng khi nào?', options: ['Khi chào tạm biệt', 'Khi đã thống nhất xong một việc', 'Khi xin lỗi', 'Khi không hiểu'], a: 1, why: 'Nghĩa đen là “chúng ta đã thoả thuận rồi” — tương đương “chốt nhé”.' },
+    { t: 'match', q: 'Nối:', pairs: [['Жду отве́та', 'Mong thư trả lời'], ['Всё в поря́дке', 'Ổn cả'], ['Что но́вого?', 'Có gì mới không?'], ['опа́здывать', 'đến muộn']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'у меня всё хорошо', a: 'у меня всё хорошо' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 24 */
+LESSON_DATA['a1-24'] = {
+  level: 'a1',
+  intro: 'Bài cuối cấp A1. Không có gì mới — chỉ gom lại toàn bộ những gì em đã học thành vài bảng nhìn một lần là thấy hết. Học xong bài này thì vào thi lấy chứng nhận.',
+  blocks: [
+    { t: 'h', text: 'Sáu cách — bảng tổng hợp' },
+    { t: 'table', head: ['Cách', 'Trả lời câu hỏi', 'Dùng khi nào', 'Đuôi giống cái (шко́ла)'], rows: [
+      ['1 · Имени́тельный', 'Кто? Что?', 'Chủ ngữ', 'шко́л<b>а</b>'],
+      ['2 · Роди́тельный', 'Кого́? Чего́?', 'Của ai · нет · без, из, для · sau số', 'шко́л<b>ы</b>'],
+      ['3 · Да́тельный', 'Кому́? Чему́?', 'Cho ai · tuổi · нра́вится · к', 'шко́л<b>е</b>'],
+      ['4 · Вини́тельный', 'Кого́? Что?', 'Tân ngữ · в/на khi đi đâu', 'шко́л<b>у</b>'],
+      ['5 · Твори́тельный', 'Кем? Чем?', 'Với ai · bằng gì · nghề nghiệp', 'шко́л<b>ой</b>'],
+      ['6 · Предло́жный', 'О ком? Где?', 'Ở đâu · nói về ai (luôn có giới từ)', 'шко́л<b>е</b>']
+    ]},
+    { t: 'tip', html: 'Cách 3 và cách 6 của giống cái trùng đuôi (<span class="ru">шко́ле</span>). Phân biệt bằng giới từ: có в/на/о đứng trước là cách 6, không có gì là cách 3.' },
+    { t: 'h', text: 'Động từ — hai nhóm, ba thì' },
+    { t: 'table', head: ['', 'Nhóm 1 (chữ Е)', 'Nhóm 2 (chữ И)'], rows: [
+      ['я', 'чита́ю', 'говорю́'],
+      ['ты', 'чита́ешь', 'говори́шь'],
+      ['он / она́', 'чита́ет', 'говори́т'],
+      ['мы', 'чита́ем', 'говори́м'],
+      ['вы', 'чита́ете', 'говори́те'],
+      ['они́', 'чита́ют', 'говоря́т']
+    ]},
+    { t: 'table', head: ['Thì', 'Cách tạo', 'Ví dụ'], rows: [
+      ['Quá khứ', 'bỏ -ть, thêm -л / -ла / -ло / -ли (theo <b>giới tính</b>)', 'Я чита́л · Я чита́ла'],
+      ['Hiện tại', 'chia theo <b>ngôi</b> (bảng trên)', 'Я чита́ю'],
+      ['Tương lai', '<b>бу́ду</b> + nguyên thể (động từ chính không chia)', 'Я бу́ду чита́ть']
+    ]},
+    { t: 'h', text: 'Bốn quy tắc theo em suốt đời' },
+    { t: 'table', head: ['Quy tắc', 'Nội dung', 'Học ở bài'], rows: [
+      ['7 chữ cái', 'Sau <b>г к х ж ч ш щ</b> viết <b>и</b>, không viết <b>ы</b>', '4, 13, 18'],
+      ['Trọng âm', 'Một âm tiết nhấn; <b>о</b> không nhấn đọc thành <b>а</b>', 'A0 bài 7'],
+      ['В hay НА', 'Không gian kín dùng <b>в</b>; hoạt động và nơi mở dùng <b>на</b>', '9'],
+      ['Số đếm', '1 → cách 1 · 2–4 → cách 2 số ít · 5+ → cách 2 số nhiều', '12, 13']
+    ]},
+    { t: 'h', text: 'Học xong A1 em làm được gì' },
+    { t: 'words', items: [
+      { ru: 'Меня́ зову́т Оа́нь. Я из Вьетна́ма.', vn: 'Giới thiệu bản thân' },
+      { ru: 'У меня́ есть ста́рший брат и мла́дшая сестра́.', vn: 'Kể về gia đình' },
+      { ru: 'Я изуча́ю ру́сский язы́к в университе́те.', vn: 'Nói về việc học' },
+      { ru: 'Вчера́ я ходи́ла в магази́н и купи́ла хлеб.', vn: 'Kể chuyện đã qua' },
+      { ru: 'За́втра я бу́ду отдыха́ть до́ма.', vn: 'Nói về dự định' },
+      { ru: 'Скажи́те, пожа́луйста, как пройти́ до метро́?', vn: 'Hỏi đường' },
+      { ru: 'Да́йте, пожа́луйста, ко́фе без са́хара.', vn: 'Gọi đồ' },
+      { ru: 'Мне два́дцать пять лет. Мне нра́вится Росси́я.', vn: 'Nói tuổi và sở thích' }
+    ]},
+    { t: 'note', html: 'Tám câu trên gói trọn cấp A1. Nếu em đọc thành tiếng cả tám câu mà không phải nghĩ, thì em đã sẵn sàng cho bài thi — và cho một cuộc trò chuyện thật với người Nga.' },
+    { t: 'h', text: 'Còn gì ở phía trước' },
+    { t: 'p', html: 'Cấp A2 sẽ dạy em thứ khiến tiếng Nga thật sự có chiều sâu: <b>thể động từ</b> (hoàn thành / chưa hoàn thành) — cùng một hành động, hai cách nhìn. Rồi động từ chuyển động có tiền tố, câu phức với <span class="ru">кото́рый</span>, và cách kể một câu chuyện dài.' },
+    { t: 'tip', html: 'Trước khi vào A2, hãy để bộ thẻ từ vựng làm việc của nó: mỗi ngày 10 phút ôn thẻ trong hai tuần. Cấp A1 có gần 200 từ — thuộc chắc từng ấy thì A2 nhẹ hơn hẳn.' }
+  ],
+  vocab: [
+    { ru: 'паде́ж', vn: 'cách (ngữ pháp)' }, { ru: 'глаго́л', vn: 'động từ' },
+    { ru: 'существи́тельное', vn: 'danh từ' }, { ru: 'прилага́тельное', vn: 'tính từ' },
+    { ru: 'пра́вило', vn: 'quy tắc' }, { ru: 'уро́вень', vn: 'trình độ, cấp độ' }
+  ],
+  ex: [
+    { t: 'choice', q: 'Cách nào trả lời câu hỏi <span class="ru">Кому́?</span>', options: ['Cách 2', 'Cách 3', 'Cách 4', 'Cách 5'], a: 1, why: 'Кому? = cho ai → дательный, cách 3.' },
+    { t: 'choice', q: 'Cách nào <b>luôn</b> phải có giới từ đứng trước?', options: ['Cách 2', 'Cách 3', 'Cách 5', 'Cách 6'], a: 3, why: 'Предложный падеж không bao giờ đứng một mình — luôn có в, на hoặc о.' },
+    { t: 'choice', q: 'Thì nào chia động từ theo <b>giới tính</b> người nói?', options: ['Hiện tại', 'Quá khứ', 'Tương lai', 'Cả ba'], a: 1, why: 'Quá khứ: читал / читала / читали.' },
+    { t: 'type', q: 'Điền: У меня́ нет ___ (вре́мя)', a: 'времени', alt: ['вре́мени'], hint: 'Sau нет là cách 2. время là danh từ bất quy tắc.' },
+    { t: 'type', q: 'Điền: Я рабо́таю ___ (врач — làm nghề bác sĩ)', a: 'врачом', alt: ['врачо́м'], hint: 'работать + cách 5.' },
+    { t: 'choice', q: 'Câu nào <b>đúng</b> hoàn toàn?', options: ['Я иду́ в Москву́ ка́ждый год.', 'Я е́зжу в Москву́ ка́ждый год.', 'Я хожу́ в Москву́ ка́ждый год.', 'Я е́ду в Москву́ ка́ждый год.'], a: 1, why: 'Đi Moskva phải bằng phương tiện, và “каждый год” là lặp lại → езжу.' },
+    { t: 'choice', q: 'Sau số <b>5 trở lên</b>, danh từ ở dạng nào?', options: ['Cách 1 số ít', 'Cách 2 số ít', 'Cách 2 số nhiều', 'Cách 4 số nhiều'], a: 2, why: 'пять рублей, десять книг — cách 2 số nhiều.' },
+    { t: 'match', q: 'Nối cách với công dụng:', pairs: [['Cách 2', 'нет, без, của ai'], ['Cách 3', 'cho ai, bao nhiêu tuổi'], ['Cách 4', 'tân ngữ trực tiếp'], ['Cách 5', 'với ai, bằng gì']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'мне двадцать пять лет', a: 'мне двадцать пять лет' }
+  ]
+};

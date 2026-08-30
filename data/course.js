@@ -98,12 +98,12 @@ const LESSONS = {
     { id: 'a1-16', title: 'Cách 3 (дательный): đưa cho ai', sub: 'Дательный — cho ai, bao nhiêu tuổi, thích cái gì', ready: true },
     { id: 'a1-17', title: 'Cách 5 (творительный): với ai, bằng cái gì', sub: 'Творительный — với ai, bằng gì, làm nghề gì', ready: true },
     { id: 'a1-18', title: 'Tính từ và sự hoà hợp', sub: 'Tính từ phải hoà hợp với danh từ nó bổ nghĩa', ready: true },
-    { id: 'a1-19', title: 'Trong cửa hàng, trong quán ăn' },
-    { id: 'a1-20', title: 'Hỏi đường, phương tiện đi lại' },
-    { id: 'a1-21', title: 'Động từ chuyển động: идти / ходить, ехать / ездить' },
-    { id: 'a1-22', title: 'Thể mệnh lệnh: hãy làm ơn…' },
-    { id: 'a1-23', title: 'Viết thư ngắn, tin nhắn' },
-    { id: 'a1-24', title: 'Ôn tập toàn cấp A1' }
+    { id: 'a1-19', title: 'Trong cửa hàng, trong quán ăn', sub: 'Mua đồ, gọi món, hỏi giá, trả tiền', ready: true },
+    { id: 'a1-20', title: 'Hỏi đường, phương tiện đi lại', sub: 'Hỏi đường và đi lại bằng на + cách 6', ready: true },
+    { id: 'a1-21', title: 'Động từ chuyển động: идти / ходить, ехать / ездить', sub: 'идти / ходить / ехать / ездить — bốn chữ “đi”', ready: true },
+    { id: 'a1-22', title: 'Thể mệnh lệnh: hãy làm ơn…', sub: 'Скажите, Дайте, Помогите — tạo từ ngôi они', ready: true },
+    { id: 'a1-23', title: 'Viết thư ngắn, tin nhắn', sub: 'Thư và tin nhắn — nơi cả cấp A1 gặp nhau', ready: true },
+    { id: 'a1-24', title: 'Ôn tập toàn cấp A1', sub: 'Bảng 6 cách, hai nhóm động từ, ba thì', ready: true }
   ],
   a2: [
     { id: 'a2-01', title: 'Thể động từ: совершенный / несовершенный' },
