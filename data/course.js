@@ -80,12 +80,12 @@ const LESSONS = {
     { id: 'a0-10', title: 'Câu tiếng Nga đầu tiên của em', sub: 'Я — Оань. Я из Вьетнама.', ready: true }
   ],
   a1: [
-    { id: 'a1-01', title: 'Giống của danh từ: đàn ông, đàn bà hay trung tính' },
-    { id: 'a1-02', title: 'Đại từ nhân xưng và “của tôi, của bạn”' },
-    { id: 'a1-03', title: 'Câu không có động từ “là”' },
-    { id: 'a1-04', title: 'Số nhiều của danh từ' },
-    { id: 'a1-05', title: 'Động từ nhóm 1: работать, знать, читать' },
-    { id: 'a1-06', title: 'Động từ nhóm 2: говорить, учить, любить' },
+    { id: 'a1-01', title: 'Giống của danh từ: đàn ông, đàn bà hay trung tính', sub: 'Nhìn chữ cuối cùng là biết giống của từ', ready: true },
+    { id: 'a1-02', title: 'Đại từ nhân xưng và “của tôi, của bạn”', sub: 'я, ты, он, она… và мой / моя / моё', ready: true },
+    { id: 'a1-03', title: 'Câu không có động từ “là”', sub: 'Это, Кто?, Что?, và cách hỏi chỉ bằng giọng', ready: true },
+    { id: 'a1-04', title: 'Số nhiều của danh từ', sub: 'Đuôi -ы / -и / -а và quy tắc chính tả 7 chữ', ready: true },
+    { id: 'a1-05', title: 'Động từ nhóm 1: работать, знать, читать', sub: 'Bộ đuôi chữ Е — chia cho sáu ngôi', ready: true },
+    { id: 'a1-06', title: 'Động từ nhóm 2: говорить, учить, любить', sub: 'Bộ đuôi chữ И, chữ Л chen vào, và хотеть / мочь', ready: true },
     { id: 'a1-07', title: 'Cách 4 (винительный): tôi đọc CÁI GÌ' },
     { id: 'a1-08', title: 'Cách 6 (предложный): ở đâu, nói về ai' },
     { id: 'a1-09', title: 'В hay НА — chỗ sai kinh điển của người Việt' },

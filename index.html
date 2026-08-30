@@ -116,6 +116,8 @@
 <script src="assets/js/supabase-config.js"></script>
 <script src="data/course.js"></script>
 <script src="data/lessons/a0.js"></script>
+<script src="data/lessons/a1.js"></script>
+<script src="data/exams.js"></script>
 <script src="assets/js/core.js"></script>
 <script src="assets/js/auth.js"></script>
 <script>
@@ -201,7 +203,7 @@ if (guest) {
         <div class="small"><b>Học xong cấp này em làm được:</b></div>
         <ul class="small soft" style="margin:6px 0 14px">${lv.can.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
         ${rows}
-        ${readyCount ? `<div style="margin-top:14px"><a class="btn btn-accent btn-sm" href="${guest ? 'dangnhap.html?next=' + encodeURIComponent('thi.html?level=' + lv.id) : 'thi.html?level=' + lv.id}">Thi cuối cấp ${lv.code}${guest ? ' 🔒' : ''}</a></div>` : ''}
+        ${readyCount && EXAMS[lv.id] ? `<div style="margin-top:14px"><a class="btn btn-accent btn-sm" href="${guest ? 'dangnhap.html?next=' + encodeURIComponent('thi.html?level=' + lv.id) : 'thi.html?level=' + lv.id}">Thi cuối cấp ${lv.code}${guest ? ' 🔒' : ''}</a></div>` : ''}
       </div>
     </div>`;
   }).join('');
