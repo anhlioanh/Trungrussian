@@ -68,5 +68,44 @@ const EXAMS = {
       { t: 'listen', q: 'Nghe và gõ lại:', say: 'сколько стоит', a: 'сколько стоит' },
       { t: 'listen', q: 'Nghe và gõ lại:', say: 'я не понимаю', a: 'я не понимаю' }
     ]
+  },
+
+  a2: {
+    title: 'Thi cuối cấp A2 — Cơ sở',
+    desc: 'Bài thi bao trùm cấp A2: thể động từ, động từ chuyển động có tiền tố, который, чтобы, thể giả định, so sánh, động từ phản thân, надо / должен, và từ vựng đời sống.',
+    minutes: 35,
+    pass: 80,
+    q: [
+      { t: 'choice', q: 'Chọn đúng: Ка́ждый день я ___ газе́ту.', options: ['прочита́ю', 'чита́ю', 'прочита́л', 'прочита́ть'], a: 1 },
+      { t: 'choice', q: 'Chọn đúng: Я уже́ ___ э́ту кни́гу, мо́жешь взять.', options: ['чита́л', 'прочита́л', 'чита́ю', 'бу́ду чита́ть'], a: 1 },
+      { t: 'choice', q: 'Thể hoàn thành <b>không có</b> thì nào?', options: ['Quá khứ', 'Hiện tại', 'Tương lai', 'Không thiếu thì nào'], a: 1 },
+      { t: 'choice', q: '<span class="ru ru-big">прочита́ю</span> mang nghĩa gì?', options: ['Tôi đang đọc', 'Tôi đã đọc xong', 'Tôi sẽ đọc xong', 'Tôi hay đọc'], a: 2 },
+      { t: 'choice', q: 'Chọn đúng: Он ___ в ко́мнату и сел.', options: ['вы́шел', 'вошёл', 'ушёл', 'подошёл'], a: 1 },
+      { t: 'choice', q: 'Tiền tố nào nghĩa là "rời đi hẳn"?', options: ['при-', 'у-', 'до-', 'под-'], a: 1 },
+      { t: 'choice', q: 'Điền: Э́то кни́га, ___ я чита́л вчера́.', options: ['кото́рый', 'кото́рая', 'кото́рую', 'кото́рой'], a: 2 },
+      { t: 'choice', q: 'Điền: Э́то дом, в ___ я живу́.', options: ['кото́рый', 'кото́ром', 'кото́рого', 'кото́рым'], a: 1 },
+      { t: 'choice', q: 'Giống của <span class="ru">кото́рый</span> lấy từ đâu?', options: ['Từ vai trò trong vế sau', 'Từ danh từ ở vế trước', 'Từ động từ', 'Luôn là giống đực'], a: 1 },
+      { t: 'choice', q: 'Điền: Я был бо́лен, ___ не пришёл.', options: ['потому́ что', 'поэ́тому', 'что́бы', 'хотя́'], a: 1 },
+      { t: 'choice', q: 'Điền: Я хочу́, что́бы ты ___ .', options: ['прийти́', 'придёшь', 'пришёл', 'приходи́шь'], a: 2 },
+      { t: 'choice', q: 'Điền: Я пришёл, что́бы ___ с тобо́й.', options: ['поговори́ть', 'поговори́л', 'поговорю́', 'говори́шь'], a: 0 },
+      { t: 'choice', q: 'So sánh hơn của <span class="ru ru-big">хоро́ший</span>:', options: ['хоро́шее', 'лу́чше', 'са́мый хоро́ший', 'хороши́е'], a: 1 },
+      { t: 'choice', q: 'Câu nào <b>đúng</b>?', options: ['Он ста́рше как я.', 'Он ста́рше чем меня́.', 'Он ста́рше меня́.', 'Он ста́рше от меня́.'], a: 2 },
+      { t: 'type', q: 'So sánh hơn của <span class="ru">интере́сный</span>:', a: 'интереснее' },
+      { t: 'choice', q: 'Sau <span class="ru">бы</span>, động từ ở dạng nào?', options: ['Nguyên thể', 'Hiện tại', 'Quá khứ', 'Mệnh lệnh'], a: 2 },
+      { t: 'type', q: 'Nhờ vả lịch sự: Не ___ бы вы помо́чь?', a: 'могли' },
+      { t: 'choice', q: 'Câu nào <b>đúng</b>?', options: ['Я учу́сь ру́сский язы́к.', 'Я учу́ ру́сский язы́к.', 'Я учу́сь ру́сским языко́м.', 'Я учу́ в университе́те.'], a: 1 },
+      { t: 'type', q: 'Điền: Я ___ в университе́те. (đi học ở đâu)', a: 'учусь' },
+      { t: 'choice', q: 'Câu nào <b>đúng</b>?', options: ['Я на́до идти́.', 'Мне на́до идти́.', 'Меня́ на́до идти́.', 'Мной на́до идти́.'], a: 1 },
+      { t: 'choice', q: 'Oanh nói "Tôi phải làm việc" bằng должен:', options: ['Я до́лжен рабо́тать.', 'Я должна́ рабо́тать.', 'Мне должна́ рабо́тать.', 'Я должны́ рабо́тать.'], a: 1 },
+      { t: 'choice', q: '"Tôi đau đầu" nói đúng là:', options: ['Я боли́т голова́.', 'У меня́ боли́т голова́.', 'Мне боли́т голова́.', 'Я боле́ю го́лову.'], a: 1 },
+      { t: 'choice', q: '<span class="ru ru-big">пять гра́дусов моро́за</span> nghĩa là:', options: ['+5 độ', '−5 độ', '5 giờ', '15 độ'], a: 1 },
+      { t: 'choice', q: '"Hôm nay ngày 30 tháng 8" nói là:', options: ['Сего́дня три́дцать а́вгуст.', 'Сего́дня тридца́тое а́вгуста.', 'Сего́дня тридца́тый а́вгуст.', 'Сего́дня три́дцать а́вгуста.'], a: 1 },
+      { t: 'choice', q: '"Năm người" nói đúng là:', options: ['пять люде́й', 'пять челове́к', 'пять челове́ка', 'пять лю́ди'], a: 1 },
+      { t: 'type', q: 'Điền: У меня́ нет ___ (вре́мя)', a: 'времени' },
+      { t: 'choice', q: '<span class="ru">интересова́ться</span> đòi cách nào?', options: ['Cách 2', 'Cách 3', 'Cách 4', 'Cách 5'], a: 3 },
+      { t: 'choice', q: 'Tặng hoa cho người Nga thì chọn:', options: ['Số chẵn', 'Số lẻ', 'Số nào cũng được', 'Càng nhiều càng tốt'], a: 1 },
+      { t: 'listen', q: 'Nghe và gõ lại:', say: 'мне надо идти', a: 'мне надо идти' },
+      { t: 'listen', q: 'Nghe và gõ lại:', say: 'я уже прочитал', a: 'я уже прочитал' }
+    ]
   }
 };
