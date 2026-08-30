@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap");
+
 /* ============================================================
    Học tiếng Nga cùng Oanh — hệ thống giao diện
    Một file duy nhất. Đổi màu/phông ở khối :root là đổi cả web.
@@ -36,7 +38,7 @@
 
   --font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-ru: "Georgia", "PT Serif", "Times New Roman", serif;
-  --font-display: "Georgia", "PT Serif", serif;
+  --font-display: "Lora", "Times New Roman", Georgia, serif;
 
   --maxw: 1080px;
   color-scheme: light;

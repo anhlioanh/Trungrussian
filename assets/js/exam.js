@@ -23,7 +23,7 @@ function drawCertificate(canvas, opt) {
   /* hoa văn nền rất nhạt */
   c.save();
   c.globalAlpha = 0.05; c.fillStyle = navy;
-  c.font = 'bold 300px Georgia, serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+  c.font = 'bold 300px "Times New Roman", Georgia, serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
   c.fillText('Р', W / 2, H / 2 + 20);
   c.restore();
 
@@ -40,20 +40,20 @@ function drawCertificate(canvas, opt) {
   c.textAlign = 'center';
 
   /* đầu trang */
-  c.fillStyle = mute; c.font = '600 20px Georgia, serif';
+  c.fillStyle = mute; c.font = '600 20px "Times New Roman", Georgia, serif';
   c.fillText('СЕРТИФИКАТ  ·  GIẤY CHỨNG NHẬN', W / 2, 148);
 
   c.strokeStyle = red; c.lineWidth = 2;
   c.beginPath(); c.moveTo(W / 2 - 90, 172); c.lineTo(W / 2 + 90, 172); c.stroke();
 
-  c.fillStyle = navy; c.font = 'bold 62px Georgia, serif';
+  c.fillStyle = navy; c.font = 'bold 62px "Times New Roman", Georgia, serif';
   c.fillText('HOÀN THÀNH CẤP ĐỘ ' + opt.code, W / 2, 250);
 
-  c.fillStyle = ink; c.font = '25px Georgia, serif';
+  c.fillStyle = ink; c.font = '25px "Times New Roman", Georgia, serif';
   c.fillText('Chứng nhận rằng', W / 2, 330);
 
   /* tên học viên */
-  c.fillStyle = red; c.font = 'bold 78px Georgia, serif';
+  c.fillStyle = red; c.font = 'bold 78px "Times New Roman", Georgia, serif';
   const name = (opt.name || 'Học viên').slice(0, 34);
   c.fillText(name, W / 2, 425);
   c.strokeStyle = '#d8cdb6'; c.lineWidth = 2;
@@ -61,32 +61,32 @@ function drawCertificate(canvas, opt) {
   c.beginPath(); c.moveTo((W - w) / 2, 455); c.lineTo((W + w) / 2, 455); c.stroke();
 
   /* nội dung */
-  c.fillStyle = ink; c.font = '25px Georgia, serif';
+  c.fillStyle = ink; c.font = '25px "Times New Roman", Georgia, serif';
   c.fillText('đã hoàn thành chương trình', W / 2, 512);
-  c.font = 'bold 34px Georgia, serif'; c.fillStyle = navy;
+  c.font = 'bold 34px "Times New Roman", Georgia, serif'; c.fillStyle = navy;
   c.fillText(opt.levelName + '  ·  ' + opt.levelRu, W / 2, 560);
-  c.fillStyle = ink; c.font = '25px Georgia, serif';
+  c.fillStyle = ink; c.font = '25px "Times New Roman", Georgia, serif';
   c.fillText('của khoá học ' + opt.site, W / 2, 606);
 
   /* điểm số */
-  c.fillStyle = '#1e7d4f'; c.font = 'bold 40px Georgia, serif';
+  c.fillStyle = '#1e7d4f'; c.font = 'bold 40px "Times New Roman", Georgia, serif';
   c.fillText('Kết quả: ' + opt.score + '%', W / 2, 676);
 
   /* chân trang: ngày, mã, chữ ký */
-  c.textAlign = 'left'; c.fillStyle = mute; c.font = '19px Georgia, serif';
+  c.textAlign = 'left'; c.fillStyle = mute; c.font = '19px "Times New Roman", Georgia, serif';
   c.fillText('Ngày cấp:  ' + opt.date, 130, 806);
   c.fillText('Mã số:  ' + opt.cert, 130, 838);
 
   c.textAlign = 'right';
-  c.fillStyle = navy; c.font = 'italic 30px Georgia, serif';
+  c.fillStyle = navy; c.font = 'italic 30px "Times New Roman", Georgia, serif';
   c.fillText(opt.site, W - 130, 800);
   c.strokeStyle = '#d8cdb6'; c.lineWidth = 1.5;
   c.beginPath(); c.moveTo(W - 430, 818); c.lineTo(W - 130, 818); c.stroke();
-  c.fillStyle = mute; c.font = '17px Georgia, serif';
+  c.fillStyle = mute; c.font = '17px "Times New Roman", Georgia, serif';
   c.fillText('Người soạn khoá học', W - 130, 844);
 
   /* ghi chú trung thực */
-  c.textAlign = 'center'; c.fillStyle = mute; c.font = '15px Georgia, serif';
+  c.textAlign = 'center'; c.fillStyle = mute; c.font = '15px "Times New Roman", Georgia, serif';
   c.fillText('Đây là giấy chứng nhận nội bộ của website học tiếng Nga miễn phí này,', W / 2, 900);
   c.fillText('ghi nhận nỗ lực của người học. Không phải chứng chỉ ТРКИ do cơ quan nhà nước Nga cấp.', W / 2, 924);
 }
