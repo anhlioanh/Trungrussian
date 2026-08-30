@@ -55,6 +55,7 @@ data/course.js         lộ trình A0→C2 và danh sách bài từng cấp
 data/lessons/a0.js     nội dung cấp A0 (10 bài)
 data/lessons/a1.js     nội dung cấp A1 (24 bài)
 data/lessons/a2.js     nội dung cấp A2 (24 bài)
+data/lessons/b1.js     nội dung cấp B1 (28 bài)
 data/exams.js          đề thi cuối cấp
 data/placement.js      ngân hàng câu hỏi kiểm tra đầu vào
 ```
