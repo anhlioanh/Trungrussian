@@ -98,6 +98,14 @@ LESSON_DATA['a1-01'] = {
 
 Đúng 70% bài tập trở lên thì bài được tính là học xong và từ vựng được nạp vào bộ thẻ.
 
+## Bài giảng tự chạy
+
+Mỗi bài học có nút **“Xem bài giảng”**: nội dung bài được dựng thành một chuỗi màn hình toàn màn hình tự lật, máy đọc tiếng Nga bằng giọng Nga và giảng bằng giọng Việt (nếu máy người học có giọng vi-VN; không có thì màn hình tự dừng lâu hơn để đọc bằng mắt).
+
+Không cần làm gì thêm khi viết bài mới — trình chiếu được dựng **tự động từ chính `blocks` của bài**, nên thêm bài là có bài giảng. Mã nằm ở `assets/js/lecture.js`; muốn đổi cách một loại khối hiển thị thì sửa hàm `build()`.
+
+Điều khiển: phím cách chạy/dừng, ← → chuyển màn, Esc thoát. Có ba tốc độ và nút tắt lời giảng tiếng Việt.
+
 ## Thêm đề thi cho một cấp
 
 Trong `data/exams.js`, thêm khoá mới theo mẫu của `a0`. Các loại câu hỏi giống hệt bài tập (`choice`, `type`, `listen`).

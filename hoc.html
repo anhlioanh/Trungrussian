@@ -75,6 +75,7 @@
 <script src="data/lessons/a1.js"></script>
 <script src="assets/js/core.js"></script>
 <script src="assets/js/lesson.js"></script>
+<script src="assets/js/lecture.js"></script>
 <script src="assets/js/auth.js"></script>
 <script>
 Auth.guard(function () {
@@ -112,6 +113,16 @@ if (!data || !meta) {
 
     <section><div class="callout note">${data.intro}</div></section>
 
+    <section>
+      <button class="lec-open" id="open-lecture" type="button">
+        <span class="play">▶</span>
+        <span>
+          <b>Xem bài giảng</b>
+          <small>Bài này tự chạy như video: chữ hiện lên, máy đọc tiếng Nga và giảng bằng tiếng Việt. Cứ ngồi xem, chưa cần đọc gì.</small>
+        </span>
+      </button>
+    </section>
+
     <section id="theory">${renderBlocks(data.blocks)}</section>
 
     <hr>
@@ -138,6 +149,11 @@ if (!data || !meta) {
       ${next ? `<a class="btn btn-ghost btn-sm" href="${nextHref}">${nextLocked ? '🔒 ' : ''}${esc(next.title)} →</a>`
              : `<a class="btn btn-accent btn-sm" href="${guest ? 'dangnhap.html' : 'thi.html?level=' + levelId}">Thi cuối cấp ${esc(level.code)} →</a>`}
     </nav>`;
+
+  /* bài giảng tự chạy */
+  Lecture.mount();
+  Lecture.build(id, data, meta, level);
+  document.getElementById('open-lecture').onclick = () => Lecture.open();
 
   /* bàn phím tiếng Nga ảo */
   const RU_KEYS = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'.split('');
