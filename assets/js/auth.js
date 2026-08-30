@@ -11,6 +11,7 @@ const sb = (SB_OK && window.supabase) ? window.supabase.createClient(SUPABASE_UR
 const Auth = {
   user: null,
   profile: null,
+  guest: false,
   syncTimer: null,
   syncing: false,
 
@@ -125,18 +126,28 @@ const Auth = {
     await sb.from('exam_results').insert({ user_id: this.user.id, level, score, passed });
   },
 
-  /* ---------- cổng gác: trang nào cũng gọi hàm này ---------- */
-  async guard(run) {
+  isGuest() { return this.guest; },
+
+  /* ---------- cổng gác: trang nào cũng gọi hàm này ----------
+     opts.guest = true  → chưa đăng nhập vẫn vào được (chế độ học thử) */
+  async guard(run, opts) {
+    opts = opts || {};
     if (!SB_OK || !sb) { showSetupNotice(); return; }
     let u = null;
     try { u = await this.boot(); } catch (e) { console.warn(e); }
     if (!u) {
-      const next = location.pathname.split('/').pop() + location.search;
-      location.replace('dangnhap.html?next=' + encodeURIComponent(next));
+      if (!opts.guest) {
+        const next = location.pathname.split('/').pop() + location.search;
+        location.replace('dangnhap.html?next=' + encodeURIComponent(next));
+        return;
+      }
+      this.guest = true;
+      run();                 // trang tự dựng thanh điều hướng trước
+      renderGuestChip();     // rồi mới gắn chip "học thử" vào
       return;
     }
-    run();                 // trang tự dựng thanh điều hướng trước
-    renderUserChip();      // rồi mới gắn chip người dùng vào
+    run();
+    renderUserChip();
   }
 };
 
@@ -186,6 +197,28 @@ function renderUserChip() {
      </span>`;
   box.appendChild(wrap);
   document.getElementById('signout').onclick = () => { if (confirm('Đăng xuất khỏi tài khoản này?')) Auth.signOut(); };
+}
+
+/* chip cho người đang học thử */
+function renderGuestChip() {
+  const box = document.querySelector('.nav-links');
+  if (!box || document.getElementById('user-chip')) return;
+  const next = encodeURIComponent(location.pathname.split('/').pop() + location.search);
+  const w = document.createElement('span');
+  w.id = 'user-chip';
+  w.innerHTML = `<span class="uchip guest">
+      <span class="uavatar">?</span><span class="uname">Học thử</span>
+      <a href="dangnhap.html?next=${next}">Đăng nhập</a></span>`;
+  box.appendChild(w);
+}
+
+/* khung nhắc đăng nhập, dùng chung ở nhiều trang */
+function guestBox(text, nextUrl) {
+  const next = encodeURIComponent(nextUrl || (location.pathname.split('/').pop() + location.search));
+  return `<div class="callout note between" style="margin:16px 0">
+      <span>${text}</span>
+      <a class="btn btn-primary btn-sm" href="dangnhap.html?next=${next}">Tạo tài khoản miễn phí</a>
+    </div>`;
 }
 
 /* ---------- đèn báo trạng thái lưu ---------- */

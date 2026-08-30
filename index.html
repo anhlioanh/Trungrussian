@@ -49,6 +49,8 @@
 
 <div class="wrap">
 
+  <div id="guest-note"></div>
+
   <section>
     <div class="card">
       <div class="grid grid-4" style="gap:0">
@@ -95,7 +97,7 @@
       <div class="between">
         <div>
           <h3 class="mb0">Tiến độ của em</h3>
-          <p class="small muted mb0">Tiến độ được lưu trên tài khoản của em, tự đồng bộ mỗi khi có thay đổi. Muốn giữ thêm một bản ngoài máy thì tải file sao lưu.</p>
+          <p class="small muted mb0" id="prog-note">Tiến độ được lưu trên tài khoản của em, tự đồng bộ mỗi khi có thay đổi. Muốn giữ thêm một bản ngoài máy thì tải file sao lưu.</p>
         </div>
         <div class="row">
           <button class="btn btn-ghost btn-sm" id="backup">Sao lưu ra file</button>
@@ -118,6 +120,7 @@
 <script src="assets/js/auth.js"></script>
 <script>
 Auth.guard(function () {
+const guest = Auth.isGuest();
 mountChrome('index.html');
 touchStreak();
 
@@ -141,11 +144,20 @@ touchStreak();
   document.getElementById('s-bar').style.width = pct + '%';
 
   /* nút "bắt đầu" nhảy tới bài chưa học đầu tiên */
-  const next = (LESSONS.a0 || []).find(l => l.ready && !Store.get('lessons.' + l.id + '.done', false));
+  const pool = guest ? (LESSONS.a0 || []).filter(l => FREE_LESSONS.includes(l.id)) : (LESSONS.a0 || []);
+  const next = pool.find(l => l.ready && !Store.get('lessons.' + l.id + '.done', false));
   const cta = document.getElementById('cta');
   if (next) { cta.href = 'hoc.html?id=' + next.id; if (st.doneLessons) cta.textContent = 'Học tiếp: ' + next.title; }
+  else if (guest) { cta.href = 'dangnhap.html?next=index.html'; cta.textContent = 'Hết phần học thử — tạo tài khoản để học tiếp'; }
   else if (st.doneLessons) { cta.href = 'thi.html?level=a0'; cta.textContent = 'Xong A0 — vào thi lấy chứng nhận'; }
 })();
+
+/* nhắc đăng nhập nếu đang học thử */
+if (guest) {
+  document.getElementById('guest-note').innerHTML = guestBox(
+    '<b>Em đang học thử.</b> Ba bài đầu mở cho tất cả mọi người. Tạo tài khoản để mở hết khoá và để tiến độ được lưu lại.',
+    'index.html');
+}
 
 /* lộ trình */
 (function () {
@@ -159,6 +171,8 @@ touchStreak();
     const rows = list.map((l, i) => {
       const isDone = d.lessons[l.id] && d.lessons[l.id].done;
       if (!l.ready) return `<div class="lesson-row locked"><span class="n">${i + 1}</span><span class="t">${esc(l.title)}<small>Đang soạn</small></span></div>`;
+      if (guest && !FREE_LESSONS.includes(l.id)) return `<a class="lesson-row locked" href="dangnhap.html?next=${encodeURIComponent('hoc.html?id=' + l.id)}">
+        <span class="n">🔒</span><span class="t">${esc(l.title)}<small>Đăng nhập để mở</small></span></a>`;
       return `<a class="lesson-row ${isDone ? 'done' : ''}" href="hoc.html?id=${l.id}">
         <span class="n">${isDone ? '✓' : i + 1}</span>
         <span class="t">${esc(l.title)}${l.sub ? `<small>${esc(l.sub)}</small>` : ''}</span>
@@ -187,7 +201,7 @@ touchStreak();
         <div class="small"><b>Học xong cấp này em làm được:</b></div>
         <ul class="small soft" style="margin:6px 0 14px">${lv.can.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
         ${rows}
-        ${readyCount ? `<div style="margin-top:14px"><a class="btn btn-accent btn-sm" href="thi.html?level=${lv.id}">Thi cuối cấp ${lv.code}</a></div>` : ''}
+        ${readyCount ? `<div style="margin-top:14px"><a class="btn btn-accent btn-sm" href="${guest ? 'dangnhap.html?next=' + encodeURIComponent('thi.html?level=' + lv.id) : 'thi.html?level=' + lv.id}">Thi cuối cấp ${lv.code}${guest ? ' 🔒' : ''}</a></div>` : ''}
       </div>
     </div>`;
   }).join('');
@@ -196,6 +210,9 @@ touchStreak();
   const first = document.querySelector('.lvl');
   if (first) first.classList.add('expanded');
 })();
+
+if (guest) document.getElementById('prog-note').textContent =
+  'Đang học thử nên tiến độ chỉ nằm tạm trong máy này. Đăng nhập là toàn bộ phần đã học được chuyển lên tài khoản, không mất gì cả.';
 
 /* sao lưu / khôi phục */
 document.getElementById('backup').onclick = () => {
@@ -224,7 +241,7 @@ document.getElementById('wipe').onclick = () => {
   }
 };
 
-}); // hết Auth.guard
+}, { guest: true }); // hết Auth.guard
 </script>
 </body>
 </html>

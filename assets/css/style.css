@@ -289,3 +289,9 @@ footer.site {
 .stu-num { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; color: var(--brand); }
 .stu .chev { transition: transform .2s; }
 .stu.open .chev { transform: rotate(90deg); }
+.uchip.guest .uavatar { background: var(--bg-soft); color: var(--text-mute); }
+.uchip a {
+  font-size: .74rem; font-weight: 700; text-decoration: none;
+  background: var(--brand); color: #fff; padding: 4px 11px; border-radius: 99px;
+}
+.uchip a:hover { filter: brightness(1.12); }

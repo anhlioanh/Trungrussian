@@ -11,6 +11,10 @@ const SITE = {
   author: 'Trung'
 };
 
+/* Ba bài đầu cho học thử, không cần tài khoản.
+   Thêm/bớt bài ở đây là đổi phạm vi học thử. */
+const FREE_LESSONS = ['a0-01', 'a0-02', 'a0-03'];
+
 /* ----- 2. Lưu trữ tiến độ (localStorage, không cần máy chủ) ----- */
 const KEY = 'htn.v1';
 
@@ -149,7 +153,7 @@ function renderNav(active) {
 function renderFooter() {
   return `<footer class="site"><div class="wrap">
     <p><strong>${SITE.name}</strong> — ${SITE.tagline}</p>
-    <p class="tiny">Tiến độ học được lưu ngay trong trình duyệt của em, không gửi đi đâu cả. Xoá dữ liệu trình duyệt là mất, nên thỉnh thoảng vào Trang chủ bấm “Sao lưu tiến độ” nhé.</p>
+    <p class="tiny">Có tài khoản thì tiến độ được lưu lại, đổi máy hay đổi điện thoại vẫn còn nguyên. Học thử không cần tài khoản: ba bài đầu mở sẵn cho mọi người.</p>
   </div></footer>`;
 }
 function mountChrome(active) {

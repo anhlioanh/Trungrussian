@@ -105,7 +105,9 @@ Trong `data/exams.js`, thêm khoá mới theo mẫu của `a0`. Các loại câu
 
 ## Nối Supabase (tài khoản + lưu tiến độ thật)
 
-Web bắt buộc đăng nhập mới học được. Tiến độ lưu trên Supabase nên đổi máy, đổi điện thoại vẫn còn nguyên.
+Tiến độ lưu trên Supabase nên đổi máy, đổi điện thoại vẫn còn nguyên.
+
+**Học thử không cần tài khoản:** ba bài đầu (`a0-01`, `a0-02`, `a0-03`) mở cho tất cả mọi người, tiến độ tạm giữ trong máy; đăng nhập là toàn bộ phần đã học được gộp lên tài khoản. Muốn mở nhiều hay ít bài hơn thì sửa dòng `FREE_LESSONS` ở đầu `assets/js/core.js`. Các bài còn lại, kì thi và trang giáo viên đều cần đăng nhập.
 
 ### 1. Tạo dự án
 
