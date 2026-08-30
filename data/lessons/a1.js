@@ -393,3 +393,408 @@ LESSON_DATA['a1-06'] = {
     { t: 'listen', q: 'Nghe và gõ lại:', say: 'я хочу учить русский язык', a: 'я хочу учить русский язык' }
   ]
 };
+
+/* ---------------------------------------------------------- BÀI 7 */
+LESSON_DATA['a1-07'] = {
+  level: 'a1',
+  intro: 'Đây là bài mở cánh cửa vào phần khó nhất — và hay nhất — của tiếng Nga: <b>hệ thống 6 cách</b>. Danh từ tiếng Nga đổi đuôi tuỳ theo vai trò của nó trong câu. Hôm nay em học cách đầu tiên: <b>вини́тельный падеж</b> (cách 4), dùng cho <b>đối tượng bị tác động</b> — tôi đọc CÁI GÌ, tôi yêu AI.',
+  blocks: [
+    { t: 'h', text: 'Vì sao tiếng Nga cần "cách"?' },
+    { t: 'p', html: 'Tiếng Việt phân biệt ai làm gì bằng <b>trật tự từ</b>: "Mẹ yêu con" khác "Con yêu mẹ". Tiếng Nga phân biệt bằng <b>đuôi từ</b>, nên trật tự từ khá tự do:' },
+    { t: 'words', items: [
+      { ru: 'Ма́ма лю́бит дочь.', vn: 'Mẹ yêu con gái.' },
+      { ru: 'Дочь лю́бит ма́ма.', vn: 'Vẫn là "mẹ yêu con gái" — vì đuôi từ mới quyết định ai làm chủ ngữ, không phải vị trí.' }
+    ]},
+    { t: 'note', html: 'Đây là lý do người Nga nghe được câu tiếng Nga sai đuôi là thấy khó chịu ngay: với họ, đổi đuôi là đổi nghĩa, chứ không phải chuyện làm đẹp.' },
+    { t: 'h', text: 'Quy tắc cách 4: chỉ giống cái mới đổi' },
+    { t: 'table', head: ['Loại danh từ', 'Đổi thế nào', 'Ví dụ'], rows: [
+      ['Đực — <b>vật</b>', 'Giữ nguyên', 'журна́л → Я чита́ю журна́л.'],
+      ['Trung', 'Giữ nguyên', 'окно́ → Я ви́жу окно́.'],
+      ['Cái -а', 'đổi thành <b>-у</b>', 'кни́га → Я чита́ю кни́г<b>у</b>.'],
+      ['Cái -я', 'đổi thành <b>-ю</b>', 'семья́ → Я люблю́ семь<b>ю́</b>.'],
+      ['Cái -ь', 'Giữ nguyên', 'тетра́дь → Я ви́жу тетра́дь.'],
+      ['Đực — <b>người, con vật</b>', 'thêm <b>-а / -я</b>', 'брат → Я ви́жу бра́т<b>а</b>.']
+    ]},
+    { t: 'tip', html: 'Nhìn bảng cho gọn: <b>chỉ hai nhóm phải đổi</b> — giống cái đuôi -а/-я, và giống đực chỉ người hoặc con vật. Mọi thứ còn lại giữ nguyên. Không đáng sợ như em tưởng.' },
+    { t: 'h', text: 'Người / con vật khác đồ vật' },
+    { t: 'p', html: 'Tiếng Nga chia danh từ giống đực thành <b>одушевлённые</b> (có sự sống) và <b>неодушевлённые</b> (không sự sống). Chỉ nhóm có sự sống mới đổi đuôi ở cách 4:' },
+    { t: 'words', items: [
+      { ru: 'Я ви́жу дом.', vn: 'Tôi thấy ngôi nhà. (vật — giữ nguyên)' },
+      { ru: 'Я ви́жу бра́та.', vn: 'Tôi thấy anh trai. (người — thêm -а)' },
+      { ru: 'Я зна́ю студе́нта.', vn: 'Tôi biết cậu sinh viên đó.' },
+      { ru: 'Я слу́шаю преподава́теля.', vn: 'Tôi nghe thầy giáo giảng. (-ь → -я)' },
+      { ru: 'Я люблю́ соба́ку.', vn: 'Tôi yêu con chó. (giống cái: -а → -у)' }
+    ]},
+    { t: 'h', text: 'Những động từ đòi cách 4' },
+    { t: 'p', html: 'Học động từ thì học luôn nó "đòi" cách nào. Nhóm dưới đây đều đi với cách 4:' },
+    { t: 'words', items: [
+      { ru: 'чита́ть', vn: 'đọc — читать книгу' },
+      { ru: 'знать', vn: 'biết — знать ответ' },
+      { ru: 'люби́ть', vn: 'yêu — любить музыку' },
+      { ru: 'изуча́ть', vn: 'học môn — изучать русский язык' },
+      { ru: 'смотре́ть', vn: 'xem — смотреть фильм' },
+      { ru: 'слу́шать', vn: 'nghe — слушать песню' },
+      { ru: 'де́лать', vn: 'làm — делать работу' },
+      { ru: 'покупа́ть', vn: 'mua — покупать газету' },
+      { ru: 'понима́ть', vn: 'hiểu — понимать вопрос' }
+    ]},
+    { t: 'warn', html: '<b>Lỗi số một của người Việt:</b> để danh từ nguyên dạng từ điển. Tiếng Việt không đổi đuôi nên tai ta không thấy thiếu gì. Nói <span class="ru">Я чита́ю кни́га</span> là sai — phải là <span class="ru">кни́гу</span>. Cách chữa: mỗi lần nói một câu có tân ngữ, dừng nửa giây tự hỏi "từ này giống cái không?" Vài tuần là thành phản xạ.' },
+    { t: 'h', text: 'Câu mẫu để nhại theo' },
+    { t: 'words', items: [
+      { ru: 'Я изуча́ю ру́сский язы́к.', vn: 'Tôi học tiếng Nga.' },
+      { ru: 'Она́ чита́ет интере́сную кни́гу.', vn: 'Cô ấy đang đọc một quyển sách hay.' },
+      { ru: 'Мы смо́трим но́вости.', vn: 'Chúng tôi xem tin tức.' },
+      { ru: 'Ты понима́ешь вопро́с?', vn: 'Bạn hiểu câu hỏi không?' },
+      { ru: 'Он лю́бит свою́ рабо́ту.', vn: 'Anh ấy yêu công việc của mình.' }
+    ]}
+  ],
+  vocab: [
+    { ru: 'вопро́с', vn: 'câu hỏi' }, { ru: 'отве́т', vn: 'câu trả lời' }, { ru: 'фильм', vn: 'bộ phim' },
+    { ru: 'пе́сня', vn: 'bài hát' }, { ru: 'но́вости', vn: 'tin tức' }, { ru: 'покупа́ть', vn: 'mua' },
+    { ru: 'соба́ка', vn: 'con chó' }, { ru: 'ко́шка', vn: 'con mèo' }, { ru: 'интере́сный', vn: 'thú vị, hay' }
+  ],
+  ex: [
+    { t: 'type', q: 'Điền cách 4: Я чита́ю ___ (кни́га)', a: 'книгу', alt: ['кни́гу'], hint: 'Giống cái -а đổi thành -у.' },
+    { t: 'type', q: 'Điền cách 4: Я ви́жу ___ (брат)', a: 'брата', alt: ['бра́та'], hint: 'Giống đực chỉ người thì thêm -а.' },
+    { t: 'choice', q: 'Câu nào <b>đúng</b>?', options: ['Я смотрю́ фильм.', 'Я смотрю́ фильма.', 'Я смотрю́ фильму.', 'Я смотре́ть фильм.'], a: 0, why: 'фильм là giống đực chỉ vật nên giữ nguyên ở cách 4.' },
+    { t: 'choice', q: 'Vì sao <span class="ru">Я ви́жу дом</span> không đổi đuôi mà <span class="ru">Я ви́жу бра́та</span> lại đổi?', options: ['Vì дом ngắn hơn', 'Vì брат chỉ người còn дом là đồ vật', 'Vì дом là giống trung', 'Vì брат là số nhiều'], a: 1, why: 'Giống đực chia thành có sự sống và không có sự sống. Chỉ nhóm có sự sống mới đổi đuôi ở cách 4.' },
+    { t: 'type', q: 'Điền cách 4: Я люблю́ ___ (му́зыка)', a: 'музыку', alt: ['му́зыку'], hint: '-а → -у' },
+    { t: 'choice', q: 'Trong tiếng Nga, cái gì quyết định ai là chủ ngữ của câu?', options: ['Vị trí đứng đầu câu', 'Đuôi của từ', 'Trọng âm', 'Dấu câu'], a: 1, why: 'Đuôi từ quyết định vai trò, nên trật tự từ tiếng Nga khá tự do.' },
+    { t: 'match', q: 'Nối:', pairs: [['вопро́с', 'câu hỏi'], ['отве́т', 'câu trả lời'], ['пе́сня', 'bài hát'], ['покупа́ть', 'mua']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'я читаю книгу', a: 'я читаю книгу' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 8 */
+LESSON_DATA['a1-08'] = {
+  level: 'a1',
+  intro: 'Cách thứ hai em học: <b>предло́жный паде́ж</b> (cách 6). Tên của nó nghĩa là "cách đi với giới từ" — vì nó <b>không bao giờ đứng một mình</b>, luôn có в, на hoặc о đứng trước. Dùng để nói <b>ở đâu</b> và <b>về ai, về cái gì</b>.',
+  blocks: [
+    { t: 'h', text: 'Quy tắc gọn nhất trong sáu cách: hầu hết thành -е' },
+    { t: 'table', head: ['Số ít', 'Cách 6', 'Câu'], rows: [
+      ['дом', 'в до́м<b>е</b>', 'Я до́ма… nhưng: Кни́га в до́ме.'],
+      ['шко́ла', 'в шко́л<b>е</b>', 'Она́ рабо́тает в шко́ле.'],
+      ['окно́', 'в окн<b>е́</b>', 'Я ви́жу свет в окне́.'],
+      ['Москва́', 'в Москв<b>е́</b>', 'Он живёт в Москве́.'],
+      ['стол', 'на стол<b>е́</b>', 'Кни́га на столе́.']
+    ]},
+    { t: 'h', text: 'Ba ngoại lệ phải nhớ' },
+    { t: 'table', head: ['Kết thúc bằng', 'Thành', 'Ví dụ'], rows: [
+      ['-ия', '-ии', 'Росси́я → в Росси́<b>и</b> · лаборато́рия → в лаборато́ри<b>и</b>'],
+      ['-ие', '-ии', 'общежи́тие → в общежи́ти<b>и</b> · зда́ние → в зда́ни<b>и</b>'],
+      ['-ий', '-ии', 'санато́рий → в санато́ри<b>и</b>'],
+      ['-ь (giống cái)', '-и', 'тетра́дь → в тетра́д<b>и</b> · дверь → в двер<b>и</b>']
+    ]},
+    { t: 'warn', html: 'Nhóm <b>-ия / -ие / -ий → -ии</b> gặp rất nhiều trong từ học thuật: <span class="ru">лаборато́рия, ауди́тория, конфере́нция, о́бщежи́тие</span>. Học nhóm này một lần cho chắc là tránh được hàng chục lỗi về sau.' },
+    { t: 'h', text: 'Giới từ О — nói VỀ ai, VỀ cái gì' },
+    { t: 'words', items: [
+      { ru: 'Я ду́маю о тебе́.', vn: 'Anh nghĩ về em.' },
+      { ru: 'Мы говори́м о рабо́те.', vn: 'Chúng tôi nói chuyện về công việc.' },
+      { ru: 'Он расска́зывает о Росси́и.', vn: 'Anh ấy kể về nước Nga.' },
+      { ru: 'О ком вы говори́те?', vn: 'Các anh đang nói về ai vậy?' },
+      { ru: 'О чём э́та кни́га?', vn: 'Quyển sách này nói về cái gì?' }
+    ]},
+    { t: 'note', html: 'Trước nguyên âm, <span class="ru">о</span> đổi thành <span class="ru">об</span> cho dễ đọc: <span class="ru">об отце́</span> (về bố), <span class="ru">об э́том</span> (về chuyện này). Cùng lý do với "a / an" trong tiếng Anh.' },
+    { t: 'h', text: 'Câu hỏi Где? — Ở đâu?' },
+    { t: 'dialog', lines: [
+      { who: 'А', ru: 'Где ты сейча́с?', vn: 'Bây giờ cậu ở đâu?' },
+      { who: 'Б', ru: 'Я в университе́те. А ты?', vn: 'Tớ ở trường. Còn cậu?' },
+      { who: 'А', ru: 'Я до́ма. Где твоя́ сестра́?', vn: 'Tớ ở nhà. Chị cậu đâu?' },
+      { who: 'Б', ru: 'Она́ на рабо́те.', vn: 'Chị ấy đang ở chỗ làm.' },
+      { who: 'А', ru: 'А где мой слова́рь?', vn: 'Thế từ điển của tớ đâu?' },
+      { who: 'Б', ru: 'На столе́, в ко́мнате.', vn: 'Trên bàn, trong phòng ấy.' }
+    ]},
+    { t: 'tip', html: 'Hai từ chỉ chỗ <b>không theo quy tắc</b> mà em dùng hằng ngày: <span class="ru">до́ма</span> (ở nhà) và <span class="ru">здесь</span> (ở đây). Chúng là trạng từ, không phải danh từ, nên không có giới từ và không đổi đuôi.' }
+  ],
+  vocab: [
+    { ru: 'университе́т', vn: 'trường đại học' }, { ru: 'ко́мната', vn: 'căn phòng' },
+    { ru: 'лаборато́рия', vn: 'phòng thí nghiệm' }, { ru: 'общежи́тие', vn: 'ký túc xá' },
+    { ru: 'ду́мать', vn: 'nghĩ' }, { ru: 'жить', vn: 'sống, ở' },
+    { ru: 'расска́зывать', vn: 'kể' }, { ru: 'о чём', vn: 'về cái gì' }, { ru: 'о ком', vn: 'về ai' }
+  ],
+  ex: [
+    { t: 'type', q: 'Điền cách 6: Он живёт в ___ (Москва́)', a: 'москве', alt: ['Москве', 'Москве́'], hint: '-а đổi thành -е.' },
+    { t: 'type', q: 'Điền cách 6: Я рабо́таю в ___ (лаборато́рия)', a: 'лаборатории', alt: ['лаборато́рии'], hint: '-ия là ngoại lệ, đổi thành -ии chứ không phải -е.' },
+    { t: 'choice', q: 'Câu nào <b>đúng</b>?', options: ['Я живу́ в Росси́е.', 'Я живу́ в Росси́и.', 'Я живу́ в Росси́я.', 'Я живу́ в Росси́ю.'], a: 1, why: 'Россия kết thúc -ия nên cách 6 là -ии: в России.' },
+    { t: 'choice', q: 'Vì sao cách 6 được gọi là "предложный"?', options: ['Vì nó dài nhất', 'Vì nó luôn đi kèm giới từ', 'Vì nó chỉ dùng cho câu đề nghị', 'Vì nó đứng cuối câu'], a: 1, why: 'предлог = giới từ. Cách 6 không bao giờ đứng một mình, luôn có в / на / о phía trước.' },
+    { t: 'choice', q: '"Anh nghĩ về em" nói là:', options: ['Я ду́маю о ты.', 'Я ду́маю о тебе́.', 'Я ду́маю о тебя́.', 'Я ду́маю тебе́.'], a: 1, why: 'Sau о phải dùng cách 6: ты → о тебе.' },
+    { t: 'type', q: 'Điền: Кни́га на ___ (стол)', a: 'столе', alt: ['столе́'], hint: 'Thêm -е, trọng âm rơi vào đuôi.' },
+    { t: 'match', q: 'Nối:', pairs: [['общежи́тие', 'ký túc xá'], ['ко́мната', 'căn phòng'], ['жить', 'sống, ở'], ['ду́мать', 'nghĩ']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'я в университете', a: 'я в университете' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 9 */
+LESSON_DATA['a1-09'] = {
+  level: 'a1',
+  intro: 'Bài này chỉ về <b>hai chữ cái</b>: в và на. Nghe thì nhỏ, nhưng đây là lỗi người Việt học tiếng Nga mắc nhiều nhất và dai nhất — có người học năm năm vẫn còn sai. Nắm chắc hôm nay là đỡ được cả chặng đường dài.',
+  blocks: [
+    { t: 'h', text: 'Quy tắc gốc: kín hay hở' },
+    { t: 'table', head: ['Giới từ', 'Dùng khi', 'Ví dụ'], rows: [
+      ['<b>в</b>', 'Bên <b>trong</b> một không gian có ranh giới', 'в до́ме, в ко́мнате, в шко́ле, в маши́не, в го́роде'],
+      ['<b>на</b>', 'Trên <b>bề mặt</b>, hoặc không gian <b>mở</b>', 'на столе́, на у́лице, на пло́щади, на мо́ре']
+    ]},
+    { t: 'p', html: 'Đến đây thì logic còn dễ. Cái khó là <b>nhóm ngoại lệ</b>: một số nơi chốn và hoạt động dùng <span class="ru">на</span> dù chúng hoàn toàn là không gian kín. Không có lý do logic — chỉ có thói quen ngôn ngữ.' },
+    { t: 'h', text: 'Danh sách НА — học thuộc như học từ vựng' },
+    { t: 'words', items: [
+      { ru: 'на рабо́те', vn: 'ở chỗ làm' },
+      { ru: 'на уро́ке', vn: 'trong giờ học' },
+      { ru: 'на ле́кции', vn: 'ở buổi giảng' },
+      { ru: 'на заня́тии', vn: 'ở buổi học' },
+      { ru: 'на факульте́те', vn: 'ở khoa' },
+      { ru: 'на ка́федре', vn: 'ở bộ môn' },
+      { ru: 'на заво́де', vn: 'ở nhà máy' },
+      { ru: 'на по́чте', vn: 'ở bưu điện' },
+      { ru: 'на вокза́ле', vn: 'ở nhà ga' },
+      { ru: 'на ста́нции', vn: 'ở ga tàu điện' },
+      { ru: 'на конце́рте', vn: 'ở buổi hoà nhạc' },
+      { ru: 'на собра́нии', vn: 'ở cuộc họp' },
+      { ru: 'на ю́ге / на се́вере', vn: 'ở phía nam / phía bắc' }
+    ]},
+    { t: 'tip', html: 'Nhìn kỹ danh sách trên: phần lớn là <b>hoạt động</b> (giờ học, buổi giảng, cuộc họp, buổi hoà nhạc) chứ không phải cái phòng chứa nó. Người Nga hình dung "đang tham gia vào việc đó" chứ không phải "đang ở trong cái phòng đó". Nhớ theo hướng này dễ hơn học vẹt.' },
+    { t: 'h', text: 'Đối lập với danh sách В' },
+    { t: 'words', items: [
+      { ru: 'в университе́те', vn: 'ở trường đại học' },
+      { ru: 'в институ́те', vn: 'ở viện' },
+      { ru: 'в шко́ле', vn: 'ở trường phổ thông' },
+      { ru: 'в лаборато́рии', vn: 'trong phòng thí nghiệm' },
+      { ru: 'в библиоте́ке', vn: 'trong thư viện' },
+      { ru: 'в общежи́тии', vn: 'ở ký túc xá' },
+      { ru: 'в магази́не', vn: 'trong cửa hàng' },
+      { ru: 'в теа́тре', vn: 'ở nhà hát' },
+      { ru: 'в Росси́и / во Вьетна́ме', vn: 'ở Nga / ở Việt Nam' }
+    ]},
+    { t: 'warn', html: 'Cặp bẫy kinh điển: <span class="ru">в университе́те</span> (ở trường) nhưng <span class="ru">на факульте́те</span> (ở khoa) — cùng một toà nhà, hai giới từ khác nhau. Và <span class="ru">в лаборато́рии</span> chứ <b>không phải</b> <span class="ru">на лаборато́рии</span>.' },
+    { t: 'h', text: 'Ở ĐÂU hay ĐI ĐÂU — cùng giới từ, khác cách' },
+    { t: 'p', html: 'Đây là điểm hay của tiếng Nga: <span class="ru">в</span> và <span class="ru">на</span> đi với <b>hai cách khác nhau</b> tuỳ theo em đang đứng yên hay đang di chuyển.' },
+    { t: 'table', head: ['Câu hỏi', 'Cách dùng', 'Ví dụ'], rows: [
+      ['<b>Где?</b> — Ở đâu (đứng yên)', 'в / на + <b>cách 6</b>', 'Я в университе́т<b>е</b>. · Я на рабо́т<b>е</b>.'],
+      ['<b>Куда́?</b> — Đi đâu (di chuyển)', 'в / на + <b>cách 4</b>', 'Я иду́ в университе́т. · Я иду́ на рабо́т<b>у</b>.']
+    ]},
+    { t: 'words', items: [
+      { ru: 'Я в шко́ле.', vn: 'Tôi đang ở trường. (Где?)' },
+      { ru: 'Я иду́ в шко́лу.', vn: 'Tôi đang đi đến trường. (Куда?)' },
+      { ru: 'Она́ на рабо́те.', vn: 'Cô ấy đang ở chỗ làm.' },
+      { ru: 'Она́ идёт на рабо́ту.', vn: 'Cô ấy đang đi làm.' }
+    ]},
+    { t: 'note', html: 'Giới từ giữ nguyên, chỉ đuôi danh từ đổi. Nếu một nơi dùng <span class="ru">на</span> khi đứng yên thì lúc đi cũng vẫn <span class="ru">на</span> — không bao giờ đổi sang в. Nhớ được điều này thì học thuộc danh sách НА một lần là dùng cho cả hai trường hợp.' }
+  ],
+  vocab: [
+    { ru: 'рабо́та', vn: 'công việc, chỗ làm' }, { ru: 'уро́к', vn: 'giờ học' },
+    { ru: 'ле́кция', vn: 'buổi giảng' }, { ru: 'факульте́т', vn: 'khoa' },
+    { ru: 'библиоте́ка', vn: 'thư viện' }, { ru: 'по́чта', vn: 'bưu điện' },
+    { ru: 'вокза́л', vn: 'nhà ga' }, { ru: 'куда́', vn: 'đi đâu' }, { ru: 'идти́', vn: 'đi (bộ)' }
+  ],
+  ex: [
+    { t: 'choice', q: 'Chọn đúng: Я рабо́таю ___ лаборато́рии.', options: ['на', 'в', 'о', 'у'], a: 1, why: 'Phòng thí nghiệm là không gian kín nên dùng в: в лаборатории. Đây là lỗi rất hay gặp.' },
+    { t: 'choice', q: 'Chọn đúng: Он ___ рабо́те.', options: ['в', 'на', 'о', 'из'], a: 1, why: 'работа nằm trong danh sách НА — người Nga hình dung là "đang tham gia công việc".' },
+    { t: 'choice', q: 'Chọn đúng: Она́ у́чится ___ факульте́те.', options: ['в', 'на', 'о', 'к'], a: 1, why: 'на факультете, dù cùng toà nhà với в университете. Đây là cặp bẫy kinh điển.' },
+    { t: 'type', q: 'Điền đuôi đúng: Я иду́ в шко́л___ (đi ĐẾN trường)', a: 'школу', alt: ['шко́лу'], hint: 'Куда? → cách 4, giống cái -а thành -у.' },
+    { t: 'type', q: 'Điền đuôi đúng: Я в шко́л___ (đang Ở trường)', a: 'школе', alt: ['шко́ле'], hint: 'Где? → cách 6, đuôi -е.' },
+    { t: 'choice', q: 'Nếu một nơi dùng <span class="ru">на</span> khi trả lời Где?, thì khi trả lời Куда? nó dùng:', options: ['в', 'vẫn на', 'к', 'bỏ giới từ'], a: 1, why: 'Giới từ không đổi, chỉ đuôi danh từ đổi từ cách 6 sang cách 4.' },
+    { t: 'match', q: 'Nối nơi chốn với giới từ đúng:', pairs: [['___ библиоте́ке', 'в'], ['___ по́чте', 'на'], ['___ теа́тре', 'в'], ['___ вокза́ле', 'на']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'я работаю в лаборатории', a: 'я работаю в лаборатории' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 10 */
+LESSON_DATA['a1-10'] = {
+  level: 'a1',
+  intro: 'Sau hai bài về cách, đây là bài <b>dễ thở</b>. Thì quá khứ tiếng Nga đơn giản đến bất ngờ: không chia theo ngôi, chỉ có bốn dạng, và cách tạo thì chỉ một bước.',
+  blocks: [
+    { t: 'h', text: 'Công thức: bỏ -ть, thêm -л' },
+    { t: 'table', head: ['Ai nói', 'Đuôi', 'чита́ть → đọc'], rows: [
+      ['Nam (я, ты, он)', '-л', 'чита́<b>л</b> — Я чита́л.'],
+      ['Nữ (я, ты, она́)', '-ла', 'чита́<b>ла</b> — Я чита́ла.'],
+      ['Trung (оно́)', '-ло', 'чита́<b>ло</b>'],
+      ['Số nhiều (мы, вы, они́)', '-ли', 'чита́<b>ли</b> — Мы чита́ли.']
+    ]},
+    { t: 'warn', html: '<b>Điểm khác hẳn tiếng Việt và tiếng Anh:</b> quá khứ tiếng Nga chia theo <b>giới tính người nói</b>, không phải theo ngôi. Oanh nói <span class="ru">Я чита́ла</span>, còn Trung nói <span class="ru">Я чита́л</span> — cùng nghĩa "tôi đã đọc". Nói sai đuôi là người Nga tưởng em đang nói về người khác giới.' },
+    { t: 'h', text: 'Ví dụ đủ bốn dạng' },
+    { t: 'words', items: [
+      { ru: 'Он рабо́тал в Москве́.', vn: 'Anh ấy đã làm việc ở Moskva.' },
+      { ru: 'Она́ рабо́тала в шко́ле.', vn: 'Cô ấy đã làm việc ở trường.' },
+      { ru: 'Мы говори́ли о тебе́.', vn: 'Chúng tôi đã nói về cậu.' },
+      { ru: 'Они́ смотре́ли фильм.', vn: 'Họ đã xem phim.' },
+      { ru: 'Я не понима́л.', vn: 'Tôi đã không hiểu. (nam nói)' },
+      { ru: 'Я не понима́ла.', vn: 'Tôi đã không hiểu. (nữ nói)' }
+    ]},
+    { t: 'h', text: 'Động từ "là" chỉ xuất hiện ở quá khứ' },
+    { t: 'p', html: 'Nhớ lại bài A0: hiện tại tiếng Nga <b>bỏ hẳn</b> động từ "là". Nhưng ở quá khứ thì nó quay lại, và bắt buộc phải có:' },
+    { t: 'table', head: ['', 'Hiện tại', 'Quá khứ'], rows: [
+      ['Tôi ở nhà (nam)', 'Я до́ма.', 'Я <b>был</b> до́ма.'],
+      ['Tôi ở nhà (nữ)', 'Я до́ма.', 'Я <b>была́</b> до́ма.'],
+      ['Trời đã lạnh', 'Хо́лодно.', '<b>Бы́ло</b> хо́лодно.'],
+      ['Chúng tôi đã ở đó', 'Мы там.', 'Мы <b>бы́ли</b> там.']
+    ]},
+    { t: 'note', html: 'Chú ý trọng âm của <span class="ru">была́</span> — rơi vào âm cuối, khác hẳn <span class="ru">был, бы́ло, бы́ли</span>. Đây là dạng người học hay đọc sai.' },
+    { t: 'h', text: 'Hai động từ bất quy tắc hay dùng' },
+    { t: 'table', head: ['Nguyên thể', 'Nam', 'Nữ', 'Số nhiều'], rows: [
+      ['идти́ (đi bộ)', 'шёл', 'шла', 'шли'],
+      ['мочь (có thể)', 'мог', 'могла́', 'могли́']
+    ]},
+    { t: 'words', items: [
+      { ru: 'Вчера́ я шёл в университе́т.', vn: 'Hôm qua tôi đi tới trường. (nam)' },
+      { ru: 'Она́ шла домо́й.', vn: 'Cô ấy đang trên đường về nhà.' },
+      { ru: 'Я не мог говори́ть по-ру́сски.', vn: 'Tôi đã không nói được tiếng Nga.' }
+    ]},
+    { t: 'tip', html: 'Bốn từ chỉ thời gian đi kèm quá khứ, học luôn cho tiện: <span class="ru">вчера́</span> (hôm qua), <span class="ru">ра́ньше</span> (trước đây), <span class="ru">неда́вно</span> (mới đây), <span class="ru">давно́</span> (lâu rồi).' }
+  ],
+  vocab: [
+    { ru: 'был', vn: 'đã ở, đã là (nam)' }, { ru: 'была́', vn: 'đã ở, đã là (nữ)' },
+    { ru: 'бы́ли', vn: 'đã ở, đã là (số nhiều)' }, { ru: 'вчера́', vn: 'hôm qua' },
+    { ru: 'ра́ньше', vn: 'trước đây' }, { ru: 'давно́', vn: 'lâu rồi' },
+    { ru: 'домо́й', vn: 'về nhà (hướng đi)' }, { ru: 'шёл', vn: 'đã đi (nam)' }
+  ],
+  ex: [
+    { t: 'choice', q: 'Oanh kể "Tôi đã đọc quyển sách này" thì nói:', options: ['Я чита́л э́ту кни́гу.', 'Я чита́ла э́ту кни́гу.', 'Я чита́ли э́ту кни́гу.', 'Я чита́ть э́ту кни́гу.'], a: 1, why: 'Quá khứ tiếng Nga chia theo giới tính người nói. Oanh là nữ nên dùng đuôi -ла.' },
+    { t: 'choice', q: 'Thì quá khứ tiếng Nga chia theo:', options: ['Ngôi (tôi, bạn, họ)', 'Giới tính và số', 'Thời điểm cụ thể', 'Không chia gì cả'], a: 1, why: 'Chỉ có 4 dạng: nam, nữ, trung, số nhiều. Ngôi không ảnh hưởng.' },
+    { t: 'type', q: 'Điền: Вчера́ мы ___ в теа́тре. (быть)', a: 'были', alt: ['бы́ли'], hint: 'Số nhiều của быть ở quá khứ.' },
+    { t: 'type', q: 'Điền (nữ nói): Я ___ до́ма. (быть)', a: 'была', alt: ['была́'], hint: 'Đuôi -ла, trọng âm rơi vào âm cuối.' },
+    { t: 'choice', q: 'Câu nào <b>sai</b>?', options: ['Я был до́ма.', 'Я до́ма.', 'Я есть до́ма.', 'Мы бы́ли там.'], a: 2, why: 'Thì hiện tại không dùng động từ "là". “Я есть дома” là lỗi dịch từ tiếng Anh.' },
+    { t: 'choice', q: 'Quá khứ của <span class="ru ru-big">идти́</span> ở giống nam là:', options: ['идёл', 'шёл', 'шла', 'ходи́л'], a: 1, why: 'идти là động từ bất quy tắc: шёл / шла / шли.' },
+    { t: 'match', q: 'Nối:', pairs: [['вчера́', 'hôm qua'], ['ра́ньше', 'trước đây'], ['давно́', 'lâu rồi'], ['домо́й', 'về nhà']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'вчера я был дома', a: 'вчера я был дома' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 11 */
+LESSON_DATA['a1-11'] = {
+  level: 'a1',
+  intro: 'Nốt thì cuối cùng ở cấp A1. Thì tương lai cũng dễ như quá khứ: chỉ cần một động từ phụ <span class="ru">быть</span> đứng trước, còn động từ chính giữ nguyên dạng nguyên thể.',
+  blocks: [
+    { t: 'h', text: 'Công thức: бу́ду + nguyên thể' },
+    { t: 'table', head: ['Ngôi', 'быть ở tương lai', 'Ví dụ đầy đủ'], rows: [
+      ['я', 'бу́ду', 'Я <b>бу́ду</b> чита́ть.'],
+      ['ты', 'бу́дешь', 'Ты <b>бу́дешь</b> рабо́тать.'],
+      ['он / она́', 'бу́дет', 'Она́ <b>бу́дет</b> учи́ть ру́сский.'],
+      ['мы', 'бу́дем', 'Мы <b>бу́дем</b> смотре́ть фильм.'],
+      ['вы', 'бу́дете', 'Вы <b>бу́дете</b> отдыха́ть?'],
+      ['они́', 'бу́дут', 'Они́ <b>бу́дут</b> говори́ть по-ру́сски.']
+    ]},
+    { t: 'tip', html: 'Chỉ có <span class="ru">быть</span> là chia. Động từ thứ hai <b>luôn ở dạng nguyên thể</b>, y như sau <span class="ru">хочу́</span> và <span class="ru">могу́</span> em đã học ở bài 6. Ba cấu trúc, cùng một quy luật.' },
+    { t: 'h', text: 'Бу́ду đứng một mình = "sẽ ở, sẽ là"' },
+    { t: 'words', items: [
+      { ru: 'За́втра я бу́ду до́ма.', vn: 'Mai tôi sẽ ở nhà.' },
+      { ru: 'Он бу́дет врачо́м.', vn: 'Anh ấy sẽ trở thành bác sĩ.' },
+      { ru: 'Ве́чером мы бу́дем в теа́тре.', vn: 'Buổi tối chúng tôi sẽ ở nhà hát.' },
+      { ru: 'Э́то бу́дет интере́сно.', vn: 'Cái đó sẽ hay đấy.' }
+    ]},
+    { t: 'h', text: 'Ba thì cạnh nhau cho dễ nhìn' },
+    { t: 'table', head: ['Thì', 'Câu', 'Nghĩa'], rows: [
+      ['Quá khứ', 'Я чита́л кни́гу.', 'Tôi đã đọc sách.'],
+      ['Hiện tại', 'Я чита́ю кни́гу.', 'Tôi đọc / đang đọc sách.'],
+      ['Tương lai', 'Я бу́ду чита́ть кни́гу.', 'Tôi sẽ đọc sách.']
+    ]},
+    { t: 'note', html: 'Để ý: chỉ có <b>hiện tại</b> là chia động từ chính theo ngôi. Quá khứ chia theo giới tính, tương lai thì động từ chính không chia gì cả. Nghĩa là em chỉ phải học thuộc <b>một</b> bộ chia — bộ hiện tại ở bài 5 và 6.' },
+    { t: 'h', text: 'Từ chỉ thời gian tương lai' },
+    { t: 'words', items: [
+      { ru: 'за́втра', vn: 'ngày mai' },
+      { ru: 'послеза́втра', vn: 'ngày kia' },
+      { ru: 'ско́ро', vn: 'sắp tới, chẳng bao lâu nữa' },
+      { ru: 'пото́м', vn: 'sau đó' },
+      { ru: 'че́рез неде́лю', vn: 'một tuần nữa' },
+      { ru: 'в бу́дущем году́', vn: 'năm sau' }
+    ]},
+    { t: 'warn', html: 'Tiếng Nga còn một kiểu tương lai nữa — <b>tương lai hoàn thành</b> (<span class="ru">я прочита́ю</span> = tôi sẽ đọc xong), tạo từ thể hoàn thành của động từ. Cái đó thuộc cấp A2, em chưa cần lo. Ở A1 cứ dùng <span class="ru">бу́ду + nguyên thể</span> là người Nga hiểu hết.' },
+    { t: 'h', text: 'Hội thoại mẫu' },
+    { t: 'dialog', lines: [
+      { who: 'А', ru: 'Что ты бу́дешь де́лать за́втра?', vn: 'Mai cậu sẽ làm gì?' },
+      { who: 'Б', ru: 'У́тром бу́ду рабо́тать, а ве́чером бу́ду отдыха́ть.', vn: 'Sáng thì làm việc, còn tối thì nghỉ ngơi.' },
+      { who: 'А', ru: 'Ты бу́дешь до́ма?', vn: 'Cậu sẽ ở nhà chứ?' },
+      { who: 'Б', ru: 'Да. Пото́м бу́ду смотре́ть фильм.', vn: 'Ừ. Sau đó tớ sẽ xem phim.' }
+    ]}
+  ],
+  vocab: [
+    { ru: 'бу́ду', vn: 'tôi sẽ' }, { ru: 'за́втра', vn: 'ngày mai' }, { ru: 'ско́ро', vn: 'sắp tới' },
+    { ru: 'пото́м', vn: 'sau đó' }, { ru: 'у́тром', vn: 'buổi sáng' }, { ru: 'ве́чером', vn: 'buổi tối' },
+    { ru: 'неде́ля', vn: 'tuần' }, { ru: 'врач', vn: 'bác sĩ' }
+  ],
+  ex: [
+    { t: 'type', q: 'Điền: За́втра я ___ рабо́тать.', a: 'буду', alt: ['бу́ду'], hint: 'Dạng tương lai của быть cho ngôi я.' },
+    { t: 'choice', q: 'Câu nào <b>đúng</b>?', options: ['Я бу́ду чита́ю.', 'Я бу́ду чита́ть.', 'Я бу́дет чита́ть.', 'Я чита́ть бу́ду ю.'], a: 1, why: 'Chỉ быть chia, động từ chính giữ nguyên thể.' },
+    { t: 'type', q: 'Điền: Они́ ___ говори́ть по-ру́сски.', a: 'будут', alt: ['бу́дут'], hint: 'Ngôi они.' },
+    { t: 'choice', q: 'Thì nào <b>chia động từ chính theo ngôi</b>?', options: ['Quá khứ', 'Hiện tại', 'Tương lai', 'Cả ba'], a: 1, why: 'Quá khứ chia theo giới tính, tương lai không chia động từ chính. Chỉ hiện tại chia theo ngôi.' },
+    { t: 'choice', q: '"Mai chúng tôi sẽ ở nhà hát" nói là:', options: ['За́втра мы в теа́тре.', 'За́втра мы бу́дем в теа́тре.', 'За́втра мы бы́ли в теа́тре.', 'За́втра мы быть в теа́тре.'], a: 1, why: 'будем đứng một mình cũng có nghĩa "sẽ ở, sẽ là".' },
+    { t: 'match', q: 'Nối:', pairs: [['за́втра', 'ngày mai'], ['ско́ро', 'sắp tới'], ['у́тром', 'buổi sáng'], ['ве́чером', 'buổi tối']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'завтра я буду дома', a: 'завтра я буду дома' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 12 */
+LESSON_DATA['a1-12'] = {
+  level: 'a1',
+  intro: 'Số đếm và tiền bạc — thứ em cần ngay ngày đầu tiên đặt chân xuống nước Nga. Bài này cũng giới thiệu một quy luật nổi tiếng khó: <b>số đếm quyết định đuôi của danh từ đứng sau</b>.',
+  blocks: [
+    { t: 'h', text: 'Từ 1 đến 10' },
+    { t: 'words', items: [
+      { ru: 'оди́н', vn: '1' }, { ru: 'два', vn: '2' }, { ru: 'три', vn: '3' },
+      { ru: 'четы́ре', vn: '4' }, { ru: 'пять', vn: '5' }, { ru: 'шесть', vn: '6' },
+      { ru: 'семь', vn: '7' }, { ru: 'во́семь', vn: '8' }, { ru: 'де́вять', vn: '9' }, { ru: 'де́сять', vn: '10' }
+    ]},
+    { t: 'h', text: 'Từ 11 đến 20 — thêm đuôi -надцать' },
+    { t: 'words', items: [
+      { ru: 'оди́ннадцать', vn: '11' }, { ru: 'двена́дцать', vn: '12' }, { ru: 'трина́дцать', vn: '13' },
+      { ru: 'четы́рнадцать', vn: '14' }, { ru: 'пятна́дцать', vn: '15' }, { ru: 'шестна́дцать', vn: '16' },
+      { ru: 'семна́дцать', vn: '17' }, { ru: 'восемна́дцать', vn: '18' }, { ru: 'девятна́дцать', vn: '19' },
+      { ru: 'два́дцать', vn: '20' }
+    ]},
+    { t: 'tip', html: 'Đuôi <b>-надцать</b> vốn là "на де́сять" (trên mười) viết dính lại. Biết gốc thì nhớ dễ hơn nhiều: <span class="ru">три + надцать</span> = mười ba.' },
+    { t: 'h', text: 'Hàng chục và trăm' },
+    { t: 'words', items: [
+      { ru: 'три́дцать', vn: '30' }, { ru: 'со́рок', vn: '40 (không theo quy tắc nào)' },
+      { ru: 'пятьдеся́т', vn: '50' }, { ru: 'шестьдеся́т', vn: '60' },
+      { ru: 'се́мьдесят', vn: '70' }, { ru: 'во́семьдесят', vn: '80' },
+      { ru: 'девяно́сто', vn: '90 (cũng bất quy tắc)' }, { ru: 'сто', vn: '100' }
+    ]},
+    { t: 'p', html: 'Ghép số thì đọc lần lượt: <span class="ru">два́дцать пять</span> (25), <span class="ru">со́рок семь</span> (47), <span class="ru">во́семьдесят три</span> (83).' },
+    { t: 'h', text: 'Quy luật quan trọng nhất bài: số nào thì đuôi nấy' },
+    { t: 'p', html: 'Trong tiếng Nga, <b>con số quyết định hình dạng của danh từ đứng sau</b>. Có ba nhóm:' },
+    { t: 'table', head: ['Số kết thúc bằng', 'Danh từ ở dạng', 'Ví dụ với рубль (đồng rúp)'], rows: [
+      ['1 (21, 31, 101…)', 'số ít, nguyên dạng', 'оди́н <b>рубль</b> · два́дцать оди́н <b>рубль</b>'],
+      ['2, 3, 4 (22, 33…)', 'số ít, cách 2', 'два <b>рубля́</b> · четы́ре <b>рубля́</b>'],
+      ['5 → 20, và 0', 'số nhiều, cách 2', 'пять <b>рубле́й</b> · сто <b>рубле́й</b>']
+    ]},
+    { t: 'words', items: [
+      { ru: 'одна́ кни́га', vn: '1 quyển sách' },
+      { ru: 'две кни́ги', vn: '2 quyển sách (chú ý: две chứ không phải два — với giống cái)' },
+      { ru: 'пять книг', vn: '5 quyển sách' },
+      { ru: 'оди́н студе́нт / два студе́нта / пять студе́нтов', vn: '1 / 2 / 5 sinh viên' }
+    ]},
+    { t: 'warn', html: '<b>Hai chữ "hai":</b> <span class="ru">два</span> đi với giống đực và trung, <span class="ru">две</span> đi với giống cái. <span class="ru">два стола́</span> nhưng <span class="ru">две кни́ги</span>. Chỉ số 1 và số 2 mới phân biệt giống, từ 3 trở lên thì dùng chung.' },
+    { t: 'note', html: 'Đừng cố học thuộc bảng này trong một buổi. Ở A1 em chỉ cần <b>nhận ra</b> quy luật và nói đúng các số hay dùng. Cách 2 sẽ được học tử tế ở bài 13, lúc đó bảng này tự sáng ra.' },
+    { t: 'h', text: 'Hỏi giá và mua bán' },
+    { t: 'dialog', lines: [
+      { who: 'А', ru: 'Ско́лько сто́ит э́та кни́га?', vn: 'Quyển sách này bao nhiêu tiền?' },
+      { who: 'Б', ru: 'Три́ста рубле́й.', vn: 'Ba trăm rúp.' },
+      { who: 'А', ru: 'А э́ти две кни́ги?', vn: 'Thế hai quyển này thì sao?' },
+      { who: 'Б', ru: 'Пятьсо́т рубле́й.', vn: 'Năm trăm rúp.' },
+      { who: 'А', ru: 'Хорошо́, я возьму́. Спаси́бо!', vn: 'Được, tôi lấy. Cảm ơn!' }
+    ]},
+    { t: 'words', items: [
+      { ru: 'Ско́лько сто́ит…?', vn: 'Cái… giá bao nhiêu? (một món)' },
+      { ru: 'Ско́лько сто́ят…?', vn: 'Những cái… giá bao nhiêu? (nhiều món)' },
+      { ru: 'до́рого', vn: 'đắt' },
+      { ru: 'дёшево', vn: 'rẻ' },
+      { ru: 'ру́бль', vn: 'đồng rúp' },
+      { ru: 'де́ньги', vn: 'tiền' }
+    ]}
+  ],
+  vocab: [
+    { ru: 'оди́н', vn: 'một' }, { ru: 'два', vn: 'hai (đực/trung)' }, { ru: 'две', vn: 'hai (cái)' },
+    { ru: 'пять', vn: 'năm' }, { ru: 'де́сять', vn: 'mười' }, { ru: 'два́дцать', vn: 'hai mươi' },
+    { ru: 'сто', vn: 'một trăm' }, { ru: 'ско́лько', vn: 'bao nhiêu' },
+    { ru: 'Ско́лько сто́ит?', vn: 'Giá bao nhiêu?' }, { ru: 'ру́бль', vn: 'đồng rúp' },
+    { ru: 'до́рого', vn: 'đắt' }, { ru: 'дёшево', vn: 'rẻ' }
+  ],
+  ex: [
+    { t: 'choice', q: 'Số <b>40</b> trong tiếng Nga là:', options: ['четы́рдесят', 'со́рок', 'четы́рнадцать', 'сорока́'], a: 1, why: 'сорок là từ bất quy tắc, không theo mẫu -десят như 50, 60, 70.' },
+    { t: 'choice', q: '"Hai quyển sách" nói là:', options: ['два кни́ги', 'две кни́ги', 'две книг', 'два кни́га'], a: 1, why: 'книга là giống cái nên dùng две, và sau 2-4 thì danh từ ở cách 2 số ít: книги.' },
+    { t: 'choice', q: 'Sau số <b>5 trở lên</b>, danh từ đứng ở dạng nào?', options: ['Nguyên dạng số ít', 'Cách 2 số ít', 'Cách 2 số nhiều', 'Cách 4'], a: 2, why: 'пять рублей, сто книг — cách 2 số nhiều.' },
+    { t: 'type', q: 'Hỏi giá một món đồ:  ___ сто́ит?', a: 'сколько', alt: ['ско́лько'], hint: 'Từ để hỏi "bao nhiêu".' },
+    { t: 'choice', q: '<span class="ru ru-big">де́вять</span> là số mấy?', options: ['7', '8', '9', '19'], a: 2, why: 'девять = 9. Đừng nhầm với девятнадцать = 19.' },
+    { t: 'choice', q: 'Số nào phân biệt giống đực và giống cái?', options: ['Chỉ số 1', 'Số 1 và số 2', 'Mọi số', 'Không số nào'], a: 1, why: 'один/одна và два/две. Từ 3 trở lên dùng chung cho mọi giống.' },
+    { t: 'match', q: 'Nối:', pairs: [['до́рого', 'đắt'], ['дёшево', 'rẻ'], ['сто', '100'], ['во́семь', '8']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'сколько стоит', a: 'сколько стоит' }
+  ]
+};
