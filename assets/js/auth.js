@@ -106,6 +106,7 @@ const Auth = {
         data: d,
         lessons_done: st.doneLessons || 0,
         words: st.cards || 0,
+        xp: st.xp || 0,
         streak: (d.streak && d.streak.days) || 0,
         updated_at: new Date().toISOString()
       }, { onConflict: 'user_id' });
@@ -118,6 +119,15 @@ const Auth = {
     clearTimeout(this.syncTimer);
     flashSync('wait');
     this.syncTimer = setTimeout(() => this.push(), 1200);
+  },
+
+  /* đọc bảng xếp hạng (view public.leaderboard trong schema.sql) */
+  async leaderboard(limit) {
+    if (!sb || !this.user) return null;
+    const { data, error } = await sb.from('leaderboard')
+      .select('*').order('xp', { ascending: false }).limit(limit || 20);
+    if (error) { console.warn('Không đọc được bảng xếp hạng:', error.message); return null; }
+    return data || [];
   },
 
   /* ghi lại một lần thi */

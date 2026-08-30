@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiểm tra đầu vào — Học tiếng Nga cùng Oanh</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .pl-wrap { max-width: 680px; margin: 0 auto; }
+  .opt { display: flex; align-items: center; gap: 10px; padding: 13px 15px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); cursor: pointer; background: var(--surface-2); margin-bottom: 8px; }
+  .opt:hover { border-color: var(--brand); }
+  .opt input { accent-color: var(--brand); }
+  .qbig { font-size: 1.12rem; font-weight: 600; margin-bottom: 16px; }
+  .round-chip { display: inline-flex; gap: 6px; align-items: center; font-size: .76rem; font-weight: 700;
+    letter-spacing: .05em; text-transform: uppercase; color: var(--accent); }
+  .lvl-result { text-align: center; padding: 30px 24px; }
+  .lvl-badge { width: 92px; height: 92px; margin: 0 auto 16px; border-radius: 26px; display: grid; place-items: center;
+    background: linear-gradient(140deg, var(--brand), var(--accent)); color: #fff;
+    font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; }
+  .ladder { display: grid; gap: 6px; margin: 18px 0; text-align: left; }
+  .rung { display: flex; align-items: center; gap: 11px; padding: 10px 14px; border-radius: var(--radius-sm);
+    border: 1px solid var(--border); background: var(--surface); font-size: .9rem; }
+  .rung.known { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+  .rung.start { background: var(--brand-soft); border-color: var(--brand); color: var(--brand); font-weight: 700; }
+  .rung .code { font-family: var(--font-display); font-weight: 700; width: 34px; }
+  .rung .tag { margin-left: auto; font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+</style>
+</head>
+<body>
+<div id="nav"></div>
+
+<div class="wrap"><div class="pl-wrap" id="page"></div></div>
+
+<div id="footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="data/course.js"></script>
+<script src="data/lessons/a0.js"></script>
+<script src="data/lessons/a1.js"></script>
+<script src="data/placement.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+Auth.guard(function () {
+mountChrome('');
+const page = document.getElementById('page');
+const first = qs('first') === '1';
+
+let round = 0, qs_ = [], cur = 0, answers = [], prelim = 'a0', r1score = {};
+
+/* ---------- màn hình mở đầu ---------- */
+function intro() {
+  const already = Store.get('placed', null);
+  page.innerHTML = `
+    <section style="margin:34px 0 20px">
+      <span class="pill pill-accent">Kiểm tra đầu vào</span>
+      <h1 style="margin:10px 0 6px">${first ? 'Chào em! Trước khi học, thử xem em đang ở đâu' : 'Em đang ở trình độ nào?'}</h1>
+      <p class="soft">Bài kiểm tra hai vòng, khoảng 8–10 phút, không tính giờ. Xong rồi web sẽ chỉ đúng chỗ em nên bắt đầu — khỏi phải học lại những gì em đã biết.</p>
+    </section>
+
+    ${already ? `<div class="callout tip">Lần trước em được xếp vào <b>${esc((COURSE.levels.find(l=>l.id===already)||{}).code || already.toUpperCase())}</b> (ngày ${esc(Store.get('placedAt',''))}). Làm lại sẽ ghi đè kết quả cũ.</div>` : ''}
+
+    <section class="card">
+      <div class="grid grid-3" style="text-align:center">
+        <div><b style="font-family:var(--font-display);font-size:1.6rem">2</b><div class="tiny muted">vòng</div></div>
+        <div><b style="font-family:var(--font-display);font-size:1.6rem">20</b><div class="tiny muted">câu hỏi</div></div>
+        <div><b style="font-family:var(--font-display);font-size:1.6rem">~9</b><div class="tiny muted">phút</div></div>
+      </div>
+      <hr>
+      <p class="small soft mb0"><b>Vòng 1 — sàng lọc.</b> 12 câu trải từ dễ đến khó, từ bảng chữ cái đến tiếng Nga học thuật. Vòng này đoán xem em đang ở khoảng nào.</p>
+      <p class="small soft"><b>Vòng 2 — xác nhận.</b> 8 câu đúng ngay mức vừa đoán, để chốt cho chắc.</p>
+      <div class="callout note small">Không biết thì cứ chọn bừa hoặc chọn phương án em thấy hợp lý nhất — đoán sai không mất gì, mục đích là xếp đúng chỗ chứ không phải chấm điểm.</div>
+      <div class="row" style="margin-top:16px">
+        <button class="btn btn-primary" id="go">Bắt đầu vòng 1</button>
+        <a class="btn btn-ghost" href="index.html">${first ? 'Bỏ qua, học từ đầu' : 'Để lúc khác'}</a>
+      </div>
+    </section>
+
+    ${first ? `<p class="tiny muted center" style="margin-top:14px">Nếu em chưa biết một chữ tiếng Nga nào thì cứ bấm “Bỏ qua, học từ đầu” — bài kiểm tra này dành cho người đã học ở đâu đó rồi.</p>` : ''}`;
+
+  document.getElementById('go').onclick = () => startRound(1);
+}
+
+/* ---------- chạy một vòng ---------- */
+function startRound(n) {
+  round = n;
+  cur = 0;
+  answers = [];
+  qs_ = (n === 1) ? PLACEMENT.round1.slice() : PLACEMENT.banks[prelim].slice();
+  question();
+}
+
+function question() {
+  const q = qs_[cur];
+  const pct = Math.round(cur / qs_.length * 100);
+  page.innerHTML = `
+    <section style="margin:26px 0 14px">
+      <div class="between">
+        <span class="round-chip">Vòng ${round}${round === 2 ? ' · xác nhận mức ' + prelim.toUpperCase() : ' · sàng lọc'}</span>
+        <span class="tiny muted">Câu ${cur + 1} / ${qs_.length}</span>
+      </div>
+      <div class="bar bar-sm" style="margin-top:8px"><i style="width:${pct}%"></i></div>
+    </section>
+    <section class="card">
+      <div class="qbig">${q.q}</div>
+      ${q.options.map((o, j) => `<label class="opt"><input type="radio" name="a" value="${j}"><span>${o}</span></label>`).join('')}
+      <div class="row" style="margin-top:18px">
+        <button class="btn btn-primary" id="next">${cur === qs_.length - 1 ? (round === 1 ? 'Xong vòng 1' : 'Xem kết quả') : 'Câu tiếp theo'}</button>
+        <span class="tiny muted">Không chắc thì cứ đoán</span>
+      </div>
+    </section>`;
+
+  document.getElementById('next').onclick = () => {
+    const p = page.querySelector('input[name="a"]:checked');
+    answers[cur] = p ? Number(p.value) : null;
+    cur++;
+    if (cur >= qs_.length) { round === 1 ? finishRound1() : finishRound2(); }
+    else question();
+  };
+}
+
+/* ---------- chấm vòng 1 → đoán mức sơ bộ ---------- */
+function finishRound1() {
+  r1score = {};
+  PLACEMENT.round1.forEach((q, i) => {
+    r1score[q.lv] = r1score[q.lv] || { ok: 0, total: 0 };
+    r1score[q.lv].total++;
+    if (answers[i] === q.a) r1score[q.lv].ok++;
+  });
+
+  /* đi từ mức thấp lên, dừng ở mức đầu tiên không qua được */
+  prelim = 'a0';
+  for (const b of BAND_ORDER) {
+    const s = r1score[b];
+    if (!s) continue;
+    if (s.ok / s.total >= 0.5) prelim = b; else break;
+  }
+
+  const lv = COURSE.levels.find(l => l.id === prelim) || { code: prelim.toUpperCase(), name: '' };
+  page.innerHTML = `
+    <section class="card center" style="margin:34px 0 18px;padding:30px">
+      <span class="round-chip">Xong vòng 1</span>
+      <h2 style="margin:12px 0 6px">Có vẻ em đang ở khoảng ${esc(lv.code)}</h2>
+      <p class="soft" style="max-width:44ch;margin:0 auto 16px">
+        Giờ vòng 2 sẽ hỏi kỹ đúng mức này — 8 câu — để chốt cho chắc chứ không xếp vội.
+      </p>
+      <div class="row" style="justify-content:center">
+        <button class="btn btn-primary" id="go2">Làm vòng 2</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h3>Em làm được gì ở vòng 1</h3>
+      ${BAND_ORDER.map(b => {
+        const s = r1score[b]; if (!s) return '';
+        const l = COURSE.levels.find(x => x.id === b) || { code: b.toUpperCase(), name: '' };
+        const pass = s.ok / s.total >= 0.5;
+        return `<div class="rung ${pass ? 'known' : ''}">
+          <span class="code">${esc(l.code)}</span>
+          <span>${esc(l.name || '')}</span>
+          <span class="tag">${s.ok}/${s.total}</span></div>`;
+      }).join('')}
+    </section>`;
+  document.getElementById('go2').onclick = () => startRound(2);
+}
+
+/* ---------- chấm vòng 2 → chốt trình độ ---------- */
+function finishRound2() {
+  const bank = PLACEMENT.banks[prelim];
+  let ok = 0;
+  bank.forEach((q, i) => { if (answers[i] === q.a) ok++; });
+
+  const idx = BAND_ORDER.indexOf(prelim);
+  let startIdx, verdict;
+  if (ok >= 6) { startIdx = Math.min(idx + 1, BAND_ORDER.length - 1); verdict = 'nắm chắc'; }
+  else if (ok >= 4) { startIdx = idx; verdict = 'nắm được nhưng chưa chắc'; }
+  else { startIdx = Math.max(idx - 1, 0); verdict = 'chưa vững'; }
+
+  const start = BAND_ORDER[startIdx];
+  const d = Store.load();
+  d.placed = start;
+  d.placedAt = today();
+  Store.save();
+
+  const lv = COURSE.levels.find(l => l.id === start) || { code: start.toUpperCase(), name: '', desc: '' };
+  const ready = (LESSONS[start] || []).filter(l => l.ready);
+  const hasContent = ready.length > 0;
+
+  page.innerHTML = `
+    <section class="card lvl-result" style="margin:30px 0 18px">
+      <div class="lvl-badge">${esc(lv.code)}</div>
+      <h1 style="margin:0 0 6px">Em nên bắt đầu từ ${esc(lv.code)}</h1>
+      <p class="soft" style="max-width:46ch;margin:0 auto">
+        Vòng 2 em được <b>${ok}/${bank.length}</b> ở mức ${esc(prelim.toUpperCase())} — ${verdict}.
+        ${startIdx > 0 ? `Những cấp dưới ${esc(lv.code)} web sẽ đánh dấu là <b>em đã biết</b>, không bắt học lại; muốn xem lại lúc nào cũng mở được.` : 'Em bắt đầu từ đầu — đúng chỗ dành cho người chưa học bao giờ.'}
+      </p>
+
+      <div class="ladder">
+        ${BAND_ORDER.map((b, i) => {
+          const l = COURSE.levels.find(x => x.id === b) || { code: b.toUpperCase(), name: '' };
+          const cls = i < startIdx ? 'known' : (i === startIdx ? 'start' : '');
+          const tag = i < startIdx ? 'đã biết' : (i === startIdx ? 'bắt đầu ở đây' : '');
+          return `<div class="rung ${cls}">
+            <span class="code">${esc(l.code)}</span><span>${esc(l.name || '')}</span>
+            <span class="tag">${tag}</span></div>`;
+        }).join('')}
+      </div>
+
+      ${hasContent
+        ? `<a class="btn btn-primary" href="hoc.html?id=${ready[0].id}">Vào bài đầu tiên của ${esc(lv.code)}</a>`
+        : `<div class="callout" style="text-align:left">
+             <b>Web hiện mới có nội dung tới cấp A1.</b> Trình độ của em đã vượt qua phần đang có.
+             Em vẫn dùng được bộ thẻ từ vựng và các kì thi; phần bài học cho cấp ${esc(lv.code)} đang được soạn.
+           </div>
+           <a class="btn btn-ghost" href="index.html">Xem lộ trình</a>`}
+    </section>
+
+    <section class="card">
+      <h3>Xem lại vòng 2</h3>
+      ${bank.map((q, i) => {
+        const good = answers[i] === q.a;
+        return `<div class="review-item" style="padding:10px 0;border-bottom:1px solid var(--border);font-size:.9rem">
+          <div class="row" style="gap:8px;align-items:flex-start">
+            <span style="color:${good ? 'var(--ok)' : 'var(--err)'};font-weight:700">${good ? '✓' : '✗'}</span>
+            <div style="flex:1">${q.q}
+              ${good ? '' : `<div class="tiny" style="margin-top:3px">Đáp án: <span style="color:var(--ok)">${q.options[q.a]}</span></div>`}
+            </div>
+          </div></div>`;
+      }).join('')}
+    </section>`;
+}
+
+intro();
+});
+</script>
+</body>
+</html>

@@ -38,6 +38,7 @@ const SRS = {
     c.ef = Math.max(1.3, Math.round(ef * 100) / 100);
     c.last = today();
     Store.save();
+    if (typeof bumpHistory === 'function') bumpHistory('cards', 1);
   },
 
   /* thống kê phân bố mức nhớ */

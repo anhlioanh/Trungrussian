@@ -37,6 +37,8 @@ hoc.html            trình phát bài học  (hoc.html?id=a0-03)
 flashcard.html      thẻ từ vựng lặp lại ngắt quãng
 thi.html            kì thi cuối cấp + giấy chứng nhận  (thi.html?level=a0)
 dangnhap.html       đăng ký / đăng nhập (email+mật khẩu, Google)
+kiemtra.html        kiểm tra đầu vào 2 vòng → xếp lớp
+bangdiem.html       bảng điểm cá nhân, huy hiệu, bảng xếp hạng
 giaovien.html       trang giáo viên: xem tiến độ cả lớp
 
 assets/css/style.css   toàn bộ giao diện — đổi màu ở khối :root
@@ -52,6 +54,7 @@ supabase/schema.sql    bảng và phân quyền, chạy một lần trong SQL Ed
 data/course.js         lộ trình A0→C2 và danh sách bài từng cấp
 data/lessons/a0.js     nội dung cấp A0 (10 bài)
 data/exams.js          đề thi cuối cấp
+data/placement.js      ngân hàng câu hỏi kiểm tra đầu vào
 ```
 
 ## Đổi tên web
@@ -105,6 +108,22 @@ Mỗi bài học có nút **“Xem bài giảng”**: nội dung bài được d
 Không cần làm gì thêm khi viết bài mới — trình chiếu được dựng **tự động từ chính `blocks` của bài**, nên thêm bài là có bài giảng. Mã nằm ở `assets/js/lecture.js`; muốn đổi cách một loại khối hiển thị thì sửa hàm `build()`.
 
 Điều khiển: phím cách chạy/dừng, ← → chuyển màn, Esc thoát. Có ba tốc độ và nút tắt lời giảng tiếng Việt.
+
+## Kiểm tra đầu vào
+
+`kiemtra.html` chạy hai vòng: **vòng 1** 12 câu trải từ A0 đến B2 để đoán mức sơ bộ, **vòng 2** 8 câu đúng mức vừa đoán để chốt. Kết quả lưu vào `Store.placed` (mã cấp độ) — trang chủ dùng nó để đánh dấu các cấp thấp hơn là “em đã biết” và nhảy thẳng tới bài nên bắt đầu. Người dùng vẫn mở được mọi bài, không khoá gì cả.
+
+Người mới đăng ký được đưa thẳng sang trang này, và có nút bỏ qua để học từ đầu.
+
+Sửa/thêm câu hỏi ở `data/placement.js`: `round1` (mỗi câu có `lv` là mức của nó) và `banks` (8 câu cho mỗi mức). Ngưỡng chấm nằm ở cuối `kiemtra.html`: qua vòng 1 nếu đúng ≥ 50% số câu của mức đó; vòng 2 đúng ≥ 6/8 thì lên mức kế tiếp, 4–5 thì học lại chính mức đó, dưới 4 thì lùi một mức.
+
+## Bảng điểm và xếp hạng
+
+`bangdiem.html` gồm: cấp hiệu và điểm kinh nghiệm, bốn con số chính, dải hoạt động 30 ngày, tiến độ từng cấp, huy hiệu, và bảng xếp hạng.
+
+Điểm kinh nghiệm **không lưu riêng** mà tính lại từ tiến độ mỗi lần mở trang (`computeXP()` trong `core.js`), nên không bao giờ lệch với thực tế. Muốn đổi cách tính thì sửa `XP_RULES`; đổi cấp hiệu thì sửa `RANKS`; thêm huy hiệu thì thêm một dòng vào `BADGES` với hàm `has(st, d)`.
+
+Bảng xếp hạng đọc từ view `public.leaderboard` trong `supabase/schema.sql` — view này cố ý chạy bằng quyền chủ sở hữu để mọi người đăng nhập đều đọc được, và **chỉ lộ tên hiển thị cùng vài con số**, không lộ email hay nội dung học. Nếu bảng xếp hạng báo lỗi thì chạy lại `schema.sql` (phần 7).
 
 ## Thêm đề thi cho một cấp
 

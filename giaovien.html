@@ -127,7 +127,7 @@ function card(p, g, ex, readyLessons) {
           <strong>${esc(name)}</strong>
           ${p.role === 'teacher' ? '<span class="pill">giáo viên</span>' : ''}
         </div>
-        <div class="tiny muted">${esc(p.email || '')} · học lần cuối ${esc(last)}</div>
+        <div class="tiny muted">${esc(p.email || '')} · học lần cuối ${esc(last)}${(g && g.xp) ? ' · ' + g.xp + ' điểm' : ''}</div>
         <div class="bar bar-sm" style="margin-top:7px"><i style="width:${pct}%"></i></div>
       </div>
       <div class="center" style="min-width:70px">
@@ -137,7 +137,8 @@ function card(p, g, ex, readyLessons) {
       <div class="chev">›</div>
     </div>
     <div class="stu-body">
-      <div class="grid grid-4" style="gap:0;margin-bottom:12px">
+      <div class="grid grid-3" style="gap:0;margin-bottom:12px">
+        <div class="kpi"><b>${(g && g.xp) || 0}</b><span>điểm kinh nghiệm</span></div>
         <div class="kpi"><b>${(g && g.words) || 0}</b><span>từ trong bộ thẻ</span></div>
         <div class="kpi"><b>${(g && g.streak) || 0}</b><span>ngày liên tiếp</span></div>
         <div class="kpi"><b>${pct}%</b><span>tiến độ</span></div>

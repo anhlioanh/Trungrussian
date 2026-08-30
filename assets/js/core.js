@@ -30,6 +30,9 @@ const Store = {
       cards: {},             // SRS: { 'мама': {ef:2.5, n:0, due:'2026-08-29', last:0} }
       exams: {},             // { 'a0': {best:92, passed:true, at:'...', code:'...'} }
       streak: { last: '', days: 0 },
+      history: {},           // { '2026-08-30': {lessons:2, cards:14, exams:1} }
+      placed: null,          // cấp độ do bài kiểm tra đầu vào xác định: 'a1', 'b1'…
+      placedAt: '',
       settings: { rate: 0.85 }
     }, d || {});
     return this._data;
@@ -58,6 +61,85 @@ function touchStreak() {
   d.streak.days = (d.streak.last === y) ? d.streak.days + 1 : 1;
   d.streak.last = today;
   Store.save();
+}
+
+/* ghi lại hoạt động trong ngày để vẽ biểu đồ 30 ngày */
+function bumpHistory(kind, n) {
+  const d = Store.load();
+  const t = today();
+  d.history = d.history || {};
+  d.history[t] = d.history[t] || { lessons: 0, cards: 0, exams: 0 };
+  d.history[t][kind] = (d.history[t][kind] || 0) + (n || 1);
+  /* chỉ giữ 120 ngày gần nhất cho gọn */
+  const keys = Object.keys(d.history).sort();
+  while (keys.length > 120) delete d.history[keys.shift()];
+  Store.save();
+}
+
+/* ----- 2b. Điểm kinh nghiệm, cấp hiệu và huy hiệu ----- */
+const XP_RULES = {
+  lesson: 20,      // mỗi bài học xong
+  correct: 2,      // mỗi câu bài tập làm đúng
+  card: 1,         // mỗi thẻ từ vựng đã ôn ít nhất một lần
+  cardSolid: 3,    // cộng thêm nếu thẻ đã nhớ chắc
+  examPass: 100,   // mỗi kì thi đạt
+  streakDay: 5     // mỗi ngày trong chuỗi học liên tiếp
+};
+
+const RANKS = [
+  { xp: 0,    vi: 'Người mới',   ru: 'Новичо́к' },
+  { xp: 150,  vi: 'Học trò',     ru: 'Учени́к' },
+  { xp: 400,  vi: 'Chăm chỉ',    ru: 'Стара́тельный' },
+  { xp: 800,  vi: 'Vững vàng',   ru: 'Уве́ренный' },
+  { xp: 1500, vi: 'Giỏi',        ru: 'Отли́чник' },
+  { xp: 2500, vi: 'Cao thủ',     ru: 'Ма́стер' },
+  { xp: 4000, vi: 'Huyền thoại', ru: 'Леге́нда' }
+];
+
+function computeXP() {
+  const d = Store.load();
+  let xp = 0;
+  Object.values(d.lessons || {}).forEach(l => {
+    if (l.done) xp += XP_RULES.lesson + (l.score || 0) * XP_RULES.correct;
+  });
+  Object.values(d.cards || {}).forEach(c => {
+    if ((c.n || 0) >= 1) xp += XP_RULES.card;
+    if ((c.n || 0) >= 3) xp += XP_RULES.cardSolid;
+  });
+  Object.values(d.exams || {}).forEach(e => { if (e.passed) xp += XP_RULES.examPass; });
+  xp += ((d.streak && d.streak.days) || 0) * XP_RULES.streakDay;
+  return xp;
+}
+
+function rankOf(xp) {
+  let cur = RANKS[0], next = null;
+  for (let i = 0; i < RANKS.length; i++) {
+    if (xp >= RANKS[i].xp) { cur = RANKS[i]; next = RANKS[i + 1] || null; }
+  }
+  const span = next ? next.xp - cur.xp : 1;
+  const into = next ? xp - cur.xp : 1;
+  return { cur, next, pct: next ? Math.round(into / span * 100) : 100 };
+}
+
+const BADGES = [
+  { id: 'first',   icon: '🌱', name: 'Bước đầu tiên',    desc: 'Học xong bài đầu tiên',           has: st => st.doneLessons >= 1 },
+  { id: 'read',    icon: '🔤', name: 'Đọc được chữ Nga', desc: 'Học hết cấp A0',                  has: st => st.byLevel.a0 && st.byLevel.a0.done >= st.byLevel.a0.ready && st.byLevel.a0.ready > 0 },
+  { id: 'ten',     icon: '📚', name: 'Mười bài',         desc: 'Học xong 10 bài',                 has: st => st.doneLessons >= 10 },
+  { id: 'w100',    icon: '🧠', name: 'Trăm từ',          desc: '100 từ trong bộ thẻ',             has: st => st.cards >= 100 },
+  { id: 'w300',    icon: '🗝️', name: 'Ba trăm từ',       desc: '300 từ trong bộ thẻ',             has: st => st.cards >= 300 },
+  { id: 'solid',   icon: '💎', name: 'Nhớ chắc',         desc: '50 từ đã nhớ chắc',               has: st => st.learned >= 50 },
+  { id: 'streak7', icon: '🔥', name: 'Bảy ngày',         desc: 'Học 7 ngày liên tiếp',            has: st => st.streak >= 7 },
+  { id: 'streak30',icon: '⚡', name: 'Ba mươi ngày',     desc: 'Học 30 ngày liên tiếp',           has: st => st.streak >= 30 },
+  { id: 'a0',      icon: '🏅', name: 'Chứng nhận A0',    desc: 'Thi đạt cuối cấp A0',             has: (st, d) => !!(d.exams.a0 && d.exams.a0.passed) },
+  { id: 'a1',      icon: '🎖️', name: 'Chứng nhận A1',    desc: 'Thi đạt cuối cấp A1',             has: (st, d) => !!(d.exams.a1 && d.exams.a1.passed) },
+  { id: 'perfect', icon: '🎯', name: 'Không sai câu nào', desc: 'Làm đúng 100% một bài',          has: (st, d) => Object.values(d.lessons || {}).some(l => l.done && l.total && l.score === l.total) },
+  { id: 'placed',  icon: '🧭', name: 'Biết mình ở đâu',  desc: 'Làm bài kiểm tra đầu vào',        has: (st, d) => !!d.placed }
+];
+
+function earnedBadges() {
+  const st = courseStats();
+  const d = Store.load();
+  return BADGES.map(b => Object.assign({}, b, { got: !!b.has(st, d) }));
 }
 
 /* ----- 3. Phát âm tiếng Nga bằng giọng có sẵn của trình duyệt ----- */
@@ -137,7 +219,8 @@ function renderNav(active) {
     ['index.html', 'Trang chủ'],
     ['hoc.html', 'Bài học'],
     ['flashcard.html', 'Thẻ từ vựng'],
-    ['thi.html', 'Kì thi']
+    ['thi.html', 'Kì thi'],
+    ['bangdiem.html', 'Bảng điểm']
   ];
   return `
   <nav class="nav"><div class="nav-inner">
@@ -177,5 +260,6 @@ function courseStats() {
   const cards = Object.keys(d.cards).length;
   const due = Object.values(d.cards).filter(c => c.due <= today()).length;
   const learned = Object.values(d.cards).filter(c => c.n >= 2).length;
-  return { totalLessons, doneLessons, byLevel, cards, due, learned, streak: d.streak.days };
+  return { totalLessons, doneLessons, byLevel, cards, due, learned,
+           streak: (d.streak && d.streak.days) || 0, xp: computeXP() };
 }

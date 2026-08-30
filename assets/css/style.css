@@ -399,3 +399,67 @@ body.lec-on { overflow: hidden; }
 }
 .lec-open b { display: block; font-size: 1rem; }
 .lec-open small { color: var(--text-mute); font-size: .82rem; }
+
+/* ---------- Bảng điểm ---------- */
+/* Thang một màu, nhạt → đậm, dùng cho dải hoạt động 30 ngày */
+:root {
+  --h0: #eee9e0;  --h1: #dbe4f3;  --h2: #b4c8e6;  --h3: #6f92c9;  --h4: #1f3a6e;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --h0: #2a2932;  --h1: #24345a;  --h2: #35528c;  --h3: #5f83c4;  --h4: #9dbcf0;
+  }
+}
+
+.rank-hero {
+  display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  background: linear-gradient(135deg, var(--brand-soft), var(--accent-soft));
+  border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px;
+}
+.rank-medal {
+  width: 74px; height: 74px; flex: none; border-radius: 22px; display: grid; place-items: center;
+  background: linear-gradient(140deg, var(--brand), var(--accent)); color: #fff; font-size: 2rem;
+}
+.rank-xp { font-family: var(--font-display); font-size: 2.4rem; line-height: 1; color: var(--brand); }
+.rank-name { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; }
+.rank-name small { display: block; font-family: var(--font-ru); font-size: .85rem; font-weight: 400; color: var(--text-mute); }
+
+/* biểu đồ cột ngang: một chuỗi dữ liệu, một màu, không cần chú giải */
+.hbar { display: grid; grid-template-columns: 46px 1fr 76px; gap: 12px; align-items: center; padding: 6px 0; }
+.hbar .lb { font-family: var(--font-display); font-weight: 700; font-size: .92rem; color: var(--text-soft); }
+.hbar .track { height: 14px; background: var(--bg-soft); border-radius: 7px; overflow: hidden; border: 1px solid var(--border); }
+.hbar .fill { display: block; height: 100%; min-width: 3px; background: var(--brand); border-radius: 0 7px 7px 0; transition: width .6s; }
+.hbar .fill.empty { background: repeating-linear-gradient(45deg, var(--border-strong) 0 3px, transparent 3px 7px); }
+.hbar .val { font-size: .8rem; color: var(--text-mute); text-align: right; white-space: nowrap; }
+
+/* dải hoạt động 30 ngày */
+.heat { display: grid; grid-template-columns: repeat(30, 1fr); gap: 3px; }
+.heat i { display: block; aspect-ratio: 1; border-radius: 3px; background: var(--h0); cursor: default; }
+.heat i.l1 { background: var(--h1); } .heat i.l2 { background: var(--h2); }
+.heat i.l3 { background: var(--h3); } .heat i.l4 { background: var(--h4); }
+.heat-key { display: flex; align-items: center; gap: 5px; font-size: .72rem; color: var(--text-mute); }
+.heat-key span { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+
+.badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 10px; }
+.badge {
+  text-align: center; padding: 14px 8px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--surface);
+}
+.badge.off { opacity: .38; filter: grayscale(1); }
+.badge .ic { font-size: 1.7rem; line-height: 1.2; }
+.badge b { display: block; font-size: .82rem; margin-top: 3px; }
+.badge small { color: var(--text-mute); font-size: .7rem; }
+
+.lb-row { display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center;
+  padding: 11px 12px; border-radius: var(--radius-sm); border: 1px solid transparent; }
+.lb-row:nth-child(odd) { background: var(--surface-2); }
+.lb-row.me { border-color: var(--brand); background: var(--brand-soft); }
+.lb-pos { font-family: var(--font-display); font-weight: 700; text-align: center; color: var(--text-mute); }
+.lb-row.top1 .lb-pos, .lb-row.top2 .lb-pos, .lb-row.top3 .lb-pos { color: var(--gold); }
+.lb-xp { font-family: var(--font-display); font-weight: 700; color: var(--brand); }
+
+#tip {
+  position: fixed; z-index: 300; pointer-events: none; opacity: 0; transition: opacity .12s;
+  background: var(--text); color: var(--bg); font-size: .76rem; line-height: 1.45;
+  padding: 6px 10px; border-radius: 7px; white-space: nowrap; box-shadow: var(--shadow);
+}

@@ -19,6 +19,7 @@ create table if not exists public.progress (
   lessons_done int  not null default 0,
   words        int  not null default 0,
   streak       int  not null default 0,
+  xp           int  not null default 0,
   updated_at   timestamptz not null default now()
 );
 
@@ -32,6 +33,9 @@ create table if not exists public.exam_results (
   created_at timestamptz not null default now()
 );
 create index if not exists exam_results_user_idx on public.exam_results (user_id, created_at desc);
+
+-- Nếu bảng progress đã tạo từ trước thì thêm cột xp:
+alter table public.progress add column if not exists xp int not null default 0;
 
 -- ---------- 4. Hàm kiểm tra quyền giáo viên ----------
 -- security definer để không bị đệ quy khi dùng trong chính policy của bảng profiles
@@ -111,6 +115,26 @@ create policy exam_select on public.exam_results
 drop policy if exists exam_insert on public.exam_results;
 create policy exam_insert on public.exam_results
   for insert with check (user_id = auth.uid());
+
+-- ---------- 7. Bảng xếp hạng ----------
+-- View này cố ý chạy với quyền của chủ sở hữu (security_invoker = off) để
+-- mọi người đã đăng nhập đều đọc được — đó chính là mục đích của bảng xếp hạng.
+-- Chỉ lộ ra tên hiển thị và vài con số; KHÔNG lộ email hay nội dung học.
+create or replace view public.leaderboard
+with (security_invoker = off) as
+select
+  p.id,
+  coalesce(nullif(p.full_name, ''), split_part(coalesce(p.email, 'hoc-vien@'), '@', 1)) as name,
+  coalesce(g.xp, 0)           as xp,
+  coalesce(g.lessons_done, 0) as lessons_done,
+  coalesce(g.words, 0)        as words,
+  coalesce(g.streak, 0)       as streak,
+  g.updated_at
+from public.profiles p
+left join public.progress g on g.user_id = p.id;
+
+revoke all on public.leaderboard from anon;
+grant select on public.leaderboard to authenticated;
 
 -- ============================================================
 -- SAU KHI CHẠY XONG: tự đặt mình làm giáo viên

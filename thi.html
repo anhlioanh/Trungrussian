@@ -205,7 +205,8 @@ function finish() {
   const old = d.exams[levelId] || { best: 0 };
   d.exams[levelId] = { best: Math.max(old.best, score), passed: passed || !!old.passed, at: date, last: score };
   Store.save();
-  Auth.logExam(levelId, score, passed);   // lưu lịch sử thi để thầy xem
+  Auth.logExam(levelId, score, passed);
+  bumpHistory('exams', 1);   // lưu lịch sử thi để thầy xem
 
   page.innerHTML = `
     <section class="card center" style="margin:30px 0 18px;padding:34px">

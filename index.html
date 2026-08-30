@@ -146,13 +146,31 @@ touchStreak();
   document.getElementById('s-bar').style.width = pct + '%';
 
   /* nút "bắt đầu" nhảy tới bài chưa học đầu tiên */
-  const pool = guest ? (LESSONS.a0 || []).filter(l => FREE_LESSONS.includes(l.id)) : (LESSONS.a0 || []);
+  /* bắt đầu từ cấp mà bài kiểm tra đầu vào đã xếp, nếu có */
+  const startLv = Store.get('placed', null) || 'a0';
+  let pool = [];
+  COURSE.levels.forEach(lv => {
+    if (COURSE.levels.findIndex(x => x.id === lv.id) >= COURSE.levels.findIndex(x => x.id === startLv))
+      pool = pool.concat((LESSONS[lv.id] || []).filter(l => l.ready));
+  });
+  if (!pool.length) pool = (LESSONS.a0 || []);
+  if (guest) pool = (LESSONS.a0 || []).filter(l => FREE_LESSONS.includes(l.id));
   const next = pool.find(l => l.ready && !Store.get('lessons.' + l.id + '.done', false));
   const cta = document.getElementById('cta');
   if (next) { cta.href = 'hoc.html?id=' + next.id; if (st.doneLessons) cta.textContent = 'Học tiếp: ' + next.title; }
   else if (guest) { cta.href = 'dangnhap.html?next=index.html'; cta.textContent = 'Hết phần học thử — tạo tài khoản để học tiếp'; }
   else if (st.doneLessons) { cta.href = 'thi.html?level=a0'; cta.textContent = 'Xong A0 — vào thi lấy chứng nhận'; }
 })();
+
+/* nhắc làm bài kiểm tra đầu vào — chỉ với người đã đăng nhập và chưa học gì */
+if (!guest && !Store.get('placed', null) && courseStats().doneLessons === 0) {
+  document.getElementById('guest-note').innerHTML = `
+    <div class="callout note between" style="margin:16px 0">
+      <span><b>Em đã học tiếng Nga ở đâu đó rồi?</b> Làm bài kiểm tra đầu vào 9 phút,
+      web sẽ chỉ đúng chỗ nên bắt đầu — khỏi học lại những gì đã biết.</span>
+      <a class="btn btn-primary btn-sm" href="kiemtra.html">Kiểm tra trình độ</a>
+    </div>`;
+}
 
 /* nhắc đăng nhập nếu đang học thử */
 if (guest) {
@@ -164,7 +182,8 @@ if (guest) {
 /* lộ trình */
 (function () {
   const d = Store.load();
-  document.getElementById('roadmap').innerHTML = COURSE.levels.map(lv => {
+  const placedIdx = d.placed ? COURSE.levels.findIndex(l => l.id === d.placed) : -1;
+  document.getElementById('roadmap').innerHTML = COURSE.levels.map((lv, li) => {
     const list = LESSONS[lv.id] || [];
     const readyCount = list.filter(l => l.ready).length;
     const done = list.filter(l => l.ready && d.lessons[l.id] && d.lessons[l.id].done).length;
@@ -188,6 +207,8 @@ if (guest) {
             <strong>${esc(lv.name)}</strong>
             <span class="pill ${readyCount ? 'pill-accent' : 'pill-mute'}">${esc(lv.tag)}</span>
             ${exam && exam.passed ? '<span class="pill pill-ok">đã có chứng nhận</span>' : ''}
+            ${placedIdx > -1 && li < placedIdx ? '<span class="pill pill-ok">em đã biết</span>' : ''}
+            ${placedIdx === li ? '<span class="pill">bắt đầu ở đây</span>' : ''}
           </div>
           <div class="small soft" style="margin:3px 0 8px">${esc(lv.goal)}</div>
           <div class="bar bar-sm"><i style="width:${pct}%"></i></div>
@@ -209,8 +230,8 @@ if (guest) {
   }).join('');
 
   document.querySelectorAll('.lvl-head').forEach(h => h.addEventListener('click', () => h.parentElement.classList.toggle('expanded')));
-  const first = document.querySelector('.lvl');
-  if (first) first.classList.add('expanded');
+  const open = (d.placed && document.querySelector(`.lvl[data-lvl="${d.placed}"]`)) || document.querySelector('.lvl');
+  if (open) open.classList.add('expanded');
 })();
 
 if (guest) document.getElementById('prog-note').textContent =

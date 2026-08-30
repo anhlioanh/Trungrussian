@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bảng điểm — Học tiếng Nga cùng Oanh</title>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div id="nav"></div>
+
+<div class="wrap">
+  <section style="margin:32px 0 18px">
+    <h1 style="margin-bottom:4px">Bảng điểm của em</h1>
+    <p class="soft mb0">Học được bao nhiêu, đều đặn tới đâu, còn thiếu chỗ nào.</p>
+  </section>
+  <div id="page"><p class="soft">Đang tải…</p></div>
+</div>
+
+<div id="tip"></div>
+<div id="footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="data/course.js"></script>
+<script src="data/lessons/a0.js"></script>
+<script src="data/lessons/a1.js"></script>
+<script src="data/exams.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+Auth.guard(function () {
+mountChrome('bangdiem.html');
+touchStreak();
+
+const d = Store.load();
+const st = courseStats();
+const r = rankOf(st.xp);
+const page = document.getElementById('page');
+
+/* ---------- dải hoạt động 30 ngày (thang một màu, nhạt → đậm) ---------- */
+function heatStrip() {
+  const days = [];
+  for (let i = 29; i >= 0; i--) {
+    const dt = new Date(Date.now() - i * 86400000).toISOString().slice(0, 10);
+    const h = (d.history || {})[dt] || {};
+    const n = (h.lessons || 0) * 3 + (h.cards || 0) + (h.exams || 0) * 5;
+    days.push({ dt, n, h });
+  }
+  const max = Math.max(1, ...days.map(x => x.n));
+  const cells = days.map(x => {
+    const lvl = x.n === 0 ? 0 : Math.min(4, Math.ceil(x.n / max * 4));
+    const label = x.n === 0 ? 'không học' :
+      [(x.h.lessons ? x.h.lessons + ' bài' : ''), (x.h.cards ? x.h.cards + ' thẻ' : ''), (x.h.exams ? x.h.exams + ' lượt thi' : '')]
+        .filter(Boolean).join(' · ');
+    return `<i class="l${lvl}" data-tip="${escAttr(x.dt + ' — ' + label)}"></i>`;
+  }).join('');
+  const active = days.filter(x => x.n > 0).length;
+  return `
+    <div class="between" style="margin-bottom:8px">
+      <h3 class="mb0">30 ngày gần đây</h3>
+      <span class="tiny muted">${active}/30 ngày có học</span>
+    </div>
+    <div class="heat">${cells}</div>
+    <div class="between" style="margin-top:8px">
+      <span class="tiny muted">${days[0].dt}</span>
+      <span class="heat-key">ít
+        <span style="background:var(--h0)"></span><span style="background:var(--h1)"></span>
+        <span style="background:var(--h2)"></span><span style="background:var(--h3)"></span>
+        <span style="background:var(--h4)"></span> nhiều</span>
+      <span class="tiny muted">hôm nay</span>
+    </div>`;
+}
+
+/* ---------- tiến độ từng cấp: một chuỗi dữ liệu, một màu ---------- */
+function levelBars() {
+  return COURSE.levels.map(lv => {
+    const list = (LESSONS[lv.id] || []).filter(l => l.ready);
+    const done = list.filter(l => d.lessons[l.id] && d.lessons[l.id].done).length;
+    const pct = list.length ? Math.round(done / list.length * 100) : 0;
+    const label = list.length ? `${done}/${list.length}` : 'đang soạn';
+    return `<div class="hbar" data-tip="${escAttr(lv.code + ' · ' + lv.name + ' — ' + label)}">
+      <span class="lb">${esc(lv.code)}</span>
+      <span class="track"><span class="fill ${list.length ? '' : 'empty'}" style="width:${list.length ? pct : 100}%"></span></span>
+      <span class="val">${esc(label)}</span>
+    </div>`;
+  }).join('');
+}
+
+/* ---------- dựng trang ---------- */
+const placedLv = d.placed ? (COURSE.levels.find(l => l.id === d.placed) || null) : null;
+
+page.innerHTML = `
+  <section class="rank-hero">
+    <div class="rank-medal">🏅</div>
+    <div style="flex:1;min-width:200px">
+      <div class="rank-name">${esc(r.cur.vi)}<small class="ru">${esc(r.cur.ru)}</small></div>
+      <div class="tiny muted" style="margin:8px 0 5px">
+        ${r.next ? `Còn <b>${r.next.xp - st.xp}</b> điểm nữa lên <b>${esc(r.next.vi)}</b>` : 'Cấp hiệu cao nhất rồi!'}
+      </div>
+      <div class="bar"><i style="width:${r.pct}%"></i></div>
+    </div>
+    <div class="center">
+      <div class="rank-xp">${st.xp}</div>
+      <div class="tiny muted">điểm kinh nghiệm</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="grid grid-4" style="gap:0">
+      <div class="stat" style="text-align:center;padding:14px 10px">
+        <b style="display:block;font-family:var(--font-display);font-size:1.8rem;color:var(--brand)">${st.doneLessons}</b>
+        <span class="tiny muted">bài đã học xong</span></div>
+      <div class="stat" style="text-align:center;padding:14px 10px">
+        <b style="display:block;font-family:var(--font-display);font-size:1.8rem;color:var(--brand)">${st.cards}</b>
+        <span class="tiny muted">từ trong bộ thẻ</span></div>
+      <div class="stat" style="text-align:center;padding:14px 10px">
+        <b style="display:block;font-family:var(--font-display);font-size:1.8rem;color:var(--brand)">${st.learned}</b>
+        <span class="tiny muted">từ đã nhớ chắc</span></div>
+      <div class="stat" style="text-align:center;padding:14px 10px">
+        <b style="display:block;font-family:var(--font-display);font-size:1.8rem;color:var(--brand)">${st.streak}</b>
+        <span class="tiny muted">ngày liên tiếp</span></div>
+    </div>
+  </section>
+
+  <section class="card">${heatStrip()}</section>
+
+  <section class="card">
+    <h3>Tiến độ từng cấp</h3>
+    ${levelBars()}
+    <p class="tiny muted" style="margin-top:10px">Cột gạch chéo là cấp chưa có bài học. Số bên phải là số bài đã xong trên tổng số bài hiện có.</p>
+  </section>
+
+  ${placedLv ? `<section class="card">
+    <h3>Kết quả kiểm tra đầu vào</h3>
+    <p class="soft small mb0">Em được xếp bắt đầu từ <b>${esc(placedLv.code)} · ${esc(placedLv.name)}</b> (ngày ${esc(d.placedAt || '—')}).
+    <a href="kiemtra.html">Kiểm tra lại</a></p>
+  </section>` : `<section class="card">
+    <div class="between">
+      <div><h3 class="mb0">Chưa làm kiểm tra đầu vào</h3>
+      <p class="small soft mb0">Nếu em đã học tiếng Nga ở đâu đó rồi, làm bài này để khỏi phải học lại từ bảng chữ cái.</p></div>
+      <a class="btn btn-primary btn-sm" href="kiemtra.html">Làm bài kiểm tra</a>
+    </div>
+  </section>`}
+
+  <section class="card">
+    <h3>Huy hiệu</h3>
+    <div class="badges" id="badges"></div>
+  </section>
+
+  <section class="card">
+    <div class="between" style="margin-bottom:10px">
+      <h3 class="mb0">Bảng xếp hạng</h3>
+      <span class="tiny muted">theo điểm kinh nghiệm</span>
+    </div>
+    <div id="lb"><p class="small soft mb0">Đang tải…</p></div>
+  </section>
+
+  <section class="card">
+    <h3>Điểm kinh nghiệm tính thế nào</h3>
+    <div class="table-scroll"><table>
+      <thead><tr><th>Việc</th><th>Điểm</th></tr></thead>
+      <tbody>
+        <tr><td>Học xong một bài</td><td>${XP_RULES.lesson}</td></tr>
+        <tr><td>Mỗi câu bài tập làm đúng</td><td>${XP_RULES.correct}</td></tr>
+        <tr><td>Mỗi từ đã ôn trong bộ thẻ</td><td>${XP_RULES.card}</td></tr>
+        <tr><td>Mỗi từ đã nhớ chắc</td><td>+${XP_RULES.cardSolid}</td></tr>
+        <tr><td>Mỗi kì thi đạt</td><td>${XP_RULES.examPass}</td></tr>
+        <tr><td>Mỗi ngày trong chuỗi học liên tiếp</td><td>${XP_RULES.streakDay}</td></tr>
+      </tbody>
+    </table></div>
+  </section>`;
+
+/* huy hiệu */
+document.getElementById('badges').innerHTML = earnedBadges().map(b =>
+  `<div class="badge ${b.got ? '' : 'off'}" data-tip="${escAttr(b.desc)}">
+     <div class="ic">${b.icon}</div><b>${esc(b.name)}</b><small>${b.got ? 'đã đạt' : 'chưa đạt'}</small>
+   </div>`).join('');
+
+/* bảng xếp hạng */
+(async () => {
+  const box = document.getElementById('lb');
+  const rows = await Auth.leaderboard(20);
+  if (rows === null) {
+    box.innerHTML = `<p class="small muted mb0">Chưa đọc được bảng xếp hạng. Thường là do chưa chạy phần
+      <code>7. Bảng xếp hạng</code> trong <code>supabase/schema.sql</code> — chạy lại file đó là xong.</p>`;
+    return;
+  }
+  const list = rows.filter(x => (x.xp || 0) > 0 || x.id === Auth.user.id);
+  if (!list.length) { box.innerHTML = '<p class="small soft mb0">Chưa có ai ghi điểm. Em học bài đầu tiên là đứng đầu bảng ngay.</p>'; return; }
+  box.innerHTML = list.map((x, i) => `
+    <div class="lb-row ${x.id === Auth.user.id ? 'me' : ''} ${i < 3 ? 'top' + (i + 1) : ''}">
+      <span class="lb-pos">${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i + 1}</span>
+      <span>
+        <b>${esc(x.name || 'Học viên')}</b>${x.id === Auth.user.id ? ' <span class="tiny muted">(em)</span>' : ''}
+        <div class="tiny muted">${x.lessons_done || 0} bài · ${x.words || 0} từ · ${x.streak || 0} ngày liên tiếp</div>
+      </span>
+      <span class="lb-xp">${x.xp || 0}</span>
+    </div>`).join('');
+})();
+
+/* chú thích khi rê chuột — dùng chung cho dải hoạt động, cột và huy hiệu */
+const tip = document.getElementById('tip');
+document.addEventListener('mouseover', e => {
+  const el = e.target.closest('[data-tip]');
+  if (!el) return;
+  tip.textContent = el.getAttribute('data-tip');
+  tip.style.opacity = '1';
+  const r2 = el.getBoundingClientRect();
+  tip.style.left = Math.min(window.innerWidth - tip.offsetWidth - 10, Math.max(8, r2.left + r2.width / 2 - tip.offsetWidth / 2)) + 'px';
+  tip.style.top = Math.max(8, r2.top - tip.offsetHeight - 8) + 'px';
+});
+document.addEventListener('mouseout', e => {
+  if (e.target.closest('[data-tip]')) tip.style.opacity = '0';
+});
+});
+</script>
+</body>
+</html>

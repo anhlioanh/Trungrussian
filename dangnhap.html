@@ -128,6 +128,8 @@ document.getElementById('form').onsubmit = async e => {
   }
   if (mode === 'up') {
     const d = Store.load(); d.learner = name; Store.save();
+    location.replace('kiemtra.html?first=1');    // người mới: xếp lớp trước đã
+    return;
   }
   location.replace(next);
 };

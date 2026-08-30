@@ -184,8 +184,10 @@ if (!data || !meta) {
       const d = Store.load();
       const old = d.lessons[id] || {};
       const wrong = Array.from(document.querySelectorAll('.exq.bad')).map(el => Number(el.dataset.i) + 1);
+      const wasDone = old.done;
       d.lessons[id] = { done: true, score: Math.max(correct, old.score || 0), total, at: today(), wrong };
       Store.save();
+      if (!wasDone) bumpHistory('lessons', 1);
     }
 
     document.getElementById('result').innerHTML = `
