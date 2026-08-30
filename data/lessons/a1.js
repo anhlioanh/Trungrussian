@@ -798,3 +798,459 @@ LESSON_DATA['a1-12'] = {
     { t: 'listen', q: 'Nghe và gõ lại:', say: 'сколько стоит', a: 'сколько стоит' }
   ]
 };
+
+/* ---------------------------------------------------------- BÀI 13 */
+LESSON_DATA['a1-13'] = {
+  level: 'a1',
+  intro: 'Nếu chỉ được chọn <b>một</b> cách để học cho thật kỹ, người Nga sẽ khuyên em chọn cách này. <b>Роди́тельный паде́ж</b> (cách 2) là cách dùng nhiều nhất tiếng Nga — nó xuất hiện trong sở hữu, phủ định, số đếm, và sau cả một loạt giới từ.',
+  blocks: [
+    { t: 'h', text: 'Đuôi của cách 2' },
+    { t: 'table', head: ['Loại từ', 'Đuôi', 'Ví dụ'], rows: [
+      ['Đực (phụ âm)', '-а', 'брат → бра́т<b>а</b> · дом → до́м<b>а</b>'],
+      ['Đực (-й, -ь)', '-я', 'музе́й → музе́<b>я</b> · слова́рь → словар<b>я́</b>'],
+      ['Cái -а', '-ы', 'шко́ла → шко́л<b>ы</b> · сестра́ → сестр<b>ы́</b>'],
+      ['Cái -га, -ка…', '-и (quy tắc 7 chữ)', 'кни́га → кни́г<b>и</b> · ру́чка → ру́чк<b>и</b>'],
+      ['Cái -я / -ия', '-и / -ии', 'неде́ля → неде́л<b>и</b> · Росси́я → Росси́<b>и</b>'],
+      ['Cái -ь', '-и', 'тетра́дь → тетра́д<b>и</b>'],
+      ['Trung -о', '-а', 'окно́ → окн<b>а́</b>'],
+      ['Trung -е', '-я', 'мо́ре → мо́р<b>я</b>']
+    ]},
+    { t: 'tip', html: 'Nhớ lại quy tắc 7 chữ ở bài 4 — sau <b>г к х ж ч ш щ</b> viết и chứ không viết ы. Nó quay lại đây, và sẽ còn quay lại rất nhiều lần nữa.' },
+    { t: 'h', text: 'Dùng 1 — Của ai, của cái gì' },
+    { t: 'p', html: 'Tiếng Việt nói "sách <b>của</b> anh trai". Tiếng Nga không có chữ "của" — chỉ đổi đuôi từ thứ hai. Và trật tự ngược với tiếng Việt: <b>vật đứng trước, người sở hữu đứng sau</b>.' },
+    { t: 'words', items: [
+      { ru: 'кни́га бра́та', vn: 'sách của anh trai' },
+      { ru: 'дом отца́', vn: 'nhà của bố' },
+      { ru: 'столи́ца Росси́и', vn: 'thủ đô của nước Nga' },
+      { ru: 'центр го́рода', vn: 'trung tâm thành phố' },
+      { ru: 'дверь ко́мнаты', vn: 'cửa của căn phòng' }
+    ]},
+    { t: 'h', text: 'Dùng 2 — Có và không có' },
+    { t: 'p', html: 'Đây là cấu trúc em sẽ dùng mỗi ngày. Tiếng Nga không nói "tôi có", mà nói "<b>ở chỗ tôi có</b>": <span class="ru">У меня́ есть…</span>' },
+    { t: 'table', head: ['Khẳng định', 'Phủ định'], rows: [
+      ['У меня́ есть брат. — Tôi có anh trai.', 'У меня́ <b>нет бра́та</b>. — Tôi không có anh trai.'],
+      ['У меня́ есть вре́мя. — Tôi có thời gian.', 'У меня́ <b>нет вре́мени</b>. — Tôi không có thời gian.'],
+      ['Здесь есть магази́н. — Ở đây có cửa hàng.', 'Здесь <b>нет магази́на</b>. — Ở đây không có cửa hàng.']
+    ]},
+    { t: 'warn', html: 'Quy luật sắt: sau <span class="ru">нет</span> thì danh từ <b>bắt buộc</b> ở cách 2. Nói <span class="ru">У меня́ нет брат</span> là sai. Đây là chỗ người Việt hay quên vì tiếng Việt nói "không có anh trai" — chữ "anh trai" chẳng đổi gì.' },
+    { t: 'words', items: [
+      { ru: 'у меня́', vn: 'ở chỗ tôi (tôi có)' },
+      { ru: 'у тебя́', vn: 'ở chỗ bạn' },
+      { ru: 'у него́ / у неё', vn: 'ở chỗ anh ấy / cô ấy' },
+      { ru: 'у нас / у вас / у них', vn: 'ở chỗ chúng tôi / các bạn / họ' }
+    ]},
+    { t: 'h', text: 'Dùng 3 — Sau các giới từ' },
+    { t: 'words', items: [
+      { ru: 'из Вьетна́ма', vn: 'từ Việt Nam (nơi xuất phát)' },
+      { ru: 'от бра́та', vn: 'từ anh trai (từ một người)' },
+      { ru: 'до конца́', vn: 'cho đến hết' },
+      { ru: 'о́коло до́ма', vn: 'gần nhà' },
+      { ru: 'без са́хара', vn: 'không đường' },
+      { ru: 'для сестры́', vn: 'dành cho chị gái' },
+      { ru: 'по́сле уро́ка', vn: 'sau giờ học' }
+    ]},
+    { t: 'note', html: 'Câu hay dùng nhất: <span class="ru">Ко́фе без са́хара, пожа́луйста.</span> — "Cho tôi cà phê không đường." Cả câu chỉ có một chỗ đổi đuôi, mà không đổi là người ta nghe ra ngay.' },
+    { t: 'h', text: 'Dùng 4 — Sau số đếm (nhắc lại bài 12)' },
+    { t: 'p', html: 'Giờ thì bảng ở bài 12 đã có tên gọi: sau 2, 3, 4 là <b>cách 2 số ít</b>; từ 5 trở lên là <b>cách 2 số nhiều</b>.' },
+    { t: 'words', items: [
+      { ru: 'два бра́та', vn: '2 anh em (cách 2 số ít)' },
+      { ru: 'пять бра́тьев', vn: '5 anh em (cách 2 số nhiều)' },
+      { ru: 'три кни́ги', vn: '3 quyển sách' },
+      { ru: 'де́сять книг', vn: '10 quyển sách' },
+      { ru: 'два́дцать рубле́й', vn: '20 rúp' }
+    ]},
+    { t: 'tip', html: 'Cách 2 số nhiều có nhiều dạng, chưa cần học hết ở A1. Ba mẫu hay gặp: giống đực thêm <b>-ов</b> (студе́нтов), giống cái và trung thì <b>bỏ đuôi</b> (книг, о́кон), và nhóm mềm lấy <b>-ей</b> (рубле́й, друзе́й).' }
+  ],
+  vocab: [
+    { ru: 'оте́ц', vn: 'bố (trang trọng)' }, { ru: 'центр', vn: 'trung tâm' },
+    { ru: 'вре́мя', vn: 'thời gian' }, { ru: 'без', vn: 'không có, thiếu' },
+    { ru: 'для', vn: 'dành cho' }, { ru: 'о́коло', vn: 'gần, khoảng' },
+    { ru: 'по́сле', vn: 'sau khi' }, { ru: 'са́хар', vn: 'đường' },
+    { ru: 'у меня́ есть', vn: 'tôi có' }, { ru: 'нет', vn: 'không có' }
+  ],
+  ex: [
+    { t: 'type', q: 'Điền cách 2: У меня́ нет ___ (брат)', a: 'брата', alt: ['бра́та'], hint: 'Giống đực thêm -а.' },
+    { t: 'type', q: 'Điền cách 2: Э́то кни́га ___ (сестра́)', a: 'сестры', alt: ['сестры́'], hint: 'Giống cái -а đổi thành -ы.' },
+    { t: 'choice', q: 'Sau <span class="ru ru-big">нет</span>, danh từ phải ở cách nào?', options: ['Cách 1 (nguyên dạng)', 'Cách 2', 'Cách 4', 'Cách 6'], a: 1, why: 'нет luôn đòi cách 2: нет времени, нет магазина, нет брата.' },
+    { t: 'choice', q: '"Cà phê không đường" nói là:', options: ['ко́фе без са́хар', 'ко́фе без са́хара', 'ко́фе без са́харом', 'ко́фе не са́хар'], a: 1, why: 'Giới từ без luôn đi với cách 2: без сахара.' },
+    { t: 'type', q: 'Điền cách 2: Я из ___ (Вьетна́м)', a: 'вьетнама', alt: ['Вьетнама', 'Вьетна́ма'], hint: 'Giống đực thêm -а.' },
+    { t: 'choice', q: '"Sách của anh trai" trong tiếng Nga viết theo thứ tự nào?', options: ['бра́та кни́га', 'кни́га бра́та', 'кни́га для брат', 'бра́т кни́га'], a: 1, why: 'Vật đứng trước, người sở hữu đứng sau và đổi sang cách 2 — ngược thứ tự với tiếng Việt.' },
+    { t: 'match', q: 'Nối giới từ với nghĩa:', pairs: [['без', 'không có'], ['для', 'dành cho'], ['по́сле', 'sau khi'], ['о́коло', 'gần']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'у меня нет времени', a: 'у меня нет времени' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 14 */
+LESSON_DATA['a1-14'] = {
+  level: 'a1',
+  intro: 'Chủ đề đầu tiên người Nga hỏi khi làm quen là gia đình. Bài này cho em đủ từ để kể về nhà mình, và luyện luôn cách 2 vừa học ở bài trước.',
+  blocks: [
+    { t: 'h', text: 'Người trong nhà' },
+    { t: 'words', items: [
+      { ru: 'семья́', vn: 'gia đình' },
+      { ru: 'роди́тели', vn: 'bố mẹ (luôn số nhiều)' },
+      { ru: 'оте́ц / па́па', vn: 'bố — отец trang trọng, папа thân mật' },
+      { ru: 'мать / ма́ма', vn: 'mẹ — cùng kiểu như trên' },
+      { ru: 'брат', vn: 'anh / em trai' },
+      { ru: 'ста́рший брат', vn: 'anh trai' },
+      { ru: 'мла́дший брат', vn: 'em trai' },
+      { ru: 'сестра́', vn: 'chị / em gái' },
+      { ru: 'сын', vn: 'con trai' },
+      { ru: 'дочь', vn: 'con gái' },
+      { ru: 'муж', vn: 'chồng' },
+      { ru: 'жена́', vn: 'vợ' },
+      { ru: 'ба́бушка', vn: 'bà' },
+      { ru: 'де́душка', vn: 'ông' },
+      { ru: 'дя́дя', vn: 'chú, bác, cậu' },
+      { ru: 'тётя', vn: 'cô, dì, bác gái' }
+    ]},
+    { t: 'note', html: 'Tiếng Nga <b>không phân biệt vai vế</b> như tiếng Việt: <span class="ru">брат</span> vừa là anh vừa là em. Muốn nói rõ thì thêm <span class="ru">ста́рший</span> (lớn hơn) hoặc <span class="ru">мла́дший</span> (nhỏ hơn). Đây là chỗ người Việt thấy thiếu, còn người Nga thấy đủ.' },
+    { t: 'h', text: 'Kể về gia đình mình' },
+    { t: 'words', items: [
+      { ru: 'У меня́ больша́я семья́.', vn: 'Nhà tôi đông người.' },
+      { ru: 'У меня́ есть ста́рший брат и мла́дшая сестра́.', vn: 'Tôi có một anh trai và một em gái.' },
+      { ru: 'У меня́ нет бра́та.', vn: 'Tôi không có anh em trai.' },
+      { ru: 'Мои́ роди́тели живу́т во Вьетна́ме.', vn: 'Bố mẹ tôi sống ở Việt Nam.' },
+      { ru: 'Мой па́па — инжене́р.', vn: 'Bố tôi là kỹ sư.' },
+      { ru: 'Моя́ ма́ма рабо́тает в шко́ле.', vn: 'Mẹ tôi làm việc ở trường học.' },
+      { ru: 'Я ещё не за́мужем.', vn: 'Tôi chưa lập gia đình. (nữ nói)' },
+      { ru: 'Я ещё не жена́т.', vn: 'Tôi chưa lập gia đình. (nam nói)' }
+    ]},
+    { t: 'warn', html: 'Hai từ chỉ tình trạng hôn nhân <b>khác nhau theo giới</b>: nam nói <span class="ru">жена́т</span>, nữ nói <span class="ru">за́мужем</span>. Nói nhầm là câu chuyện thành buồn cười ngay.' },
+    { t: 'h', text: 'Nghề nghiệp hay gặp' },
+    { t: 'words', items: [
+      { ru: 'инжене́р', vn: 'kỹ sư' }, { ru: 'врач', vn: 'bác sĩ' },
+      { ru: 'учи́тель / учи́тельница', vn: 'giáo viên (nam / nữ)' },
+      { ru: 'студе́нт / студе́нтка', vn: 'sinh viên (nam / nữ)' },
+      { ru: 'программи́ст', vn: 'lập trình viên' }, { ru: 'бухга́лтер', vn: 'kế toán' },
+      { ru: 'води́тель', vn: 'lái xe' }, { ru: 'продаве́ц', vn: 'người bán hàng' },
+      { ru: 'пенсионе́р', vn: 'người về hưu' }, { ru: 'рабо́чий', vn: 'công nhân' }
+    ]},
+    { t: 'tip', html: 'Nhiều nghề có dạng riêng cho nữ, thêm đuôi <b>-ка</b> hoặc <b>-ница</b>: студе́нт → студе́нтка, учи́тель → учи́тельница. Nhưng một số nghề thì dùng chung cho cả hai giới: <span class="ru">врач, инжене́р, программи́ст</span> — người ta vẫn nói <span class="ru">Она́ врач</span>.' },
+    { t: 'h', text: 'Hội thoại làm quen' },
+    { t: 'dialog', lines: [
+      { who: 'А', ru: 'У тебя́ больша́я семья́?', vn: 'Nhà cậu đông người không?' },
+      { who: 'Б', ru: 'Да. У меня́ есть роди́тели, брат и две сестры́.', vn: 'Ừ. Tớ có bố mẹ, một anh trai và hai chị em gái.' },
+      { who: 'А', ru: 'А где они́ живу́т?', vn: 'Họ sống ở đâu?' },
+      { who: 'Б', ru: 'Они́ живу́т во Вьетна́ме, в Хано́е.', vn: 'Họ sống ở Việt Nam, ở Hà Nội.' },
+      { who: 'А', ru: 'Кто твой оте́ц?', vn: 'Bố cậu làm nghề gì?' },
+      { who: 'Б', ru: 'Он инжене́р. А ма́ма — учи́тельница.', vn: 'Bố tớ là kỹ sư. Còn mẹ là giáo viên.' }
+    ]}
+  ],
+  vocab: [
+    { ru: 'семья́', vn: 'gia đình' }, { ru: 'роди́тели', vn: 'bố mẹ' }, { ru: 'оте́ц', vn: 'bố' },
+    { ru: 'дочь', vn: 'con gái' }, { ru: 'сын', vn: 'con trai' }, { ru: 'муж', vn: 'chồng' },
+    { ru: 'жена́', vn: 'vợ' }, { ru: 'ба́бушка', vn: 'bà' }, { ru: 'тётя', vn: 'cô, dì' },
+    { ru: 'ста́рший', vn: 'lớn hơn' }, { ru: 'мла́дший', vn: 'nhỏ hơn' },
+    { ru: 'инжене́р', vn: 'kỹ sư' }, { ru: 'учи́тельница', vn: 'cô giáo' }, { ru: 'программи́ст', vn: 'lập trình viên' }
+  ],
+  ex: [
+    { t: 'choice', q: 'Từ <span class="ru ru-big">брат</span> trong tiếng Nga nghĩa là:', options: ['Chỉ anh trai', 'Chỉ em trai', 'Cả anh lẫn em trai', 'Anh em họ'], a: 2, why: 'Tiếng Nga không phân biệt vai vế. Muốn rõ thì thêm старший (anh) hoặc младший (em).' },
+    { t: 'choice', q: 'Oanh nói "Tôi chưa lập gia đình" thì dùng:', options: ['Я ещё не жена́т.', 'Я ещё не за́мужем.', 'Я ещё не муж.', 'У меня́ нет жены́.'], a: 1, why: 'Nữ dùng замужем, nam dùng женат.' },
+    { t: 'type', q: 'Điền cách 2: У меня́ нет ___ (сестра́)', a: 'сестры', alt: ['сестры́'], hint: 'Sau нет là cách 2, giống cái -а thành -ы.' },
+    { t: 'choice', q: '"Bố mẹ" trong tiếng Nga là:', options: ['роди́тель', 'роди́тели', 'роди́теля', 'ро́дина'], a: 1, why: 'родители luôn ở số nhiều. Đừng nhầm với родина (quê hương).' },
+    { t: 'type', q: 'Dịch: "Tôi có một chị gái." (dùng У меня́…)', a: 'у меня есть сестра', alt: ['у меня есть старшая сестра'], hint: 'Cấu trúc У меня есть + cách 1.' },
+    { t: 'match', q: 'Nối:', pairs: [['ба́бушка', 'bà'], ['дя́дя', 'chú, cậu'], ['дочь', 'con gái'], ['врач', 'bác sĩ']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'у меня большая семья', a: 'у меня большая семья' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 15 */
+LESSON_DATA['a1-15'] = {
+  level: 'a1',
+  intro: 'Thứ, tháng, giờ giấc — thứ em cần để hẹn gặp, đặt lịch, và hiểu khi người ta nói "thứ Ba tuần sau". Bài này cũng cho em thấy các cách đã học quay lại làm việc thật.',
+  blocks: [
+    { t: 'h', text: 'Bảy ngày trong tuần' },
+    { t: 'table', head: ['Thứ', 'Tiếng Nga', 'Vào thứ… (в + cách 4)'], rows: [
+      ['Thứ hai', 'понеде́льник', 'в понеде́льник'],
+      ['Thứ ba', 'вто́рник', 'во вто́рник'],
+      ['Thứ tư', 'среда́', 'в сре́ду'],
+      ['Thứ năm', 'четве́рг', 'в четве́рг'],
+      ['Thứ sáu', 'пя́тница', 'в пя́тницу'],
+      ['Thứ bảy', 'суббо́та', 'в суббо́ту'],
+      ['Chủ nhật', 'воскресе́нье', 'в воскресе́нье']
+    ]},
+    { t: 'note', html: 'Ba từ giống cái (среда́, пя́тница, суббо́та) đổi đuôi thành <b>-у</b> vì đây là cách 4 — đúng quy tắc em học ở bài 7. Và <span class="ru">во вто́рник</span> dùng <b>во</b> chứ không phải <b>в</b>, chỉ vì hai phụ âm в-т đứng cạnh nhau khó đọc.' },
+    { t: 'tip', html: 'Tên các thứ có logic đẹp: <span class="ru">вто́рник</span> từ <span class="ru">второ́й</span> (thứ hai), <span class="ru">четве́рг</span> từ <span class="ru">четы́ре</span> (bốn), <span class="ru">пя́тница</span> từ <span class="ru">пять</span> (năm). Còn <span class="ru">среда́</span> nghĩa là "ở giữa", và <span class="ru">воскресе́нье</span> nghĩa gốc là "sự phục sinh".' },
+    { t: 'h', text: 'Mười hai tháng' },
+    { t: 'words', items: [
+      { ru: 'янва́рь', vn: 'tháng 1' }, { ru: 'февра́ль', vn: 'tháng 2' },
+      { ru: 'март', vn: 'tháng 3' }, { ru: 'апре́ль', vn: 'tháng 4' },
+      { ru: 'май', vn: 'tháng 5' }, { ru: 'ию́нь', vn: 'tháng 6' },
+      { ru: 'ию́ль', vn: 'tháng 7' }, { ru: 'а́вгуст', vn: 'tháng 8' },
+      { ru: 'сентя́брь', vn: 'tháng 9' }, { ru: 'октя́брь', vn: 'tháng 10' },
+      { ru: 'ноя́брь', vn: 'tháng 11' }, { ru: 'дека́брь', vn: 'tháng 12' }
+    ]},
+    { t: 'p', html: 'Nói "vào tháng…" thì dùng <b>в + cách 6</b>: <span class="ru">в январе́, в ма́е, в сентябре́</span>. Để ý trọng âm nhảy về đuôi ở các tháng kết thúc bằng -брь.' },
+    { t: 'h', text: 'Mấy giờ rồi?' },
+    { t: 'words', items: [
+      { ru: 'Кото́рый час?', vn: 'Mấy giờ rồi? (trang trọng)' },
+      { ru: 'Ско́лько вре́мени?', vn: 'Mấy giờ rồi? (đời thường)' },
+      { ru: 'Сейча́с час.', vn: 'Bây giờ 1 giờ.' },
+      { ru: 'Сейча́с два часа́.', vn: 'Bây giờ 2 giờ.' },
+      { ru: 'Сейча́с пять часо́в.', vn: 'Bây giờ 5 giờ.' },
+      { ru: 'В во́семь часо́в', vn: 'Lúc 8 giờ' }
+    ]},
+    { t: 'warn', html: 'Lại là quy luật số đếm ở bài 12: <b>1 giờ</b> → <span class="ru">час</span>, <b>2–4 giờ</b> → <span class="ru">часа́</span>, <b>5 giờ trở lên</b> → <span class="ru">часо́в</span>. Cùng một từ, ba dạng. Nghe kỹ đuôi là biết mấy giờ ngay cả khi không nghe rõ con số.' },
+    { t: 'h', text: 'Buổi trong ngày' },
+    { t: 'words', items: [
+      { ru: 'у́тром', vn: 'buổi sáng' },
+      { ru: 'днём', vn: 'buổi trưa, ban ngày' },
+      { ru: 'ве́чером', vn: 'buổi tối' },
+      { ru: 'но́чью', vn: 'ban đêm' },
+      { ru: 'сего́дня', vn: 'hôm nay' },
+      { ru: 'за́втра', vn: 'ngày mai' },
+      { ru: 'вчера́', vn: 'hôm qua' },
+      { ru: 'на про́шлой неде́ле', vn: 'tuần trước' },
+      { ru: 'на сле́дующей неде́ле', vn: 'tuần sau' }
+    ]},
+    { t: 'h', text: 'Hẹn gặp' },
+    { t: 'dialog', lines: [
+      { who: 'А', ru: 'Когда́ у нас уро́к ру́сского языка́?', vn: 'Khi nào lớp tiếng Nga của chúng ta học?' },
+      { who: 'Б', ru: 'В понеде́льник и в сре́ду, в де́сять часо́в.', vn: 'Thứ hai và thứ tư, lúc 10 giờ.' },
+      { who: 'А', ru: 'А в пя́тницу?', vn: 'Còn thứ sáu?' },
+      { who: 'Б', ru: 'В пя́тницу нет уро́ка. Мы отдыха́ем.', vn: 'Thứ sáu không có buổi học. Chúng ta nghỉ.' },
+      { who: 'А', ru: 'Отли́чно! Тогда́ до понеде́льника.', vn: 'Tuyệt! Vậy hẹn gặp thứ hai nhé.' }
+    ]},
+    { t: 'note', html: 'Câu cuối dùng <span class="ru">до</span> + cách 2: <span class="ru">до понеде́льника</span> (cho đến thứ hai). Cùng kiểu với <span class="ru">до свида́ния</span> mà em học từ bài A0 — nghĩa đen là "cho đến lần gặp lại".' }
+  ],
+  vocab: [
+    { ru: 'понеде́льник', vn: 'thứ hai' }, { ru: 'среда́', vn: 'thứ tư' }, { ru: 'пя́тница', vn: 'thứ sáu' },
+    { ru: 'суббо́та', vn: 'thứ bảy' }, { ru: 'воскресе́нье', vn: 'chủ nhật' },
+    { ru: 'янва́рь', vn: 'tháng 1' }, { ru: 'ию́нь', vn: 'tháng 6' }, { ru: 'сентя́брь', vn: 'tháng 9' },
+    { ru: 'Кото́рый час?', vn: 'Mấy giờ rồi?' }, { ru: 'когда́', vn: 'khi nào' },
+    { ru: 'у́тром', vn: 'buổi sáng' }, { ru: 'но́чью', vn: 'ban đêm' }, { ru: 'неде́ля', vn: 'tuần' }
+  ],
+  ex: [
+    { t: 'choice', q: '"Vào thứ tư" nói là:', options: ['в среда́', 'в сре́ду', 'в среде́', 'во среда́'], a: 1, why: 'среда là giống cái nên ở cách 4 thành среду.' },
+    { t: 'choice', q: 'Vì sao thứ ba lại là <span class="ru">во вто́рник</span> chứ không phải <span class="ru">в вто́рник</span>?', options: ['Vì вторник là giống cái', 'Vì hai phụ âm в-т cạnh nhau khó đọc', 'Vì đó là ngoại lệ ngữ pháp', 'Vì вторник bắt đầu bằng nguyên âm'], a: 1, why: 'Thuần lý do phát âm. Cùng kiểu với во Вьетнаме.' },
+    { t: 'choice', q: '"Bây giờ 5 giờ" nói là:', options: ['Сейча́с пять час.', 'Сейча́с пять часа́.', 'Сейча́с пять часо́в.', 'Сейча́с пять часы́.'], a: 2, why: 'Từ 5 trở lên dùng cách 2 số nhiều: часов.' },
+    { t: 'type', q: 'Điền: Уро́к в ___ (понеде́льник)', a: 'понедельник', alt: ['понеде́льник'], hint: 'Giống đực nên ở cách 4 giữ nguyên.' },
+    { t: 'choice', q: '"Vào tháng chín" nói là:', options: ['в сентя́брь', 'в сентябре́', 'в сентября́', 'на сентя́брь'], a: 1, why: 'Tháng dùng в + cách 6: в сентябре, và trọng âm nhảy về đuôi.' },
+    { t: 'match', q: 'Nối:', pairs: [['у́тром', 'buổi sáng'], ['ве́чером', 'buổi tối'], ['но́чью', 'ban đêm'], ['когда́', 'khi nào']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'который час', a: 'который час' },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'в субботу', a: 'в субботу' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 16 */
+LESSON_DATA['a1-16'] = {
+  level: 'a1',
+  intro: '<b>Да́тельный паде́ж</b> (cách 3) trả lời câu hỏi "cho ai". Nhưng nó còn làm hai việc mà em dùng hằng ngày: nói <b>tuổi</b> và nói <b>cảm giác</b> — "tôi lạnh", "tôi thích cái này".',
+  blocks: [
+    { t: 'h', text: 'Đuôi của cách 3' },
+    { t: 'table', head: ['Loại từ', 'Đuôi', 'Ví dụ'], rows: [
+      ['Đực (phụ âm)', '-у', 'брат → бра́т<b>у</b>'],
+      ['Đực (-й, -ь)', '-ю', 'музе́й → музе́<b>ю</b> · слова́рь → словар<b>ю́</b>'],
+      ['Cái -а / -я', '-е', 'сестра́ → сестр<b>е́</b> · шко́ла → шко́л<b>е</b>'],
+      ['Cái -ия', '-ии', 'Росси́я → Росси́<b>и</b>'],
+      ['Cái -ь', '-и', 'тетра́дь → тетра́д<b>и</b>'],
+      ['Trung', '-у / -ю', 'окно́ → окн<b>у́</b> · мо́ре → мо́р<b>ю</b>']
+    ]},
+    { t: 'tip', html: 'Đuôi giống cái ở cách 3 là <b>-е</b>, y hệt cách 6 (<span class="ru">сестре́</span>). Nghe thì dễ lẫn, nhưng phân biệt được bằng giới từ: cách 6 luôn có в / на / о đứng trước, cách 3 thì không.' },
+    { t: 'h', text: 'Dùng 1 — Đưa, nói, gọi CHO AI' },
+    { t: 'words', items: [
+      { ru: 'Я даю́ кни́гу бра́ту.', vn: 'Tôi đưa sách cho anh trai.' },
+      { ru: 'Он звони́т сестре́.', vn: 'Anh ấy gọi điện cho chị gái.' },
+      { ru: 'Я пишу́ письмо́ дру́гу.', vn: 'Tôi viết thư cho bạn.' },
+      { ru: 'Она́ помога́ет ма́ме.', vn: 'Cô ấy giúp mẹ.' },
+      { ru: 'Преподава́тель объясня́ет студе́нтам.', vn: 'Thầy giảng cho các sinh viên.' }
+    ]},
+    { t: 'warn', html: 'Nhóm động từ này <b>bắt buộc</b> đi với cách 3, không có ngoại lệ: <span class="ru">дать, сказа́ть, показа́ть, помога́ть, звони́ть, писа́ть, объясня́ть</span>. Học động từ thì học luôn cách nó đòi — đây là cách chữa gốc rễ cho lỗi chọn đuôi bằng cảm tính.' },
+    { t: 'h', text: 'Dùng 2 — Tuổi tác' },
+    { t: 'p', html: 'Tiếng Nga không nói "tôi 25 tuổi" mà nói "<b>với tôi có 25 năm</b>". Người nói đứng ở cách 3:' },
+    { t: 'table', head: ['Đại từ cách 3', 'Câu', 'Nghĩa'], rows: [
+      ['мне', 'Мне два́дцать пять лет.', 'Tôi 25 tuổi.'],
+      ['тебе́', 'Ско́лько тебе́ лет?', 'Cậu bao nhiêu tuổi?'],
+      ['ему́ / ей', 'Ему́ три́дцать лет.', 'Anh ấy 30 tuổi.'],
+      ['нам / вам / им', 'Ско́лько вам лет?', 'Ngài bao nhiêu tuổi? (lịch sự)']
+    ]},
+    { t: 'note', html: 'Từ chỉ "tuổi" cũng theo quy luật số đếm: <b>1</b> → <span class="ru">год</span>, <b>2–4</b> → <span class="ru">го́да</span>, <b>5 trở lên</b> → <span class="ru">лет</span>. Ví dụ: <span class="ru">два́дцать оди́н год · два́дцать два го́да · два́дцать пять лет</span>.' },
+    { t: 'h', text: 'Dùng 3 — Cảm giác và sở thích' },
+    { t: 'words', items: [
+      { ru: 'Мне хо́лодно.', vn: 'Tôi lạnh.' },
+      { ru: 'Мне жа́рко.', vn: 'Tôi nóng.' },
+      { ru: 'Мне интере́сно.', vn: 'Tôi thấy hay.' },
+      { ru: 'Мне тру́дно.', vn: 'Tôi thấy khó.' },
+      { ru: 'Мне нра́вится ру́сский язы́к.', vn: 'Tôi thích tiếng Nga.' },
+      { ru: 'Ей нра́вится э́та пе́сня.', vn: 'Cô ấy thích bài hát này.' }
+    ]},
+    { t: 'warn', html: '<span class="ru">нра́виться</span> hoạt động ngược với tiếng Việt. Câu <span class="ru">Мне нра́вится кни́га</span> dịch sát là "<b>quyển sách làm vừa lòng tôi</b>" — nên chủ ngữ là <b>quyển sách</b>, còn người thích thì ở cách 3. Vì thế nếu thích nhiều thứ thì động từ đổi: <span class="ru">Мне нра́вятся э́ти кни́ги</span>.' },
+    { t: 'h', text: 'Dùng 4 — Giới từ К (đến chỗ ai)' },
+    { t: 'words', items: [
+      { ru: 'Я иду́ к врачу́.', vn: 'Tôi đi đến chỗ bác sĩ.' },
+      { ru: 'Приходи́ ко мне!', vn: 'Đến chỗ tớ chơi đi!' },
+      { ru: 'Он е́дет к роди́телям.', vn: 'Anh ấy về chỗ bố mẹ.' }
+    ]},
+    { t: 'tip', html: 'Phân biệt hai kiểu "đi đâu": đến một <b>nơi chốn</b> thì dùng <span class="ru">в / на</span> + cách 4 (<span class="ru">в шко́лу</span>); đến chỗ một <b>con người</b> thì dùng <span class="ru">к</span> + cách 3 (<span class="ru">к врачу́</span>).' }
+  ],
+  vocab: [
+    { ru: 'дать', vn: 'đưa, cho' }, { ru: 'помога́ть', vn: 'giúp đỡ' }, { ru: 'писа́ть', vn: 'viết' },
+    { ru: 'объясня́ть', vn: 'giải thích' }, { ru: 'нра́виться', vn: 'làm vừa lòng, thích' },
+    { ru: 'мне', vn: 'với tôi, cho tôi' }, { ru: 'хо́лодно', vn: 'lạnh' }, { ru: 'жа́рко', vn: 'nóng' },
+    { ru: 'тру́дно', vn: 'khó' }, { ru: 'год', vn: 'năm, tuổi' }, { ru: 'лет', vn: 'tuổi (từ 5 trở lên)' }
+  ],
+  ex: [
+    { t: 'type', q: 'Điền cách 3: Я звоню́ ___ (сестра́)', a: 'сестре', alt: ['сестре́'], hint: 'Giống cái ở cách 3 lấy đuôi -е.' },
+    { t: 'type', q: 'Điền cách 3: Он пи́шет письмо́ ___ (брат)', a: 'брату', alt: ['бра́ту'], hint: 'Giống đực lấy đuôi -у.' },
+    { t: 'choice', q: '"Tôi 25 tuổi" nói là:', options: ['Я два́дцать пять лет.', 'Мне два́дцать пять лет.', 'Мне два́дцать пять год.', 'У меня́ два́дцать пять лет.'], a: 1, why: 'Người nói đứng ở cách 3 (мне), và 25 kết thúc bằng 5 nên dùng лет.' },
+    { t: 'choice', q: 'Trong câu <span class="ru">Мне нра́вится кни́га</span>, chủ ngữ là:', options: ['мне', 'кни́га', 'нра́вится', 'không có chủ ngữ'], a: 1, why: 'Nghĩa đen là "quyển sách làm vừa lòng tôi" — sách mới là chủ ngữ, nên nếu nhiều sách thì thành нравятся.' },
+    { t: 'choice', q: '"Tôi đi đến chỗ bác sĩ" dùng giới từ nào?', options: ['в + cách 4', 'на + cách 4', 'к + cách 3', 'у + cách 2'], a: 2, why: 'Đến chỗ một con người thì dùng к + cách 3: к врачу.' },
+    { t: 'type', q: 'Điền: Ско́лько ___ лет? (hỏi "cậu bao nhiêu tuổi")', a: 'тебе', alt: ['тебе́'], hint: 'Dạng cách 3 của ты.' },
+    { t: 'match', q: 'Nối:', pairs: [['хо́лодно', 'lạnh'], ['жа́рко', 'nóng'], ['тру́дно', 'khó'], ['помога́ть', 'giúp đỡ']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'мне нравится русский язык', a: 'мне нравится русский язык' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 17 */
+LESSON_DATA['a1-17'] = {
+  level: 'a1',
+  intro: 'Cách cuối cùng em học ở A1: <b>твори́тельный паде́ж</b> (cách 5). Tên nó đến từ chữ "творить" — tạo ra, làm — vì nghĩa gốc là <b>công cụ để làm việc gì</b>. Nhưng công dụng dùng nhiều nhất lại là "cùng với ai".',
+  blocks: [
+    { t: 'h', text: 'Đuôi của cách 5' },
+    { t: 'table', head: ['Loại từ', 'Đuôi', 'Ví dụ'], rows: [
+      ['Đực (phụ âm)', '-ом', 'брат → бра́т<b>ом</b> · стол → стол<b>о́м</b>'],
+      ['Đực (-й, -ь)', '-ем / -ём', 'музе́й → музе́<b>ем</b> · слова́рь → словар<b>ём</b>'],
+      ['Cái -а', '-ой', 'сестра́ → сестр<b>о́й</b> · кни́га → кни́г<b>ой</b>'],
+      ['Cái -я / -ия', '-ей', 'неде́ля → неде́л<b>ей</b> · Росси́я → Росси́<b>ей</b>'],
+      ['Cái -ь', '-ью', 'тетра́дь → тетра́д<b>ью</b>'],
+      ['Trung', '-ом / -ем', 'окно́ → окн<b>о́м</b> · мо́ре → мо́р<b>ем</b>']
+    ]},
+    { t: 'h', text: 'Dùng 1 — Cùng với ai, cùng với cái gì' },
+    { t: 'words', items: [
+      { ru: 'Я иду́ с бра́том.', vn: 'Tôi đi cùng anh trai.' },
+      { ru: 'Она́ говори́т с преподава́телем.', vn: 'Cô ấy nói chuyện với thầy giáo.' },
+      { ru: 'Ко́фе с молоко́м, пожа́луйста.', vn: 'Cho tôi cà phê sữa.' },
+      { ru: 'Чай с са́харом', vn: 'trà có đường' },
+      { ru: 'Мы с тобо́й', vn: 'tôi với cậu' }
+    ]},
+    { t: 'table', head: ['Đại từ', 'Đi với с'], rows: [
+      ['я', 'со мной'], ['ты', 'с тобо́й'], ['он / она́', 'с ним / с ней'],
+      ['мы / вы / они́', 'с на́ми / с ва́ми / с ни́ми']
+    ]},
+    { t: 'note', html: 'Nhớ ở bài 13: <span class="ru">без са́хара</span> (không đường) dùng cách 2, còn <span class="ru">с са́харом</span> (có đường) dùng cách 5. Hai câu gọi đồ uống, hai cách khác nhau — gọi cà phê ở Nga là ôn được cả hai.' },
+    { t: 'h', text: 'Dùng 2 — Bằng công cụ gì' },
+    { t: 'words', items: [
+      { ru: 'Я пишу́ ру́чкой.', vn: 'Tôi viết bằng bút.' },
+      { ru: 'Мы еди́м ло́жкой.', vn: 'Chúng tôi ăn bằng thìa.' },
+      { ru: 'Он рабо́тает рука́ми.', vn: 'Anh ấy làm việc bằng tay.' }
+    ]},
+    { t: 'tip', html: 'Ở đây <b>không có giới từ</b>. Tiếng Việt cần chữ "bằng", tiếng Nga chỉ cần đổi đuôi. Người Việt hay thêm thừa một giới từ vào — nhớ là công cụ thì để trần.' },
+    { t: 'h', text: 'Dùng 3 — Nghề nghiệp và trở thành' },
+    { t: 'words', items: [
+      { ru: 'Он рабо́тает врачо́м.', vn: 'Anh ấy làm bác sĩ.' },
+      { ru: 'Она́ рабо́тает учи́тельницей.', vn: 'Cô ấy làm giáo viên.' },
+      { ru: 'Я хочу́ стать инжене́ром.', vn: 'Tôi muốn trở thành kỹ sư.' },
+      { ru: 'Он был студе́нтом.', vn: 'Anh ấy đã từng là sinh viên.' },
+      { ru: 'Я занима́юсь иссле́дованием.', vn: 'Tôi làm nghiên cứu.' }
+    ]},
+    { t: 'warn', html: 'So sánh kỹ hai câu: <span class="ru">Он врач</span> (Anh ấy <b>là</b> bác sĩ — nói về danh tính, cách 1) và <span class="ru">Он рабо́тает врачо́м</span> (Anh ấy <b>làm nghề</b> bác sĩ — nói về công việc, cách 5). Động từ <span class="ru">рабо́тать, стать, быть</span> ở quá khứ và <span class="ru">занима́ться</span> đều kéo theo cách 5.' },
+    { t: 'h', text: 'Dùng 4 — Mùa và buổi trong ngày' },
+    { t: 'p', html: 'Những từ chỉ thời gian em đã học ở bài 15 thực ra <b>chính là cách 5</b> của danh từ:' },
+    { t: 'table', head: ['Danh từ', 'Cách 5 = trạng từ', 'Nghĩa'], rows: [
+      ['у́тро', 'у́тр<b>ом</b>', 'vào buổi sáng'],
+      ['день', 'дн<b>ём</b>', 'vào ban ngày'],
+      ['ве́чер', 'ве́чер<b>ом</b>', 'vào buổi tối'],
+      ['ночь', 'но́ч<b>ью</b>', 'vào ban đêm'],
+      ['зима́', 'зим<b>о́й</b>', 'vào mùa đông'],
+      ['ле́то', 'ле́т<b>ом</b>', 'vào mùa hè'],
+      ['весна́', 'весн<b>о́й</b>', 'vào mùa xuân'],
+      ['о́сень', 'о́сен<b>ью</b>', 'vào mùa thu']
+    ]},
+    { t: 'tip', html: 'Biết điều này thì em không phải học thuộc tám từ rời rạc nữa — chỉ cần nhớ danh từ gốc rồi đặt vào cách 5. Đây là kiểu tiết kiệm trí nhớ mà tiếng Nga thưởng cho người học chịu tìm quy luật.' }
+  ],
+  vocab: [
+    { ru: 'с', vn: 'cùng với' }, { ru: 'ло́жка', vn: 'cái thìa' }, { ru: 'стать', vn: 'trở thành' },
+    { ru: 'занима́ться', vn: 'làm, theo đuổi (một việc)' }, { ru: 'иссле́дование', vn: 'nghiên cứu' },
+    { ru: 'зимо́й', vn: 'vào mùa đông' }, { ru: 'ле́том', vn: 'vào mùa hè' },
+    { ru: 'весно́й', vn: 'vào mùa xuân' }, { ru: 'о́сенью', vn: 'vào mùa thu' },
+    { ru: 'молоко́', vn: 'sữa' }
+  ],
+  ex: [
+    { t: 'type', q: 'Điền cách 5: Я иду́ с ___ (брат)', a: 'братом', alt: ['бра́том'], hint: 'Giống đực lấy đuôi -ом.' },
+    { t: 'type', q: 'Điền cách 5: Ко́фе с ___ (молоко́)', a: 'молоком', alt: ['молоко́м'], hint: 'Giống trung lấy đuôi -ом.' },
+    { t: 'choice', q: '"Tôi viết bằng bút" nói là:', options: ['Я пишу́ с ру́чкой.', 'Я пишу́ ру́чкой.', 'Я пишу́ ру́чку.', 'Я пишу́ в ру́чке.'], a: 1, why: 'Công cụ thì để trần, không thêm giới từ. с chỉ dùng cho "cùng với ai".' },
+    { t: 'choice', q: 'Câu nào nói về <b>nghề nghiệp</b> chứ không phải danh tính?', options: ['Он врач.', 'Он рабо́тает врачо́м.', 'Э́то врач.', 'Врач здесь.'], a: 1, why: 'работать + cách 5 nói về công việc đang làm. Он врач (cách 1) nói về danh tính.' },
+    { t: 'choice', q: '<span class="ru ru-big">ле́том</span> thực chất là dạng gì của <span class="ru">ле́то</span>?', options: ['Số nhiều', 'Cách 2', 'Cách 5', 'Một trạng từ riêng biệt'], a: 2, why: 'Là cách 5 của лето. Cả tám từ chỉ mùa và buổi đều theo quy luật này.' },
+    { t: 'type', q: 'Điền: Я хочу́ стать ___ (инжене́р)', a: 'инженером', alt: ['инжене́ром'], hint: 'стать đòi cách 5.' },
+    { t: 'match', q: 'Nối:', pairs: [['зимо́й', 'mùa đông'], ['ле́том', 'mùa hè'], ['но́чью', 'ban đêm'], ['ло́жка', 'cái thìa']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'кофе с молоком', a: 'кофе с молоком' }
+  ]
+};
+
+/* ---------------------------------------------------------- BÀI 18 */
+LESSON_DATA['a1-18'] = {
+  level: 'a1',
+  intro: 'Đến giờ câu của em vẫn trần trụi: "nhà", "sách", "thành phố". Bài này cho em <b>tính từ</b> — để nói nhà <i>mới</i>, sách <i>hay</i>, thành phố <i>đẹp</i>. Quy tắc chỉ có một: tính từ phải <b>hoà hợp</b> với danh từ nó bổ nghĩa.',
+  blocks: [
+    { t: 'h', text: 'Bốn đuôi cơ bản' },
+    { t: 'table', head: ['Đi với', 'Đuôi', 'но́вый (mới)', 'Câu hỏi'], rows: [
+      ['Giống đực', '-ый / -ий / -о́й', 'но́в<b>ый</b> дом', 'Како́й?'],
+      ['Giống cái', '-ая / -яя', 'но́в<b>ая</b> кни́га', 'Кака́я?'],
+      ['Giống trung', '-ое / -ее', 'но́в<b>ое</b> окно́', 'Како́е?'],
+      ['Số nhiều', '-ые / -ие', 'но́в<b>ые</b> дома́', 'Каки́е?']
+    ]},
+    { t: 'p', html: 'Tính từ luôn đứng <b>trước</b> danh từ, và đổi đuôi theo danh từ đó — không phải theo người nói.' },
+    { t: 'h', text: 'Ba kiểu đuôi giống đực' },
+    { t: 'table', head: ['Kiểu', 'Khi nào', 'Ví dụ'], rows: [
+      ['-ый', 'Mặc định', 'но́вый, ста́рый, интере́сный'],
+      ['-ий', 'Sau <b>г к х ж ч ш щ</b> (quy tắc 7 chữ)', 'ру́сский, хоро́ший, ма́ленький'],
+      ['-о́й', 'Khi trọng âm rơi vào đuôi', 'большо́й, молодо́й, плохо́й']
+    ]},
+    { t: 'tip', html: 'Lại là quy tắc 7 chữ, lần thứ ba trong cấp A1 — ở số nhiều (bài 4), ở cách 2 (bài 13), và bây giờ ở tính từ. Đến giờ chắc em không cần nhìn lại bảng nữa.' },
+    { t: 'h', text: 'Những tính từ dùng nhiều nhất' },
+    { t: 'words', items: [
+      { ru: 'но́вый', vn: 'mới' }, { ru: 'ста́рый', vn: 'cũ, già' },
+      { ru: 'большо́й', vn: 'to, lớn' }, { ru: 'ма́ленький', vn: 'nhỏ' },
+      { ru: 'хоро́ший', vn: 'tốt' }, { ru: 'плохо́й', vn: 'tệ' },
+      { ru: 'краси́вый', vn: 'đẹp' }, { ru: 'интере́сный', vn: 'thú vị' },
+      { ru: 'тру́дный', vn: 'khó' }, { ru: 'лёгкий', vn: 'dễ, nhẹ' },
+      { ru: 'молодо́й', vn: 'trẻ' }, { ru: 'ру́сский', vn: 'thuộc về Nga' },
+      { ru: 'вьетна́мский', vn: 'thuộc về Việt Nam' }, { ru: 'дорого́й', vn: 'đắt; thân mến' }
+    ]},
+    { t: 'h', text: 'Ghép thành cụm' },
+    { t: 'words', items: [
+      { ru: 'большо́й го́род', vn: 'thành phố lớn' },
+      { ru: 'больша́я семья́', vn: 'gia đình đông người' },
+      { ru: 'большо́е окно́', vn: 'cửa sổ lớn' },
+      { ru: 'больши́е города́', vn: 'những thành phố lớn' },
+      { ru: 'хоро́шая пого́да', vn: 'thời tiết đẹp' },
+      { ru: 'интере́сная кни́га', vn: 'quyển sách hay' },
+      { ru: 'ру́сский язы́к', vn: 'tiếng Nga' },
+      { ru: 'вьетна́мская ку́хня', vn: 'ẩm thực Việt Nam' }
+    ]},
+    { t: 'h', text: 'Tính từ cũng đổi theo cách' },
+    { t: 'p', html: 'Danh từ đổi đuôi theo cách thì tính từ đi kèm cũng phải đổi theo. Ở A1 em chỉ cần nắm một trường hợp hay dùng nhất — <b>cách 4 của giống cái</b>:' },
+    { t: 'words', items: [
+      { ru: 'Э́то интере́сная кни́га.', vn: 'Đây là quyển sách hay. (cách 1)' },
+      { ru: 'Я чита́ю интере́сную кни́гу.', vn: 'Tôi đang đọc quyển sách hay. (cách 4)' },
+      { ru: 'Э́то больша́я ко́мната.', vn: 'Đây là căn phòng lớn.' },
+      { ru: 'Я ви́жу большу́ю ко́мнату.', vn: 'Tôi thấy căn phòng lớn.' }
+    ]},
+    { t: 'note', html: 'Đuôi giống cái đi thành cặp: danh từ <b>-а → -у</b> thì tính từ <b>-ая → -ую</b>. Nghe được nhịp "-ую -у" là em biết mình nói đúng.' },
+    { t: 'h', text: 'Hỏi "thế nào"' },
+    { t: 'dialog', lines: [
+      { who: 'А', ru: 'Кака́я сего́дня пого́да?', vn: 'Hôm nay thời tiết thế nào?' },
+      { who: 'Б', ru: 'Хоро́шая, но хо́лодная.', vn: 'Đẹp, nhưng lạnh.' },
+      { who: 'А', ru: 'Како́й у тебя́ но́вый дом?', vn: 'Nhà mới của cậu thế nào?' },
+      { who: 'Б', ru: 'Небольшо́й, но о́чень краси́вый.', vn: 'Không to lắm, nhưng rất đẹp.' }
+    ]},
+    { t: 'tip', html: 'Thêm <span class="ru">не-</span> vào trước tính từ là được nghĩa ngược lại, y như tiếng Việt thêm "không": <span class="ru">небольшо́й</span> (không to), <span class="ru">нетру́дный</span> (không khó), <span class="ru">неинтере́сный</span> (không hay). Một mẹo nhỏ mà nhân đôi vốn tính từ của em.' }
+  ],
+  vocab: [
+    { ru: 'но́вый', vn: 'mới' }, { ru: 'ста́рый', vn: 'cũ, già' }, { ru: 'большо́й', vn: 'to, lớn' },
+    { ru: 'ма́ленький', vn: 'nhỏ' }, { ru: 'хоро́ший', vn: 'tốt' }, { ru: 'краси́вый', vn: 'đẹp' },
+    { ru: 'интере́сный', vn: 'thú vị' }, { ru: 'тру́дный', vn: 'khó' }, { ru: 'лёгкий', vn: 'dễ' },
+    { ru: 'пого́да', vn: 'thời tiết' }, { ru: 'ку́хня', vn: 'bếp; ẩm thực' }, { ru: 'како́й', vn: 'thế nào, loại nào' }
+  ],
+  ex: [
+    { t: 'type', q: 'Điền đuôi: но́в___ кни́га', a: 'новая', alt: ['но́вая', 'ая'], hint: 'книга là giống cái.' },
+    { t: 'choice', q: '"Thành phố lớn" nói là:', options: ['больша́я го́род', 'большо́й го́род', 'большо́е го́род', 'больши́е го́род'], a: 1, why: 'город là giống đực, và большой có trọng âm ở đuôi nên lấy dạng -ой.' },
+    { t: 'choice', q: 'Vì sao <span class="ru">ру́сский</span> lấy đuôi -ий mà không phải -ый?', options: ['Vì nó là từ mượn', 'Vì trước đuôi là chữ к, thuộc quy tắc 7 chữ', 'Vì nó chỉ quốc tịch', 'Vì trọng âm ở đầu'], a: 1, why: 'Sau г к х ж ч ш щ thì viết и chứ không viết ы. Cùng quy tắc với книги ở bài 4.' },
+    { t: 'type', q: 'Điền: Я чита́ю интере́сн___ кни́гу.', a: 'интересную', alt: ['интере́сную', 'ую'], hint: 'Danh từ ở cách 4 (-у) thì tính từ cũng phải theo (-ую).' },
+    { t: 'choice', q: 'Tính từ đổi đuôi theo cái gì?', options: ['Theo người nói', 'Theo danh từ nó bổ nghĩa', 'Theo động từ trong câu', 'Không đổi'], a: 1, why: 'Tính từ hoà hợp với danh từ về giống, số và cách.' },
+    { t: 'choice', q: '<span class="ru ru-big">небольшо́й</span> nghĩa là:', options: ['rất lớn', 'không to lắm', 'quá nhỏ', 'mới'], a: 1, why: 'Thêm не- vào trước tính từ được nghĩa ngược lại.' },
+    { t: 'match', q: 'Nối:', pairs: [['ста́рый', 'cũ, già'], ['краси́вый', 'đẹp'], ['лёгкий', 'dễ'], ['пого́да', 'thời tiết']] },
+    { t: 'listen', q: 'Nghe và gõ lại:', say: 'интересная книга', a: 'интересная книга' }
+  ]
+};
