@@ -34,6 +34,8 @@ git push -u origin main
 ```
 index.html          trang chủ: lộ trình 7 cấp, tiến độ, sao lưu
 hoc.html            trình phát bài học  (hoc.html?id=a0-03)
+khocau.html         kho câu: câu cửa miệng, nói khác viết, lỗi người Việt,
+                     thành ngữ, trêu đùa, sống ở Nga + 238 câu hội thoại trong bài
 luyentap.html       luyện tập tự do: trộn lại 980 câu bài tập sẵn có
 flashcard.html      thẻ từ vựng lặp lại ngắt quãng
 thi.html            kì thi cuối cấp + giấy chứng nhận
@@ -52,6 +54,7 @@ assets/js/srs.js       thuật toán lặp lại ngắt quãng
 assets/js/exam.js      chấm thi, vẽ giấy chứng nhận
 assets/js/dict.js      từ điển: dựng chỉ mục từ LESSON_DATA, dò dạng biến cách,
                         và biến từ tiếng Nga trong bài thành từ bấm-tra-được
+assets/js/record.js    ghi âm giọng mình rồi nghe lại (KHÔNG chấm điểm phát âm)
 assets/js/auth.js      tài khoản + đồng bộ tiến độ lên Supabase
 assets/js/supabase-config.js   KHOÁ SUPABASE — em dán vào đây
 
@@ -64,6 +67,7 @@ data/lessons/a1.js     nội dung cấp A1 (24 bài)
 data/lessons/a2.js     nội dung cấp A2 (24 bài)
 data/lessons/b1.js     nội dung cấp B1 (28 bài)
 data/lessons/b2.js     nội dung cấp B2 (28 bài)
+data/phrases.js        kho câu chọn tay: PHRASE_CATS (nhóm) + PHRASES (câu)
 data/exams.js          đề thi cuối cấp
 data/placement.js      ngân hàng câu hỏi kiểm tra đầu vào
 ```
@@ -247,3 +251,38 @@ trong `exams.js` ghi bằng chỉ số vị trí (`a: 2`), xáo phương án s�
 
 Muốn một cấp có nhiều đề khác nhau thật thì cứ thêm câu vào `q` của cấp đó rồi rút
 ngẫu nhiên một phần — không cần tạo nhiều bộ đề riêng.
+
+## Kho câu
+
+`khocau.html` đứng trên hai nguồn:
+
+1. `data/phrases.js` — câu chọn tay, chia sáu nhóm: **câu cửa miệng · nói khác viết ·
+   lỗi người Việt hay mắc · thành ngữ tục ngữ · trêu nhau đùa vui · sống ở Nga**.
+2. Tự gom **238 câu hội thoại** nằm sẵn trong các khối `dialog` của 114 bài học —
+   viết bài mới có hội thoại là kho câu tự lớn theo.
+
+Trường quan trọng nhất của mỗi câu là **`when` (dùng lúc nào)**, không phải `vn`.
+Biết nghĩa mà không biết được nói lúc nào thì vẫn không dùng được — đó đúng là chỗ
+người học vướng nhất. Khi thêm câu mới, viết `when` cho tử tế hơn là thêm thật nhiều câu.
+
+Nhóm `error` có thêm trường `bad` — dạng nói **sai**. Trên giao diện, câu sai luôn
+có nhãn đỏ **SAI** và bị gạch ngang, câu đúng có nhãn xanh **ĐÚNG**, để không ai
+liếc qua rồi nhớ nhầm câu sai.
+
+Nhóm `speak` (nói khác viết) nói rõ trong phần mô tả: học để **nghe hiểu**, còn khi
+viết và khi thi ТРКИ thì vẫn dùng dạng chuẩn. Đừng bỏ câu nhắc đó đi.
+
+## Ghi âm — và vì sao không chấm điểm phát âm
+
+`assets/js/record.js` cho người học ghi âm giọng mình rồi bật cạnh giọng mẫu.
+Có nút micro ở kho câu và ở mọi dòng hội thoại trong bài học.
+
+Web **cố ý không chấm điểm phát âm**. Trình duyệt không đo được trọng âm hay ngữ điệu;
+thứ chạy được trong trình duyệt chỉ đoán xem người ta nói *từ nào*, không đo được nói
+*đúng hay sai*. Một con điểm phát âm sai còn hại hơn không có điểm — người học sẽ tin
+là mình đọc chuẩn trong khi không phải. Cách làm ở đây (nghe mẫu → tự đọc → nghe lại
+so sánh) đúng là cách các lớp dạy phát âm vẫn dùng, và tai người nghe ra khác biệt tốt
+hơn mọi thuật toán chạy được offline.
+
+Bản ghi chỉ nằm trong bộ nhớ của trang, đóng tab là mất — cố ý, để không có giọng nói
+của ai bị lưu lại ở đâu cả. Cần HTTPS mới bật được micro (Vercel có sẵn HTTPS).

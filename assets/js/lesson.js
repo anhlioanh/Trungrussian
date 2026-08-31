@@ -4,7 +4,7 @@
 
 /* ---------- 1. Dựng phần lý thuyết ---------- */
 function renderBlocks(blocks) {
-  return (blocks || []).map(b => {
+  return (blocks || []).map((b, bi) => {
     switch (b.t) {
       case 'h': return `<h2>${esc(b.text)}</h2>`;
       case 'p': return `<p>${b.html}</p>`;
@@ -44,11 +44,11 @@ function renderBlocks(blocks) {
         </table></div>`;
 
       case 'dialog':
-        return `<div class="card">${b.lines.map(l => `
+        return `<div class="card">${b.lines.map((l, li) => `
           <div class="dlg-line">
             <span class="dlg-who">${esc(l.who)}</span>
             <div style="flex:1">
-              <div class="row" style="gap:8px"><span class="ru" style="font-size:1.05rem">${esc(l.ru)}</span>${speakBtn(l.ru, l.ru)}</div>
+              <div class="row" style="gap:8px"><span class="ru" style="font-size:1.05rem">${esc(l.ru)}</span>${speakBtn(l.ru, l.ru)}${typeof Rec !== 'undefined' ? Rec.button('dlg:' + bi + ':' + li, l.ru) : ''}</div>
               <div class="small muted">${esc(l.vn)}</div>
             </div>
           </div>`).join('')}</div>`;

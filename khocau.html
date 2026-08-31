@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kho câu — Học tiếng Nga cùng Oanh</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .cat-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 4px; }
+  .cat-tab { font: inherit; font-size: .85rem; cursor: pointer; padding: 8px 14px; border-radius: 99px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+  .cat-tab:hover { border-color: var(--brand); }
+  .cat-tab.on { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .ph { padding: 15px 17px; }
+  .ph + .ph { margin-top: 10px; }
+  .ph-ru { font-family: var(--font-ru); font-size: 1.18rem; font-weight: 600; line-height: 1.45; }
+  .ph-vn { color: var(--text-soft); margin-top: 3px; }
+  .ph-when { margin-top: 9px; padding: 9px 12px; background: var(--bg-soft); border-radius: var(--radius-sm);
+    font-size: .86rem; color: var(--text-soft); line-height: 1.55; }
+  .ph-when b { color: var(--text); }
+  .ph-bad { margin-top: 8px; font-size: .93rem; }
+  .ph-bad .x { color: var(--err); text-decoration: line-through; font-family: var(--font-ru); opacity: .75; }
+  .lbl { font-size: .62rem; font-weight: 700; letter-spacing: .06em; padding: 2px 6px; border-radius: 4px; vertical-align: middle; }
+  .lbl.bad { background: var(--err-soft); color: var(--err); }
+  .lbl.ok { background: var(--ok-soft); color: var(--ok); }
+  .ph-bad .v { color: var(--ok); font-family: var(--font-ru); }
+  .ph-tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .ph-src { font-size: .74rem; color: var(--text-mute); }
+  .ph-src a { color: var(--text-mute); }
+
+  /* nút ghi âm */
+  .rec-wrap { display: inline-flex; align-items: center; gap: 8px; }
+  .rec-btn { width: 32px; height: 32px; flex: none; border-radius: 50%; cursor: pointer; display: grid; place-items: center;
+    border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-soft); padding: 0; }
+  .rec-btn svg { width: 17px; height: 17px; }
+  .rec-btn:hover { border-color: var(--err); color: var(--err); }
+  .rec-btn.on { background: var(--err); border-color: var(--err); color: #fff; animation: recpulse 1.1s infinite; }
+  @keyframes recpulse { 0%,100% { opacity: 1 } 50% { opacity: .55 } }
+  .rec-live { font-size: .78rem; color: var(--err); font-weight: 600; }
+  .rec-note { font-size: .78rem; color: var(--text-mute); }
+  .rec-play { font: inherit; font-size: .78rem; cursor: pointer; padding: 4px 11px; border-radius: 99px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text-soft); }
+  .rec-play:hover { border-color: var(--brand); color: var(--brand); }
+
+  /* chế độ tự kiểm */
+  .quiz-card { padding: 30px 24px; text-align: center; }
+  .quiz-vn { font-size: 1.3rem; font-weight: 600; max-width: 32ch; margin: 0 auto 6px; }
+  .quiz-ru { font-family: var(--font-ru); font-size: 1.45rem; font-weight: 700; margin: 16px 0 4px; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<div id="nav"></div>
+
+<div class="wrap narrow" id="page"></div>
+
+<div id="footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="data/course.js"></script>
+<script src="data/lessons/a0.js"></script>
+<script src="data/lessons/a1.js"></script>
+<script src="data/lessons/a2.js"></script>
+<script src="data/lessons/b1.js"></script>
+<script src="data/lessons/b2.js"></script>
+<script src="data/phrases.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/dict.js"></script>
+<script src="assets/js/record.js"></script>
+<script src="assets/js/auth.js"></script>
+<script>
+Auth.guard(function () {
+const guest = Auth.isGuest();
+mountChrome('khocau.html');
+touchStreak();
+
+const page = document.getElementById('page');
+
+/* ---------- gom câu từ hội thoại trong 114 bài ---------- */
+function fromLessons() {
+  const out = [];
+  Object.keys(LESSON_DATA).forEach(id => {
+    if (guest && !FREE_LESSONS.includes(id)) return;
+    const lv = id.split('-')[0];
+    const meta = (LESSONS[lv] || []).find(l => l.id === id);
+    if (!meta) return;
+    (LESSON_DATA[id].blocks || []).forEach(b => {
+      if (b.t !== 'dialog') return;
+      (b.lines || []).forEach(l => {
+        if (!l.ru || !l.vn) return;
+        out.push({ ru: l.ru, vn: l.vn, cat: 'lesson', lv, lid: id, title: meta.title });
+      });
+    });
+  });
+  return out;
+}
+
+const LESSON_PHRASES = fromLessons();
+const CURATED = guest ? PHRASES.filter(p => p.lv === 'a1' || p.lv === 'a0') : PHRASES;
+const CATS = PHRASE_CATS.concat([{ id: 'lesson', name: 'Câu trong bài học', icon: '📘',
+  desc: 'Toàn bộ câu hội thoại nằm trong ' + Object.keys(LESSON_DATA).length + ' bài của khoá, gom về một chỗ để ôn lại mà không phải mở từng bài.' }]);
+
+let cat = 'song';
+let quiz = null;   // { list, i, shown }
+
+function listOf(c) {
+  return c === 'lesson' ? LESSON_PHRASES : CURATED.filter(p => p.cat === c);
+}
+
+/* ---------- màn hình chính ---------- */
+function view() {
+  quiz = null;
+  const info = CATS.find(c => c.id === cat);
+  const list = listOf(cat);
+
+  page.innerHTML = `
+    <section style="margin:30px 0 6px">
+      <h1 style="margin-bottom:6px">Kho câu</h1>
+      <p class="soft">Biết từ chưa nói được. Câu mới nói được — vì câu mang theo cả ngữ pháp lẫn <b>hoàn cảnh dùng</b>.
+        Mỗi câu ở đây đều có phần “dùng lúc nào”, vì đó mới là chỗ người học hay vướng.</p>
+    </section>
+
+    <div class="cat-tabs">
+      ${CATS.map(c => `<button class="cat-tab ${c.id===cat?'on':''}" data-cat="${c.id}" type="button">${c.icon} ${esc(c.name)}</button>`).join('')}
+    </div>
+
+    <section class="card" style="margin-top:14px">
+      <p class="small soft mb0">${esc(info.desc)}</p>
+    </section>
+
+    <div class="between" style="margin:18px 0 10px">
+      <span class="tiny muted">${list.length} câu</span>
+      ${list.length >= 4 ? `<button class="btn btn-accent btn-sm" id="startquiz">Tự kiểm: nhìn tiếng Việt, nói tiếng Nga</button>` : ''}
+    </div>
+
+    ${Rec.supported() ? `<div class="callout note" style="margin-bottom:14px">
+      <p class="mb0"><b>Nút micro để em ghi âm giọng mình rồi nghe lại.</b> Web này cố ý <b>không</b> chấm điểm phát âm —
+      trình duyệt không đo được trọng âm với ngữ điệu, chấm bừa thì hại hơn là không chấm.
+      Cách hiệu quả thật: bấm loa nghe câu mẫu, bấm micro đọc theo, rồi bật hai cái cạnh nhau. Tai em nghe ra ngay.
+      Bản ghi chỉ nằm tạm trong trang, đóng tab là mất, không lưu ở đâu cả.</p>
+    </div>` : ''}
+
+    <div id="list">${list.map(rowHTML).join('') || '<p class="soft">Chưa có câu nào ở nhóm này.</p>'}</div>
+    <div style="height:40px"></div>`;
+
+  page.querySelectorAll('.cat-tab').forEach(b => b.onclick = () => { cat = b.dataset.cat; view(); });
+  const sq = document.getElementById('startquiz');
+  if (sq) sq.onclick = () => startQuiz(list);
+}
+
+function keyOf(p, i) { return cat + ':' + i; }
+
+function rowHTML(p, i) {
+  const key = keyOf(p, i);
+  const inDeck = !!Store.load().cards[p.ru];
+  return `<div class="card ph">
+    ${p.bad ? `<div class="ph-bad"><span class="lbl bad">SAI</span> <span class="x">${esc(p.bad)}</span></div>` : ''}
+    <div class="ph-ru">${p.bad ? '<span class="lbl ok">ĐÚNG</span> ' : ''}${esc(p.ru)}</div>
+    <div class="ph-vn">${esc(p.vn)}</div>
+    ${p.when ? `<div class="ph-when"><b>Dùng lúc nào:</b> ${esc(p.when)}</div>` : ''}
+    <div class="ph-tools">
+      ${speakBtn(p.ru, p.ru)}
+      ${Rec.button(key, p.ru)}
+      <button class="rec-play" type="button" data-card="${escAttr(p.ru)}" data-vn="${escAttr(p.vn)}"
+        ${inDeck ? 'disabled' : ''}>${inDeck ? '✓ đã trong bộ thẻ' : '+ thêm vào thẻ ôn tập'}</button>
+      ${p.lid ? `<span class="ph-src">từ bài <a href="hoc.html?id=${esc(p.lid)}">${esc(Dict.levelName(p.lv))} · ${esc(p.title)}</a></span>`
+              : `<span class="ph-src">${esc(Dict.levelName(p.lv))}</span>`}
+    </div>
+  </div>`;
+}
+
+/* ---------- tự kiểm: che tiếng Nga đi ---------- */
+function startQuiz(list) {
+  quiz = { list: shuffle(list), i: 0, shown: false };
+  quizView();
+}
+
+function quizView() {
+  const p = quiz.list[quiz.i];
+  const key = 'quiz:' + quiz.i;
+
+  page.innerHTML = `
+    <section style="margin:26px 0 12px">
+      <div class="between">
+        <button class="btn btn-ghost btn-sm" id="back">← Về kho câu</button>
+        <span class="tiny muted">Câu ${quiz.i + 1} / ${quiz.list.length}</span>
+      </div>
+    </section>
+
+    <div class="card quiz-card">
+      <p class="tiny muted" style="margin-bottom:10px">Đọc câu này bằng tiếng Nga — nói to lên, đừng nói thầm.</p>
+      <div class="quiz-vn">${esc(p.vn)}</div>
+      ${p.when ? `<p class="small muted" style="max-width:40ch;margin:12px auto 0">${esc(p.when)}</p>` : ''}
+
+      <div class="row" style="justify-content:center;margin-top:20px">
+        ${Rec.button(key, p.vn)}
+        <button class="btn btn-primary" id="show">${quiz.shown ? 'Nghe lại câu mẫu' : 'Xem đáp án'}</button>
+      </div>
+
+      <div id="ans" class="${quiz.shown ? '' : 'hidden'}">
+        <hr>
+        <div class="quiz-ru">${esc(p.ru)}</div>
+        <div class="row" style="justify-content:center;margin-top:10px">
+          ${speakBtn(p.ru, p.ru)}
+          <span class="tiny muted">bấm loa nghe mẫu, rồi bấm ▶ nghe lại giọng em</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="justify-content:space-between;margin-top:16px">
+      <button class="btn btn-ghost btn-sm" id="prev" ${quiz.i === 0 ? 'disabled' : ''}>← Câu trước</button>
+      <button class="btn btn-primary btn-sm" id="next" ${quiz.i === quiz.list.length - 1 ? 'disabled' : ''}>Câu tiếp →</button>
+    </div>
+    <div style="height:40px"></div>`;
+
+  document.getElementById('back').onclick = view;
+  document.getElementById('show').onclick = () => {
+    if (!quiz.shown) { quiz.shown = true; quizView(); }
+    else Speech.say(p.ru);
+  };
+  document.getElementById('prev').onclick = () => { quiz.i--; quiz.shown = false; quizView(); };
+  document.getElementById('next').onclick = () => { quiz.i++; quiz.shown = false; quizView(); };
+}
+
+/* thêm câu vào bộ thẻ ôn tập */
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-card]');
+  if (!b || b.disabled) return;
+  const ru = b.getAttribute('data-card');
+  const d = Store.load();
+  if (!d.cards[ru]) { d.cards[ru] = { vn: b.getAttribute('data-vn') || '', ef: 2.5, n: 0, iv: 0, due: today() }; Store.save(); }
+  b.disabled = true; b.textContent = '✓ đã thêm vào thẻ';
+});
+
+view();
+
+}, { guest: true });
+</script>
+</body>
+</html>
