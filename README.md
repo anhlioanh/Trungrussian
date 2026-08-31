@@ -34,8 +34,10 @@ git push -u origin main
 ```
 index.html          trang chủ: lộ trình 7 cấp, tiến độ, sao lưu
 hoc.html            trình phát bài học  (hoc.html?id=a0-03)
+luyentap.html       luyện tập tự do: trộn lại 980 câu bài tập sẵn có
 flashcard.html      thẻ từ vựng lặp lại ngắt quãng
-thi.html            kì thi cuối cấp + giấy chứng nhận  (thi.html?level=a0)
+thi.html            kì thi cuối cấp + giấy chứng nhận
+                     (mở thẳng thi.html = trang chọn cấp; thi.html?level=b1 = vào thi luôn)
 dangnhap.html       đăng ký / đăng nhập (email+mật khẩu, Google)
 kiemtra.html        kiểm tra đầu vào 2 vòng → xếp lớp
 bangdiem.html       bảng điểm cá nhân, huy hiệu, bảng xếp hạng
@@ -224,3 +226,24 @@ Muốn tăng độ phủ thì thêm từ vào `DICT_CORE`, không cần đụng 
 
 Từ điển chỉ gắn vào phần **lý thuyết** của bài (`#theory`), cố ý không gắn vào phần
 bài tập — để bài tập còn tác dụng luyện.
+
+## Trang Luyện tập
+
+`luyentap.html` **không có nội dung riêng** — nó gom lại toàn bộ 980 câu bài tập
+đã nằm trong các bài học rồi cho trộn tự do, ngoài trình tự bài. Bốn kiểu:
+trộn tất cả · chỉ luyện nghe · chỉ bài đã học · **câu em từng sai**
+(lấy từ `Store.lessons[...].wrong`, tức đúng những câu người học đã làm sai thật).
+
+Mỗi câu đều ghi rõ nó lấy từ bài nào và có link về bài đó. Kết quả luyện ở đây
+**cố ý không ghi vào tiến độ và không cộng điểm** — để chỗ này là nơi làm sai thoải mái.
+
+Thêm bài học mới là kho câu tự lớn theo, không phải làm gì thêm.
+
+## Kì thi: xáo câu mỗi lượt
+
+`thi.html` dựng đề của từng lượt bằng `QS = shuffle(exam.q)`, nên thi lại không gặp
+lại đúng thứ tự cũ. **Chỉ xáo thứ tự câu, không xáo phương án A/B/C/D** — vì đáp án
+trong `exams.js` ghi bằng chỉ số vị trí (`a: 2`), xáo phương án sẽ làm sai đáp án.
+
+Muốn một cấp có nhiều đề khác nhau thật thì cứ thêm câu vào `q` của cấp đó rồi rút
+ngẫu nhiên một phần — không cần tạo nhiều bộ đề riêng.

@@ -218,6 +218,7 @@ function renderNav(active) {
   const links = [
     ['index.html', 'Trang chủ'],
     ['hoc.html', 'Bài học'],
+    ['luyentap.html', 'Luyện tập'],
     ['flashcard.html', 'Thẻ từ vựng'],
     ['tudien.html', 'Từ điển'],
     ['thi.html', 'Kì thi'],

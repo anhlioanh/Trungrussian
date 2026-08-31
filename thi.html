@@ -7,6 +7,14 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <style>
   .exam-wrap { max-width: 680px; margin: 0 auto; }
+  .exam-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+  .exam-row:last-child { border-bottom: 0; }
+  .exam-row.muted-row { opacity: .55; }
+  .exam-code { width: 46px; height: 46px; flex: none; border-radius: 11px; display: grid; place-items: center;
+    font-family: var(--font-display); font-weight: 700; font-size: 1.02rem;
+    background: linear-gradient(140deg, var(--brand), var(--accent)); color: #fff; }
+  .exam-code.ok { background: var(--ok); }
+  .exam-code.off { background: var(--bg-soft); color: var(--text-mute); border: 1px solid var(--border); }
   .timer { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; }
   .timer.low { color: var(--err); }
   .opt { display: flex; align-items: center; gap: 10px; padding: 13px 15px; border: 1px solid var(--border);
@@ -50,12 +58,65 @@
 Auth.guard(function () {
 mountChrome('thi.html');
 
-const levelId = qs('level') || 'a0';
+const levelId = qs('level');
 const exam = EXAMS[levelId];
 const level = COURSE.levels.find(l => l.id === levelId);
 const page = document.getElementById('page');
 
 let answers = [], cur = 0, timeLeft = 0, timerId = null;
+/* QS = đề của LƯỢT THI NÀY. Câu được xáo lại mỗi lần thi nên thi lại không
+   gặp y hệt thứ tự cũ. Không xáo các phương án A/B/C/D vì chỉ số đáp án
+   `a` gắn theo vị trí. */
+let QS = [];
+
+/* ---------- vào thẳng trang Kì thi (không kèm ?level=): cho chọn cấp ----------
+   Trước đây trang này mặc định về A0 nên ai đã thi xong A0 vào vẫn thấy mỗi A0. */
+function chooser() {
+  const d = Store.load();
+  const rows = COURSE.levels.map(lv => {
+    const ex = EXAMS[lv.id];
+    const r = d.exams[lv.id];
+    const lessons = (LESSONS[lv.id] || []).filter(l => l.ready);
+    const done = lessons.filter(l => d.lessons[l.id] && d.lessons[l.id].done).length;
+
+    if (!ex) {
+      return `<div class="exam-row muted-row">
+        <div class="exam-code off">${esc(lv.code)}</div>
+        <div style="flex:1;min-width:0">
+          <b>${esc(lv.name)}</b>
+          <div class="tiny muted">${lv.selfStudy ? 'Cấp tự học — không có bài thi' : 'Đề thi chưa soạn'}</div>
+        </div>
+      </div>`;
+    }
+
+    const status = r && r.passed
+      ? `<span class="pill pill-ok">đã đạt ${r.best}%</span>`
+      : (r ? `<span class="pill pill-accent">đã thi, cao nhất ${r.best}%</span>` : '');
+
+    return `<div class="exam-row">
+      <div class="exam-code${r && r.passed ? ' ok' : ''}">${esc(lv.code)}</div>
+      <div style="flex:1;min-width:0">
+        <div class="row" style="gap:8px"><b>${esc(lv.name)}</b>${status}</div>
+        <div class="tiny muted">${ex.q.length} câu · ${ex.minutes} phút · đạt từ ${ex.pass}%
+          · đã học ${done}/${lessons.length} bài${r && r.passed ? ` · ngày ${esc(r.at)}` : ''}</div>
+      </div>
+      <a class="btn ${r && r.passed ? 'btn-ghost' : 'btn-primary'} btn-sm" href="thi.html?level=${lv.id}">
+        ${r && r.passed ? 'Thi lại' : 'Vào thi'}</a>
+    </div>`;
+  }).join('');
+
+  const passedCount = COURSE.levels.filter(lv => d.exams[lv.id] && d.exams[lv.id].passed).length;
+
+  page.innerHTML = `
+    <section style="margin:34px 0 18px">
+      <h1 style="margin-bottom:6px">Kì thi cuối cấp</h1>
+      <p class="soft">Chọn cấp em muốn thi. Đạt là có giấy chứng nhận mang tên em, tải về được.
+        ${passedCount ? `Em đang có <b>${passedCount}</b> chứng nhận.` : ''}</p>
+    </section>
+    <section class="card" style="padding:6px 18px">${rows}</section>
+    <p class="tiny muted" style="margin:14px 0 40px">Giấy chứng nhận ở đây là chứng nhận nội bộ của web này, dùng để tự theo dõi —
+      không phải chứng chỉ ТРКИ do cơ quan nhà nước Nga cấp.</p>`;
+}
 
 /* ---------- màn hình mở đầu ---------- */
 function intro() {
@@ -111,7 +172,8 @@ function intro() {
 
 /* ---------- làm bài ---------- */
 function begin() {
-  answers = new Array(exam.q.length).fill(null);
+  QS = shuffle(exam.q);
+  answers = new Array(QS.length).fill(null);
   cur = 0;
   timeLeft = exam.minutes * 60;
   timerId = setInterval(() => {
@@ -127,8 +189,8 @@ function begin() {
 }
 
 function question() {
-  const q = exam.q[cur];
-  const pct = Math.round(cur / exam.q.length * 100);
+  const q = QS[cur];
+  const pct = Math.round(cur / QS.length * 100);
   let body = '';
   if (q.t === 'choice') {
     body = q.options.map((o, j) => `<label class="opt"><input type="radio" name="a" value="${j}"><span>${o}</span></label>`).join('');
@@ -141,7 +203,7 @@ function question() {
   page.innerHTML = `
     <section style="margin:26px 0 14px">
       <div class="between">
-        <span class="tiny muted">Câu ${cur + 1} / ${exam.q.length}</span>
+        <span class="tiny muted">Câu ${cur + 1} / ${QS.length}</span>
         <span class="timer" id="timer">${String(Math.floor(timeLeft / 60)).padStart(2, '0')}:${String(timeLeft % 60).padStart(2, '0')}</span>
       </div>
       <div class="bar bar-sm" style="margin-top:8px"><i style="width:${pct}%"></i></div>
@@ -150,7 +212,7 @@ function question() {
       <div class="qbig">${q.q}</div>
       ${body}
       <div class="row" style="margin-top:18px">
-        <button class="btn btn-primary" id="next">${cur === exam.q.length - 1 ? 'Nộp bài' : 'Câu tiếp theo'}</button>
+        <button class="btn btn-primary" id="next">${cur === QS.length - 1 ? 'Nộp bài' : 'Câu tiếp theo'}</button>
         <span class="tiny muted">Không quay lại sửa được đâu nhé</span>
       </div>
     </section>`;
@@ -179,14 +241,14 @@ function question() {
       answers[cur] = document.getElementById('txt').value;
     }
     cur++;
-    if (cur >= exam.q.length) { clearInterval(timerId); finish(); } else question();
+    if (cur >= QS.length) { clearInterval(timerId); finish(); } else question();
   };
 }
 
 /* ---------- chấm và kết quả ---------- */
 function finish() {
   let correct = 0;
-  const review = exam.q.map((q, i) => {
+  const review = QS.map((q, i) => {
     let ok, given, right;
     if (q.t === 'choice') {
       ok = answers[i] === q.a;
@@ -201,7 +263,7 @@ function finish() {
     return { ok, given, right, q: q.q };
   });
 
-  const score = Math.round(correct / exam.q.length * 100);
+  const score = Math.round(correct / QS.length * 100);
   const passed = score >= exam.pass;
   const date = today();
 
@@ -215,7 +277,7 @@ function finish() {
   page.innerHTML = `
     <section class="card center" style="margin:30px 0 18px;padding:34px">
       <div style="font-family:var(--font-display);font-size:3.4rem;line-height:1;color:${passed ? 'var(--ok)' : 'var(--accent)'}">${score}%</div>
-      <div class="pill ${passed ? 'pill-ok' : 'pill-accent'}" style="margin:12px 0">${correct}/${exam.q.length} câu đúng — ${passed ? 'ĐẠT' : 'CHƯA ĐẠT'}</div>
+      <div class="pill ${passed ? 'pill-ok' : 'pill-accent'}" style="margin:12px 0">${correct}/${QS.length} câu đúng — ${passed ? 'ĐẠT' : 'CHƯA ĐẠT'}</div>
       <p class="soft" style="max-width:46ch;margin:0 auto">
         ${passed
           ? 'Chúc mừng em! Giấy chứng nhận đã sẵn sàng ở dưới — tải về hoặc chụp màn hình khoe cũng được.'
@@ -265,7 +327,7 @@ function showCert(score, date) {
   box.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-intro();
+if (!levelId) chooser(); else intro();
 
 }); // hết Auth.guard
 </script>
