@@ -525,3 +525,58 @@ body.lec-on { overflow: hidden; }
   border: 1px solid var(--border); background: var(--surface); color: var(--text-soft); white-space: nowrap; }
 .rec-play:hover { border-color: var(--brand); color: var(--brand); }
 .rec-play:disabled { opacity: .6; cursor: default; }
+
+/* ===== Thanh tab dưới đáy cho điện thoại (như app) ===== */
+.tabbar, .sheet, .sheet-back { display: none; }
+
+@media (max-width: 760px) {
+  /* đầu trang thu lại còn logo, để chỗ cho nội dung */
+  .nav-links { display: none; }
+  .nav-inner { padding: 9px 14px; gap: 10px; }
+  .logo-text { font-size: .95rem; white-space: nowrap; }
+  .logo-text small { display: none; }
+
+  .tabbar {
+    display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+    background: var(--surface); border-top: 1px solid var(--border);
+    padding: 4px 2px calc(4px + env(safe-area-inset-bottom));
+    box-shadow: 0 -2px 14px rgba(0,0,0,.05);
+  }
+  .tabbar a, .tab-more {
+    flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 7px 2px; text-decoration: none; border: 0; background: none; cursor: pointer;
+    font: inherit; font-size: .66rem; font-weight: 600; color: var(--text-mute);
+  }
+  .tabbar svg { width: 22px; height: 22px; }
+  .tabbar a span, .tab-more span { line-height: 1.1; white-space: nowrap; }
+  .tabbar a.on, .tab-more.on { color: var(--brand); }
+
+  /* chừa chỗ để thanh tab không đè lên cuối trang */
+  body { padding-bottom: 66px; }
+
+  /* chấm đồng bộ nhấc lên trên thanh tab */
+  #syncdot { bottom: calc(74px + env(safe-area-inset-bottom)) !important; }
+
+  /* bảng "Thêm" trượt lên từ đáy */
+  .sheet-back { display: block; position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.35); }
+  .sheet {
+    display: flex; flex-direction: column; gap: 2px;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 61;
+    background: var(--surface); border-radius: 18px 18px 0 0;
+    padding: 8px 14px calc(14px + env(safe-area-inset-bottom));
+    box-shadow: 0 -6px 30px rgba(0,0,0,.18);
+  }
+  .sheet-grab { width: 38px; height: 4px; border-radius: 99px; background: var(--border-strong); margin: 4px auto 10px; }
+  .sheet a {
+    text-decoration: none; color: var(--text); font-size: .98rem; font-weight: 500;
+    padding: 13px 14px; border-radius: var(--radius-sm);
+  }
+  .sheet a:active { background: var(--bg-soft); }
+  .sheet a.on { background: var(--brand-soft); color: var(--brand); font-weight: 600; }
+  .sheet-close {
+    margin-top: 8px; font: inherit; font-size: .92rem; font-weight: 600; cursor: pointer;
+    padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border);
+    background: var(--surface); color: var(--text-soft);
+  }
+  .sheet[hidden], .sheet-back[hidden] { display: none; }
+}

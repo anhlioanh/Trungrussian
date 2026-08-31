@@ -55,6 +55,10 @@ assets/js/exam.js      chấm thi, vẽ giấy chứng nhận
 assets/js/dict.js      từ điển: dựng chỉ mục từ LESSON_DATA, dò dạng biến cách,
                         và biến từ tiếng Nga trong bài thành từ bấm-tra-được
 assets/js/record.js    ghi âm giọng mình rồi nghe lại (KHÔNG chấm điểm phát âm)
+
+manifest.webmanifest   khai báo để cài web vào màn hình điện thoại
+sw.js                  service worker: chạy được khi mất mạng
+assets/icons/          biểu tượng app (192, 512, maskable, apple-touch)
 assets/js/auth.js      tài khoản + đồng bộ tiến độ lên Supabase
 assets/js/supabase-config.js   KHOÁ SUPABASE — em dán vào đây
 
@@ -286,3 +290,41 @@ hơn mọi thuật toán chạy được offline.
 
 Bản ghi chỉ nằm trong bộ nhớ của trang, đóng tab là mất — cố ý, để không có giọng nói
 của ai bị lưu lại ở đâu cả. Cần HTTPS mới bật được micro (Vercel có sẵn HTTPS).
+
+## Cài vào điện thoại và đưa lên Google Play
+
+Web đã là một **PWA** đầy đủ: có `manifest.webmanifest`, có `sw.js` (service worker
+xử lý sự kiện fetch), có biểu tượng 192/512 kèm bản `maskable`, và chạy trên HTTPS.
+Mở web bằng Chrome trên điện thoại là có ngay mục **“Thêm vào màn hình chính”** —
+lúc đó nó mở toàn màn hình, có biểu tượng riêng, không còn thanh địa chỉ.
+
+**Học được cả khi mất mạng.** Service worker chạy kiểu *mạng trước, hỏng thì lấy bản
+đã lưu* — nên đẩy bài mới lên là người học thấy ngay, nhưng lúc mất sóng vẫn mở được
+bài đã vào. `Auth.boot()` cũng đã được sửa để mất mạng KHÔNG đá người học về trang
+đăng nhập: phiên đăng nhập đọc từ trong máy, ba bước cần mạng (lấy hồ sơ, kéo và đẩy
+tiến độ) mỗi bước tự chịu lỗi riêng, nối lại mạng thì đồng bộ chạy tiếp.
+
+### Các bước đưa lên Google Play
+
+1. Web phải chạy HTTPS ở tên miền cố định (Vercel đã có sẵn).
+2. Dùng **Bubblewrap** (Google) hoặc **PWABuilder** (Microsoft, có giao diện) để đóng
+   PWA thành gói Android — kiểu **TWA**, tức app chỉ là một lớp vỏ mỏng bọc chính web này.
+3. Đặt file **Digital Asset Links** tại `/.well-known/assetlinks.json` để Google xác
+   nhận app và web cùng một chủ. Bubblewrap sinh sẵn nội dung file này.
+4. Tài khoản Google Play Developer: **25 USD, đóng một lần, trọn đời**.
+5. Nếu là **tài khoản cá nhân mở sau 13/11/2023**: bắt buộc chạy **closed test với ít
+   nhất 12 người thử, giữ liên tục 14 ngày**, xong mới được xin phát hành công khai.
+   Nhớ tính thêm thời gian này vào kế hoạch.
+
+Sửa web là app tự cập nhật theo — vì app chỉ là vỏ, nội dung vẫn lấy từ web.
+Không phải build lại, không phải chờ Google duyệt lại.
+
+## Giao diện trên điện thoại
+
+Điện thoại (dưới 760px) dùng **thanh tab dưới đáy** như app thật: Trang chủ · Kho câu ·
+Luyện tập · Thẻ từ · Thêm. Các mục còn lại (Bài học, Từ điển, Kì thi, Bảng điểm,
+Tự học C1–C2) nằm trong bảng trượt lên khi bấm “Thêm”.
+
+Trước đây tám mục nằm ngang ở đầu trang, xuống điện thoại tự xuống dòng thành ba hàng
+và ăn mất 166px — khoảng một phần năm màn hình, trên mọi trang. Giờ đầu trang chỉ còn
+49px. Máy tính vẫn giữ nguyên kiểu cũ.

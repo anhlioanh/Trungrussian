@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kì thi — Học tiếng Nga cùng Oanh</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1e3a5f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Cùng Oanh">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<link rel="icon" href="assets/icons/icon-192.png">
 <link rel="stylesheet" href="assets/css/style.css">
 <style>
   .exam-wrap { max-width: 680px; margin: 0 auto; }
@@ -331,6 +339,12 @@ function showCert(score, date) {
 if (!levelId) chooser(); else intro();
 
 }); // hết Auth.guard
+</script>
+<script>
+/* đăng ký service worker — để cài được vào màn hình và học được khi mất mạng */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
 </script>
 </body>
 </html>

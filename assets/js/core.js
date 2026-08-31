@@ -214,6 +214,22 @@ function norm(s) {
 }
 
 /* ----- 5. Thanh điều hướng dùng chung ----- */
+/* Biểu tượng nhỏ cho thanh tab dưới đáy (điện thoại) */
+const NAV_ICONS = {
+  home:  'M12 3 2 12h3v8h6v-5h2v5h6v-8h3z',
+  phr:   'M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zM7 9h10v2H7zm0 4h7v2H7z',
+  drill: 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z',
+  card:  'M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4H4V6h16zM6 11h8v2H6zm0 4h5v2H6z',
+  more:  'M6 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z'
+};
+function navIcon(k) {
+  return `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${NAV_ICONS[k]}"/></svg>`;
+}
+
+/* Trên máy tính: một hàng liên kết ở đầu trang.
+   Trên điện thoại: đầu trang chỉ còn logo, còn điều hướng chuyển xuống
+   thanh tab dưới đáy — đúng kiểu app, và không ăn mất 1/5 màn hình như
+   khi tám mục tự xuống dòng. */
 function renderNav(active) {
   const links = [
     ['index.html', 'Trang chủ'],
@@ -225,6 +241,19 @@ function renderNav(active) {
     ['thi.html', 'Kì thi'],
     ['bangdiem.html', 'Bảng điểm']
   ];
+  /* năm mục hay dùng nhất nằm ở thanh dưới; phần còn lại nằm trong "Thêm" */
+  const tabs = [
+    ['index.html', 'Trang chủ', 'home'],
+    ['khocau.html', 'Kho câu', 'phr'],
+    ['luyentap.html', 'Luyện tập', 'drill'],
+    ['flashcard.html', 'Thẻ từ', 'card']
+  ];
+  const more = [
+    ['hoc.html', 'Bài học'], ['tudien.html', 'Từ điển'],
+    ['thi.html', 'Kì thi'], ['bangdiem.html', 'Bảng điểm'], ['tuhoc.html', 'Tự học C1–C2']
+  ];
+  const moreActive = more.some(([h]) => h === active);
+
   return `
   <nav class="nav"><div class="nav-inner">
     <a class="logo" href="index.html">
@@ -234,8 +263,21 @@ function renderNav(active) {
     <div class="nav-links">
       ${links.map(([h, t]) => `<a href="${h}" ${h === active ? 'class="active"' : ''}>${t}</a>`).join('')}
     </div>
-  </div></nav>`;
+  </div></nav>
+
+  <nav class="tabbar" aria-label="Điều hướng chính">
+    ${tabs.map(([h, t, ic]) => `<a href="${h}" class="${h === active ? 'on' : ''}">${navIcon(ic)}<span>${t}</span></a>`).join('')}
+    <button type="button" class="tab-more ${moreActive ? 'on' : ''}" id="tab-more">${navIcon('more')}<span>Thêm</span></button>
+  </nav>
+
+  <div class="sheet-back" id="sheet-back" hidden></div>
+  <div class="sheet" id="sheet" hidden>
+    <div class="sheet-grab"></div>
+    ${more.map(([h, t]) => `<a href="${h}" class="${h === active ? 'on' : ''}">${t}</a>`).join('')}
+    <button type="button" class="sheet-close" id="sheet-close">Đóng</button>
+  </div>`;
 }
+
 function renderFooter() {
   return `<footer class="site"><div class="wrap">
     <p><strong>${SITE.name}</strong> — ${SITE.tagline}</p>
@@ -247,6 +289,17 @@ function mountChrome(active) {
   if (nav) nav.outerHTML = renderNav(active);
   const ft = document.getElementById('footer');
   if (ft) ft.outerHTML = renderFooter();
+
+  const sheet = document.getElementById('sheet');
+  const back = document.getElementById('sheet-back');
+  const openBtn = document.getElementById('tab-more');
+  if (sheet && back && openBtn) {
+    const show = on => { sheet.hidden = !on; back.hidden = !on; };
+    openBtn.onclick = () => show(sheet.hidden);
+    back.onclick = () => show(false);
+    document.getElementById('sheet-close').onclick = () => show(false);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') show(false); });
+  }
 }
 
 /* ----- 6. Thống kê tiến độ toàn khoá ----- */

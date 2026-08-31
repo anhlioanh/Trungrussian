@@ -22,15 +22,24 @@ const Auth = {
     return data.session || null;
   },
 
+  /* Phiên đăng nhập đọc được từ ngay trong máy, nhưng ba bước sau (lấy hồ sơ,
+     kéo tiến độ về, đẩy tiến độ lên) đều cần mạng. Trước đây chỉ cần một bước
+     hỏng là cả hàm ném lỗi, guard bắt được rồi coi như CHƯA đăng nhập và đá
+     người học về trang đăng nhập — nghĩa là mất mạng thì không học được gì.
+     Giờ mỗi bước tự chịu lỗi riêng: mất mạng vẫn vào học bình thường bằng
+     tiến độ trong máy, nối lại mạng thì đồng bộ chạy tiếp. */
   async boot() {
     if (!sb) return null;
-    const s = await this.session();
+    let s = null;
+    try { s = await this.session(); } catch (e) { s = null; }
     if (!s) return null;
     this.user = s.user;
-    await this.loadProfile();
-    await this.pull();
+    this.offline = false;
+
+    try { await this.loadProfile(); } catch (e) { this.offline = true; }
+    try { await this.pull(); }        catch (e) { this.offline = true; }
     Store.onSave = () => this.scheduleSync();
-    await this.push();            // đẩy bản đã trộn lên cho hai bên khớp nhau
+    try { await this.push(); }        catch (e) { this.offline = true; }
     return this.user;
   },
 
