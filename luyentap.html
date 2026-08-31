@@ -52,6 +52,11 @@
   .kb button:hover { background: var(--brand-soft); }
   .score-box { text-align: center; padding: 26px; }
   .score-box .big { font-family: var(--font-display); font-size: 3rem; line-height: 1; color: var(--brand); }
+  .cloze-ru { font-family: var(--font-ru); font-size: 1.15rem; line-height: 1.6; }
+  .blank { display: inline-block; min-width: 86px; border-bottom: 2px solid var(--brand);
+    margin: 0 3px; vertical-align: baseline; }
+  .fill-ok { color: var(--ok); border-bottom: 2px solid var(--ok); padding: 0 3px; }
+  .fill-bad { color: var(--err); border-bottom: 2px solid var(--err); padding: 0 3px; }
   .src { font-size: .75rem; color: var(--text-mute); margin-top: 8px; }
   .src a { color: var(--text-mute); }
 </style>
@@ -72,7 +77,9 @@
 <script src="data/lessons/b1.js"></script>
 <script src="data/lessons/b2.js"></script>
 <script src="assets/js/core.js"></script>
+<script src="data/phrases.js"></script>
 <script src="assets/js/dict.js"></script>
+<script src="assets/js/cloze.js"></script>
 <script src="assets/js/record.js"></script>
 <script src="assets/js/lesson.js"></script>
 <script src="assets/js/auth.js"></script>
@@ -145,6 +152,8 @@ function setup() {
           <b>Bài đã học</b><small>${learned.length?`Chỉ lấy câu trong ${new Set(learned.map(x=>x.lid)).size} bài em đã xong`:'Chưa học xong bài nào'}</small></button>
         <button class="mode ${mode==='wrong'?'on':''}" data-mode="wrong" type="button" ${WRONG.length?'':'disabled'}>
           <b>Câu em từng sai</b><small>${WRONG.length?`${WRONG.length} câu em đã làm sai trước đây`:'Chưa có câu sai nào được ghi'}</small></button>
+        <button class="mode ${mode==='cloze'?'on':''}" data-mode="cloze" type="button">
+          <b>Điền vào chỗ trống</b><small>Khoét một từ trong câu thật, em tự điền lại — luyện đuôi cách chắc hơn trắc nghiệm</small></button>
       </div>
 
       <h3 style="margin:22px 0 8px">Cấp độ</h3>
@@ -178,11 +187,15 @@ function setup() {
   document.getElementById('avail').textContent =
     n ? `Đang có ${n} câu hợp với lựa chọn trên.` : 'Không có câu nào hợp với lựa chọn này — em đổi kiểu luyện hoặc đổi cấp nhé.';
   document.getElementById('go').disabled = !n;
-  document.getElementById('go').onclick = () => run(shuffle(pick()).slice(0, count));
+  document.getElementById('go').onclick = () => {
+    if (mode === 'cloze') runCloze(Cloze.draw(count, lvSel, guest));
+    else run(shuffle(pick()).slice(0, count));
+  };
 }
 
 /* lọc theo lựa chọn hiện tại */
 function pick() {
+  if (mode === 'cloze') return Cloze.build(guest).filter(x => lvSel === 'all' || x.lv === lvSel);
   let src = mode === 'wrong' ? WRONG
           : mode === 'learned' ? ALL.filter(x => d.lessons[x.lid] && d.lessons[x.lid].done)
           : ALL;
@@ -252,6 +265,97 @@ function run(items) {
         </div>
       </div>`;
     document.getElementById('again').onclick = () => run(shuffle(pick()).slice(0, count));
+    document.getElementById('back2').onclick = setup;
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
+  window.scrollTo({ top: 0 });
+}
+
+/* ---------- điền vào chỗ trống ---------- */
+function runCloze(items) {
+  if (!items.length) { setup(); return; }
+
+  page.innerHTML = `
+    <section style="margin:26px 0 14px">
+      <h1 style="margin-bottom:4px">Điền vào chỗ trống — ${items.length} câu</h1>
+      <p class="soft small mb0">Nhìn nghĩa tiếng Việt và phần còn lại của câu, đoán từ bị thiếu.
+        Không cần gõ dấu trọng âm. Kết quả ở đây không ghi vào tiến độ.</p>
+    </section>
+    <div class="card" style="padding:12px 16px;margin-bottom:14px">
+      <div class="tiny muted" style="margin-bottom:2px">Không có bàn phím tiếng Nga? Bấm chữ ở đây.</div>
+      <div class="kb" id="kb"></div>
+    </div>
+    <div class="grid" style="gap:10px" id="exs">
+      ${items.map((it, i) => `
+        <div class="card exq" data-i="${i}">
+          <div class="row" style="gap:10px;align-items:flex-start">
+            <span class="qn">${i + 1}</span>
+            <div style="flex:1;min-width:0">
+              <div class="cloze-ru">${esc(it.before)}<span class="blank">&nbsp;</span>${esc(it.after)}</div>
+              <div class="small soft" style="margin:6px 0 10px">${esc(it.vn)}</div>
+              <div class="row" style="gap:8px">
+                <input class="inp" autocomplete="off" spellcheck="false" placeholder="từ còn thiếu…">
+                ${speakBtn(it.full, it.full)}
+              </div>
+              <div class="fb" style="display:none"></div>
+              <div class="src">${it.lid
+                ? `từ bài <a href="hoc.html?id=${esc(it.lid)}">${esc(Dict.levelName(it.lv))} · ${esc(it.title)}</a>`
+                : `kho câu · ${esc(Dict.levelName(it.lv))}`}</div>
+            </div>
+          </div>
+        </div>`).join('')}
+    </div>
+    <div class="row" style="margin-top:18px">
+      <button class="btn btn-primary" id="grade">Chấm bài</button>
+      <button class="btn btn-ghost" id="back">Chọn lại</button>
+    </div>
+    <div id="result"></div>`;
+
+  const kb = document.getElementById('kb');
+  kb.innerHTML = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'.split('')
+    .map(c => `<button type="button" data-k="${c}">${c}</button>`).join('') +
+    '<button type="button" data-k="⌫" style="width:44px">⌫</button>';
+  let last = null;
+  document.addEventListener('focusin', e => { if (e.target.classList.contains('inp')) last = e.target; });
+  kb.addEventListener('click', e => {
+    const b = e.target.closest('[data-k]'); if (!b) return;
+    const t = last || document.querySelector('.inp'); if (!t) return;
+    const k = b.getAttribute('data-k');
+    t.value = (k === '⌫') ? t.value.slice(0, -1) : t.value + k;
+    t.focus();
+  });
+
+  document.getElementById('back').onclick = setup;
+  document.getElementById('grade').onclick = () => {
+    let correct = 0;
+    items.forEach((it, i) => {
+      const card = document.querySelector(`.exq[data-i="${i}"]`);
+      const val = card.querySelector('.inp').value;
+      const fb = card.querySelector('.fb');
+      const ok = Cloze.check(val, it.answer);
+      if (ok) correct++;
+      card.classList.add(ok ? 'ok' : 'bad');
+      card.querySelector('.blank').outerHTML = `<b class="${ok ? 'fill-ok' : 'fill-bad'}">${esc(it.answer)}</b>`;
+      fb.style.display = '';
+      fb.className = 'fb ' + (ok ? 'good' : 'wrong');
+      fb.innerHTML = ok ? 'Đúng rồi.' : `Đáp án: <b>${esc(it.answer)}</b>`;
+      card.querySelector('.inp').disabled = true;
+    });
+    const pct = Math.round(correct / items.length * 100);
+    document.getElementById('result').innerHTML = `
+      <div class="card score-box" style="margin-top:16px">
+        <div class="big">${correct}/${items.length}</div>
+        <div class="pill ${pct >= 70 ? 'pill-ok' : 'pill-accent'}" style="margin:10px 0">${pct}%</div>
+        <p class="soft small" style="max-width:46ch;margin:0 auto 14px">
+          ${pct >= 70 ? 'Tốt. Đây là kiểu bài khó hơn trắc nghiệm nhiều, làm được thế này là em nhớ thật chứ không phải nhận mặt.'
+                      : 'Kiểu bài này khó hơn trắc nghiệm vì phải tự dựng lại từ, không có sẵn đáp án để chọn. Sai nhiều là bình thường — cứ làm tiếp.'}
+        </p>
+        <div class="row" style="justify-content:center">
+          <button class="btn btn-primary" id="again">Làm ${items.length} câu khác</button>
+          <button class="btn btn-ghost" id="back2">Đổi kiểu luyện</button>
+        </div>
+      </div>`;
+    document.getElementById('again').onclick = () => runCloze(Cloze.draw(count, lvSel, guest));
     document.getElementById('back2').onclick = setup;
     document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'center' });
   };

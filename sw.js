@@ -23,7 +23,7 @@ const CORE = [
   './manifest.webmanifest',
   './assets/css/style.css',
   './assets/js/core.js', './assets/js/lesson.js', './assets/js/srs.js',
-  './assets/js/exam.js', './assets/js/dict.js', './assets/js/record.js',
+  './assets/js/exam.js', './assets/js/dict.js', './assets/js/cloze.js', './assets/js/record.js',
   './assets/js/lecture.js', './assets/js/auth.js',
   './data/course.js', './data/exams.js', './data/placement.js', './data/phrases.js',
   './data/lessons/a0.js', './data/lessons/a1.js', './data/lessons/a2.js',

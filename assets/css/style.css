@@ -1,4 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap");
+/* Lora — tiêu đề tiếng Việt (Georgia làm vỡ dấu tiếng Việt trên Windows).
+   PT Serif — CHỮ NGA. Bắt buộc phải nạp phông này: Georgia trên Windows
+   không có bảng đặt dấu (GPOS mark positioning) cho chữ Cyrillic, nên dấu
+   trọng âm U+0301 bị đẩy ra thành một ký tự riêng: "Дава ́й" thay vì "Дава́й".
+   PT Serif do ParaType làm riêng cho tiếng Nga nên đặt dấu đúng chỗ. */
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap");
 
 /* ============================================================
    Học tiếng Nga cùng Oanh — hệ thống giao diện
@@ -37,7 +42,11 @@
   --shadow-lg: 0 2px 4px rgba(36,33,28,.06), 0 24px 48px -20px rgba(36,33,28,.28);
 
   --font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-ru: "Georgia", "PT Serif", "Times New Roman", serif;
+  /* KHÔNG để Georgia ở đây — xem ghi chú phông ở đầu file. */
+  /* KHÔNG để Georgia hay Times New Roman đứng đầu — cả hai đều đẩy dấu
+     trọng âm lệch ra khỏi nguyên âm. Thứ tự dự phòng dưới đây đều là phông
+     có bảng đặt dấu tử tế cho chữ Cyrillic. */
+  --font-ru: "PT Serif", "Noto Serif", "DejaVu Serif", "Segoe UI", serif;
   --font-display: "Lora", "Times New Roman", Georgia, serif;
 
   --maxw: 1080px;

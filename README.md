@@ -55,6 +55,7 @@ assets/js/exam.js      chấm thi, vẽ giấy chứng nhận
 assets/js/dict.js      từ điển: dựng chỉ mục từ LESSON_DATA, dò dạng biến cách,
                         và biến từ tiếng Nga trong bài thành từ bấm-tra-được
 assets/js/record.js    ghi âm giọng mình rồi nghe lại (KHÔNG chấm điểm phát âm)
+assets/js/cloze.js     dựng bài điền vào chỗ trống từ 382 câu sẵn có
 
 manifest.webmanifest   khai báo để cài web vào màn hình điện thoại
 sw.js                  service worker: chạy được khi mất mạng
@@ -328,3 +329,40 @@ Tự học C1–C2) nằm trong bảng trượt lên khi bấm “Thêm”.
 Trước đây tám mục nằm ngang ở đầu trang, xuống điện thoại tự xuống dòng thành ba hàng
 và ăn mất 166px — khoảng một phần năm màn hình, trên mọi trang. Giờ đầu trang chỉ còn
 49px. Máy tính vẫn giữ nguyên kiểu cũ.
+
+## Điền vào chỗ trống (cloze)
+
+Một kiểu luyện trong `luyentap.html`, mã ở `assets/js/cloze.js`. Cơ chế mượn từ
+Clozemaster: khoét một từ trong câu **thật** rồi bắt người học tự điền lại. Trắc nghiệm
+A/B/C/D chỉ cần *nhận ra* đáp án; điền thì phải *tự dựng lại* — nên nó ép nhớ đuôi cách,
+đúng chỗ người Việt yếu nhất.
+
+Không có nội dung riêng: câu lấy từ 238 câu hội thoại trong bài học + kho câu chọn tay.
+
+Bốn quy tắc chọn câu và chọn từ để khoét, đều có lý do:
+
+- **Câu dài 3–12 từ.** Dưới 3 thì không còn manh mối; trên 12 thì thành đoạn văn
+  (vài dòng hội thoại B2 dài cả đoạn), khoét một từ trong đó chẳng học được gì.
+- **Không khoét từ đầu câu** nếu còn lựa chọn khác — mất hết manh mối phía trước.
+- **Tránh từ chức năng ngắn** (и, в, на, я, ты…) qua danh sách `DULL`; ưu tiên từ
+  từ 3 chữ trở lên, vì đó mới là chỗ có đuôi cách để học.
+- **Bỏ hẳn nhóm `error` và `speak`** của kho câu: ở hai nhóm đó cái đúng/cái sai chính
+  là chuyện đang bàn, khoét chỗ trống dễ làm người học nhớ nhầm dạng sai.
+
+Chấm bài bỏ qua **dấu trọng âm, hoa thường và ё/е** — người học không gõ được dấu nhấn
+trên bàn phím thường, bắt gõ đúng dấu là đánh đố chứ không phải kiểm tra tiếng Nga.
+
+## Phông chữ — đừng đổi bừa
+
+Có hai cái bẫy đã mắc rồi, ghi lại để khỏi mắc lại:
+
+1. **Georgia làm vỡ dấu tiếng Việt** trên Windows → tiêu đề dùng **Lora**.
+2. **Georgia VÀ Times New Roman đều đẩy lệch dấu trọng âm tiếng Nga.** Chữ Nga có dấu
+   nhấn được viết bằng ký tự kết hợp U+0301 (`а` + dấu), và hai phông này không có bảng
+   đặt dấu (GPOS mark positioning) cho Cyrillic, nên dấu rơi ra thành ký tự riêng:
+   `Дава ́й` thay vì `Дава́й`. Vì vậy `--font-ru` nạp **PT Serif** (ParaType làm riêng cho
+   tiếng Nga) từ Google Fonts, và **không được để Georgia hay Times New Roman đứng đầu**
+   chuỗi dự phòng.
+
+Giấy chứng nhận vẽ bằng canvas vẫn dùng Times New Roman — chỗ đó không có chữ Nga
+mang dấu trọng âm nên không sao.
